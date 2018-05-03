@@ -1,0 +1,179 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Treino e Forma</title>
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+		});
+	});
+</script>
+
+</head>
+<body>
+
+
+	 <!-- start header_top -->
+	<div class="header">
+	   <div class="container">
+		  <div class="header-text">
+			<h1>Corpo Saudável</h1>
+			<h2>Seu melhor investimento</h2>
+			<p>Monte seu treino online</p>			
+			<div class="banner_btn">
+				<a th:href="@{/registro}">Registre-se</a>
+			</div>
+		  </div>
+		  <div class="header-arrow">
+		     <a href="#menu" class="class scroll"><span> Clique aqui </span> </a>
+		  </div>
+	    </div>
+	  </div>
+	<!-- end header_top -->
+
+    <!-- start header_bottom -->
+    <div class="header-bottom">
+		 <div class="container">
+			<div class="header-bottom_left">
+				<i class="phone"> </i><span>(DDD) 0000-0000</span>
+			</div>
+			<div class="social">	
+			   <ul>	
+				  <li class="facebook"><a href="#"><span> </span></a></li>
+				  <li class="twitter"><a href="#"><span> </span></a></li>
+				  <li class="pinterest"><a href="#"><span> </span></a></li>	
+				  <li class="google"><a href="#"><span> </span></a></li>
+				  <li class="tumblr"><a href="#"><span> </span></a></li>
+				  <li class="instagram"><a href="#"><span> </span></a></li>	
+				  <li class="rss"><a href="#"><span> </span></a></li>							
+			   </ul>
+		   </div>
+		   <div class="clear"></div>
+		</div>
+    </div>
+    <!-- start menu -->
+    <div class="menu" id="menu">
+	  <div class="container">
+		 <div class="logo">
+			<a href="index.html">Treino e Forma</a>
+		 </div>
+		 <div class="h_menu4"><!-- start h_menu4 -->
+		   <a class="toggleMenu" href="#">Menu</a>
+			 <ul class="nav">
+			   <li class="active"><a th:href="@{/}">Home</a></li>
+			   <li class="active"><a th:href="@{/contato}">Contato</a></li>			   
+			 </ul>
+			  <script type="text/javascript" src="js/nav.js"></script>
+		  </div><!-- end h_menu4 -->
+		 <div class="clear"></div>
+	  </div>
+	</div>
+	<!-- end menu -->
+       <div class="main">
+          <div class="login_top">
+          	<div class="container">
+			  <div class="col-md-6">
+				 <div class="login-page">
+					<h4 class="title">Cadastro</h4>
+					<p>Para ter acesso à área restrita do site e criar o seu treino,  faça seu registro. É simples e rápido!</p>
+					<div class="button1">
+					   <a th:href="@{/registro}"><input type="submit" name="Submit" value="Registrar-se"></a>
+					 </div>
+					 <div class="clear"></div>
+				  </div>
+				</div>
+				<div class="col-md-6">
+				 <div class="login-page">
+				  <div class="login-title">
+				  	<div th:if="${param.logout}">
+	           				<div class="alert alert-info">Volte sempre!</div>
+	           		</div>
+	           		<h4 class="title">	           			
+	           			Entrar	           			 
+	           		</h4>
+					<div id="loginbox" class="loginbox">
+						<form th:action="@{/login}" method="post" name="login" id="login-form">
+						  <fieldset class="input">
+						    <p id="login-form-username">
+						      <label for="modlgn_username">Usuário</label>
+						      <input id="modlgn_username" type="text" name="username" class="inputbox" placeholder="" size="18" autocomplete="off">
+						    </p>
+						    <p id="login-form-password">
+						      <label for="modlgn_passwd">Senha</label>
+						      <input id="modlgn_passwd" type="password" name="password" class="inputbox" placeholder="" size="18" autocomplete="off">
+						    </p>
+						    <div class="remember">
+							    <p id="login-form-remember">
+							      <label for="modlgn_remember"><a href="#">Esqueceu sua senha? </a></label>
+							   </p>
+							    <input type="submit" name="Submit" class="button" value="Login"><div class="clear"></div>
+							 </div>
+						  </fieldset>
+						  		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						 </form>
+					</div>
+			      </div>
+				</div>
+				<div class="clear"></div>
+			  </div>
+			</div>
+		  </div>
+         </div>
+         <div class="footer-bottom">
+		   <div class="container">
+		 	 <div class="row section group">
+				
+				<div class="col-md-4">
+					<div class="f-logo">
+						TREINO E FORMA
+					</div>
+					<p class="m_9">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis</p>
+					<p class="address">Phone : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="m_10">(DD) 0000-0000</span></p>
+					<p class="address">Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="m_10"></span>treinoeforma@gmail.com</p>
+				</div>
+				<div class="col-md-4">
+					<ul class="list">						
+						<li><a href="#">Sobre</a></li>						
+						<li><a href="#">Contato</a></li>
+					</ul>
+					<ul class="list1">						
+						<li><a href="#">Supporte</a></li>
+						<li><a href="#">Boletim informativo</a></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+	  		  </div>
+		 	</div>
+		 </div>
+		 <div class="copyright">
+		  <div class="container">
+		  	<div class="copy">
+		        <p>Desenvolvedor by Carlos    © 2014 Template by <a href="http://w3layouts.com" target="_blank"> w3layouts</a></p>
+		    </div>
+		    <div class="social">	
+			   <ul>	
+				  <li class="facebook"><a href="#"><span> </span></a></li>
+				  <li class="twitter"><a href="#"><span> </span></a></li>
+				  <li class="pinterest"><a href="#"><span> </span></a></li>	
+				  <li class="google"><a href="#"><span> </span></a></li>
+				  <li class="tumblr"><a href="#"><span> </span></a></li>
+				  <li class="instagram"><a href="#"><span> </span></a></li>	
+				  <li class="rss"><a href="#"><span> </span></a></li>							
+			   </ul>
+		    </div>
+		   <div class="clear"></div>
+		  </div>
+	   </div>
+</body>
+</html>

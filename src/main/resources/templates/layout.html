@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head> 
+	<meta charset="UTF-8"/> <meta name="viewport" content="width=device-width" />		
+	<title>Treino e Forma</title>	
+	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<link href="css/jquery-ui.css" rel="stylesheet"/>
+	<link href="css/jquery-confirm.min.css" rel="stylesheet" >
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+</head> 
+
+<body>
+
+<div class="container-fluid">
+   	<div class="content">   	
+	   	<!-- start menu -->
+	    <div class="menu" id="menu">
+		  <div class="container">
+			 <div class="logo">
+				<a href="index.html"></a>
+			 </div>
+			 <div class="h_menu4"><!-- start h_menu4 -->
+			   <a class="toggleMenu" href="#">Menu</a>
+				 <ul class="nav">
+				   <li class="active"><a th:href="@{/}">Home</a></li>
+				    <li sec:authorize="hasRole('PG_MONTAR_TREINO')"><a th:href="@{/montarTreino}">Montar treino</a></li>
+				    <li sec:authorize="hasRole('PG_LISTAR_TREINO')"><a th:href="@{/listarTreino}">Listar treinos</a></li>
+				    <li sec:authorize="hasRole('PG_LISTAR_EXERCICIO')"><a th:href="@{/listarExercicio}">Exercícios</a></li>				   
+				   	<li><a th:href="@{/contato}">Contato</a></li>
+				   <li>
+				   		<form th:action="@{/logout}" method="post">
+				   			<button type="submit" class="btn btn-info">Sair</button>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">		   		
+				   		</form>			   
+				   </li>
+				 </ul>			  
+			  </div><!-- end h_menu4 -->
+			 <div class="clear"></div>
+		  </div>
+		</div>
+		<!-- end menu -->
+		
+		<div layout:fragment="content">content falso</div>
+	   			
+	   		
+	</div>   			
+</div>	
+
+<script src="js/jquery.min.js"></script>	
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/jquery-confirm.min.js"></script>	 
+
+<div layout:fragment="scripts"></div>
+
+</body> 
+</html> 
