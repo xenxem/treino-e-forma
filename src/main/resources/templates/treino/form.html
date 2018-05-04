@@ -14,103 +14,125 @@
 	 -->
 	
 <div layout:fragment="content">
-	<div class="panel panel-default">					
-		
+	<div class="panel panel-default">
 		<div class="panel-body">
-			<form th:action="@{/montar}">		    
-				<div class="row">		
-		  			<div class="col-xs-8">
-		  				<span><h3><small>Título</small></h3></span>		  				
-		    			<div class="form-group">	
-		    				<div class="input-group">
-			      				<select name="titulo" class="selectpicker form-control">
-			        				<option>Mustard</option>
-			        				<option>Ketchup</option>
-			        				<option>Relish</option>
-			      				</select>
-			      				<span class="input-group-btn">
-			       		 			<button class="btn btn-info" type="button" id="novoTitulo">Novo Título</button>
-			     				</span>
-			     			</div>
-		    			</div>
-		  			</div>
+			<form th:action="@{/montar}">
+				<div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="dataInicio"><span><h3><small>Data de início</small></h3></span></label>
+				      <input  type="date" class="form-control" id="dataInicio" placeholder="Data início">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="dataFim"><span><h3><small>Data fim</small></h3></span></label>
+				      <input type="date" class="form-control" id="dataFim" placeholder="Data fim">
+				    </div>
 				</div>
-				
-			   <table class="table table-striped" id="table"> 
-					<thead>
-			            <tr>
-			            	<th><span class="label label-default"></span></th>					                
-							<th><h3><small>Descrição</small></h3></th>
-							<th><h3><small>Grupo muscular</small></h3></th>												                
-			            </tr>
-		        	</thead>		
-					 <tbody>				 	
-					 	<tr th:each="exercicio : ${exercicios}">
-					 		<td>
-					 			<input type="checkbox"  name="selecionado" id="selecionado"  th:value="${exercicio.id}">
-					 		</td>			 		
-					 		<td>	
-					 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
-					 		</td>
-					 		<td>
-					 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
-					 		</td>					 		
-					 	</tr>
-					 </tbody>
-					 
-				</table>
-				<input type="hidden" name="selecionados" id="selecionados" th:value="${selecionados}">				
-				<button type="button" class="btn btn-info" id="adicionar">Adicionar</button> 
+				<div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="titulo"><span><h3><small>Título</small></h3></span></label>
+				      <select name="titulo" class="selectpicker form-control" id="titulo">
+				       		<option>DIA1</option>
+				       		<option>DIA2</option>
+				       		<option>DIA3</option>
+				   	  </select>			      		
+				    </div>
+				</div>
+			    <div class="form-row">
+			   		<div class="form-group col-xs-12">
+					   <table class="table table-striped" id="table"> 
+							<thead>
+					            <tr>
+					            	<th><span class="label label-default"></span></th>					                
+									<th><h3><small>Descrição</small></h3></th>
+									<th><h3><small>Grupo muscular</small></h3></th>												                
+					            </tr>
+				        	</thead>		
+							 <tbody>				 	
+							 	<tr th:each="exercicio : ${exercicios}">
+							 		<td>
+							 			<input type="checkbox"  name="checkbox1" class="checkbox1"  th:value="${exercicio.id}">
+							 		</td>			 		
+							 		<td>	
+							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+							 		</td>
+							 		<td>
+							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
+							 		</td>					 		
+							 	</tr>
+							 </tbody>
+						</table>
+						<input type="hidden" name="hidden1" id="hidden1" th:value="${exerciciosMarcados}">
+						<button type="button" class="btn btn-info" id="voltar">Voltar</button>				
+						<button type="button" class="btn btn-info" id="adicionar">Adicionar</button>		   						
+					</div>	
+			  	 </div> 
 			</form>
 			
-			<!-- Start div table-footer -->				
-			 <div class="table-footer">
-                   <ul class="pagination">
-                       <li th:class="${page.isFirstPage()}? 'disabled' : ''">
-       					<span th:if="${page.isFirstPage()}">← Primeiro</span>
-       					<a th:if="${not page.isFirstPage()}" th:href="@{${page.getUrl()}(page=0,size=${page.getSize()})}">← Primeiro</a>
-     					</li>
-     					 
-					 <li th:class="${page.isHasPreviousPage()}? '' : 'disabled'">
-					    <span th:if="${not page.isHasPreviousPage()}">«</span>
-					    <a th:if="${page.isHasPreviousPage()}" th:href="@{${page.getUrl()}(page=${page.getNumber()-2},size=${page.getSize()})}" title='Ir para anterior'>«</a>
-					 </li>						 
-					 
-				     <li th:each="item : ${page.getItems()}" th:class="${item.isCurrent()} ? 'active' : ''">
-				       	<span th:if='${item.isCurrent()}' th:text='${item.getNumber()}'>1</span>
-				       	<a th:if="${not item.isCurrent()}" th:href="@{${page.getUrl()}(page=${item.getNumber()-1},size=${page.getSize()})}"><span th:text='${item.getNumber()}'>1</span></a>
-				     </li>
-				     
-				     <li th:class="${page.isHasNextPage()}? '' : 'disabled'">
-				       <span th:if="${not page.isHasNextPage()}">»</span>
-				       <a th:if="${page.isHasNextPage()}" th:href='@{${page.getUrl()}(page=${page.getNumber()},size=${page.getSize()})}' title='Ir para próxima'>»</a>
-				     </li>
-				      
-				     <li th:class="${page.isLastPage()}? 'disabled' : ''">
-				       <span th:if='${page.isLastPage()}'>Último →</span>
-				       <a th:if="${not page.isLastPage()}" th:href="@{${page.getUrl()}(page=${page.getTotalPages()-1},size=${page.getSize()})}">Último →</a>
-				     </li>
-                   </ul>
-		    </div>
-		    <!-- End div table-footer -->
+			<div class="form-row">
+		   		<div class="form-group col-xs-8">
+					<!-- Start div table-footer -->				
+					 <div class="table-footer">
+		                   <ul class="pagination">
+	                         <li th:class="${page.isFirstPage()}? 'disabled' : ''">
+	       						<span th:if="${page.isFirstPage()}">Primeiro</span>
+	       						<a th:if="${not page.isFirstPage()}" th:href="@{${page.getUrl()}(page=0,size=${page.getSize()})}">Primeiro</a>
+	     					 </li>
+		     					 
+							 <li th:class="${page.isHasPreviousPage()}? '' : 'disabled'">
+							    <span th:if="${not page.isHasPreviousPage()}">«</span>
+							    <a th:if="${page.isHasPreviousPage()}" th:href="@{${page.getUrl()}(page=${page.getNumber()-2},size=${page.getSize()})}" title='Ir para anterior'>«</a>
+							 </li>						 
+							 
+						     <li th:each="item : ${page.getItems()}" th:class="${item.isCurrent()} ? 'active' : ''">
+						       	<span th:if='${item.isCurrent()}' th:text='${item.getNumber()}'>1</span>
+						       	<a th:if="${not item.isCurrent()}" th:href="@{${page.getUrl()}(page=${item.getNumber()-1},size=${page.getSize()})}"><span th:text='${item.getNumber()}'>1</span></a>
+						     </li>
+						     
+						     <li th:class="${page.isHasNextPage()}? '' : 'disabled'">
+						       <span th:if="${not page.isHasNextPage()}">»</span>
+						       <a th:if="${page.isHasNextPage()}" th:href='@{${page.getUrl()}(page=${page.getNumber()},size=${page.getSize()})}' title='Ir para próxima'>»</a>
+						     </li>
+						      
+						     <li th:class="${page.isLastPage()}? 'disabled' : ''">
+						       <span th:if='${page.isLastPage()}'>Último</span>
+						       <a th:if="${not page.isLastPage()}" th:href="@{${page.getUrl()}(page=${page.getTotalPages()-1},size=${page.getSize()})}">Último</a>
+						     </li>
+		                   </ul>
+				    </div>
+				    <!-- End div table-footer -->
+				</div>					
+			</div>
 		</div>
-	</div>
-							
+	</div>							
 </div><!-- ./content -->	
 
 <!-- JQuery -->	
 <div layout:fragment="scripts">
 <script th:inline="javascript">
-		jQuery(function(){			
+jQuery(function(){			
+		var newArray = new Array();
+		var tam=0;		
+		$(".checkbox1").on("click",function(){			
+			if ($("#hidden1").val() === ""){
+				$("#hidden1").val($(this).val());
+				console.log($("#hidden1").val());
+			}
+			else{
+				var codigos = $("#hidden1").val();
+				newArray = codigos.split(',');
+				tam = newArray.length-1;
+				newArray[tam+1] = $(this).val();
+				var lista = newArray.join();
+				$("#hidden1").val(lista);
 				
-					//$("#myModal").modal("show").attr("data-backdrop","static");
-					var i = 0;
-					$("#adicionar").on("click",function(){
-						
-					});
 				
+				$.each(newArray,function(i,v){
+					console.log(v);
+				});
+			}
 		});	
-		
+									
+});			
 </script>
 </div><!-- fim div script -->
 	

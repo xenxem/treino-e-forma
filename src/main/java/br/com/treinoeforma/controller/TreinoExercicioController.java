@@ -29,7 +29,7 @@ public class TreinoExercicioController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/montar")
-	public ModelAndView montar(@RequestParam("selecionado") String selecionado, 
+	public ModelAndView montar(@RequestParam("hidden1") String hidden1, 
 							   @RequestParam("titulo") String titulo, Pageable pageable) {
 		
 		PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/montar");
