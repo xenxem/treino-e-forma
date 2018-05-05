@@ -30,7 +30,7 @@
 				<div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="titulo"><span><h3><small>Título</small></h3></span></label>
-				      <select name="titulo" class="selectpicker form-control" id="titulo">
+				      <select name="selcTitulo" class="selectpicker form-control" id="titulo">
 				       		<option>DIA1</option>
 				       		<option>DIA2</option>
 				       		<option>DIA3</option>
@@ -50,18 +50,18 @@
 							 <tbody>				 	
 							 	<tr th:each="exercicio : ${exercicios}">
 							 		<td>
-							 			<input type="checkbox"  name="checkbox1" class="checkbox1"  th:value="${exercicio.id}">
+							 			<input type="checkbox"  name="boxExercicio" class="boxExercicio"  th:value="${exercicio.id}">
 							 		</td>			 		
 							 		<td>	
-							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="adiciona"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
 							 		</td>
 							 		<td>
-							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
+							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="adiciona"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
 							 		</td>					 		
 							 	</tr>
 							 </tbody>
 						</table>
-						<input type="hidden" name="hidden1" id="hidden1" th:value="${exerciciosMarcados}">
+						<input type="hidden" name="hidExercicio" id="hidExercicio" th:value="${exerciciosMarcados}">
 						<button type="button" class="btn btn-info" id="voltar">Voltar</button>				
 						<button type="button" class="btn btn-info" id="adicionar">Adicionar</button>		   						
 					</div>	
@@ -110,25 +110,47 @@
 <div layout:fragment="scripts">
 <script th:inline="javascript">
 jQuery(function(){			
+	
 		var newArray = new Array();
-		var tam=0;		
-		$(".checkbox1").on("click",function(){			
-			if ($("#hidden1").val() === ""){
-				$("#hidden1").val($(this).val());
-				console.log($("#hidden1").val());
+		var arr = new Array();
+		
+		Array.prototype.verificaParaInclusao = function(val){
+			var array = new Array();
+			array['result'] = false;
+			array['pos']= null;						
+			for (i=0; i < this.length; i++){
+				if (newArray[i] == val){						
+					array['result'] = true;
+					array['pos']=i;
+					break;						
+				}
+			}
+			return array;
+		}
+		
+		$(".boxExercicio").on("click",function(){			
+			if ($.trim($("#hidExercicio").val()) === ""){
+				$("#hidExercicio").val($(this).val());				
 			}
 			else{
-				var codigos = $("#hidden1").val();
-				newArray = codigos.split(',');
-				tam = newArray.length-1;
-				newArray[tam+1] = $(this).val();
-				var lista = newArray.join();
-				$("#hidden1").val(lista);
+				var codigos = $("#hidExercicio").val();
+				newArray = codigos.split(',');								
+				arr = newArray.verificaParaInclusao($(this).val());
+				if (arr['result']){					
+					newArray.splice(arr['pos'],1);
+					newArray.sort();
+					var lista = newArray.join();
+					$("#hidExercicio").val(lista);
+					console.log($("#hidExercicio").val());
+				}
+				else{					
+					newArray.push($(this).val());
+					newArray.sort();
+					var lista = newArray.join();
+					$("#hidExercicio").val(lista);
+					console.log($("#hidExercicio").val());
+				}	
 				
-				
-				$.each(newArray,function(i,v){
-					console.log(v);
-				});
 			}
 		});	
 									
