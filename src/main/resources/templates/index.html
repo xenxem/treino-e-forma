@@ -10,7 +10,10 @@
 	<link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
 	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
 	<link href="css/jquery-ui.css" rel="stylesheet"/>
-	<link href="css/jquery-confirm.min.css" rel="stylesheet" >
+	<link href="css/jquery-confirm.min.css" rel="stylesheet" >	
+	<link href="css/dataTables.checkboxes.css" rel="stylesheet" >
+	
+	
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
@@ -185,14 +188,14 @@
 <script src="js/dataTables.bootstrap.min.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/jquery-confirm.min.js"></script>
-
+<script src="js/dataTables.checkboxes.min"></script>
 <div layout:fragment="scripts">
 <script th:inline="javascript">
 	$(function(){		
 			
 				var	 table = $('#exercicioTable').DataTable({							
 						 	responsive:true,		 
-						 	pageLength:5,
+						 	pageLength:5,						 	
 						 	language:{
 						 		info:"De _START_ Ao _END_ Total registros: _TOTAL_",
 						 		lengthMenu:     "Mostrar _MENU_ registros",

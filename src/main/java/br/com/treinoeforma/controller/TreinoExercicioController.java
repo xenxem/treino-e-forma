@@ -29,15 +29,21 @@ public class TreinoExercicioController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/montar")
-	public ModelAndView montar(@RequestParam("hidExercicio") String hidden1, 
-							   @RequestParam("selcTitulo") String titulo, Pageable pageable) {
+	public ModelAndView montar(@RequestParam("codigoExercicio") String codigoExercicio, 
+							   @RequestParam("titulo") String titulo,							   
+							   Pageable pageable) {
+		
+		
+		//List<String> lista = Arrays.asList(hidExercicio.split(","));
 		
 		PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/montar");
 		List<Exercicio> exercicios = page.getContent();
 		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form");
+		ModelAndView mv = new ModelAndView("treino/form-sel-exerc");
 		mv.addObject("exercicios",exercicios);
-		mv.addObject("grupoMuscular",grupoMuscular);		
+		mv.addObject("grupoMuscular",grupoMuscular);
+		mv.addObject("codigosMarcados",codigoExercicio);
+		//mv.addObject("lista",lista);
 		mv.addObject("page",page);
 		mv.addObject(new Exercicio());
 		return mv;

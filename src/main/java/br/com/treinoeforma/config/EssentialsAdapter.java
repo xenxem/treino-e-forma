@@ -15,7 +15,7 @@ public class EssentialsAdapter extends WebMvcConfigurerAdapter {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		PageableHandlerMethodArgumentResolver phmar = new PageableHandlerMethodArgumentResolver();
-		phmar.setFallbackPageable(new PageRequest(0,7));
+		phmar.setFallbackPageable(new PageRequest(0,10));
 		argumentResolvers.add(phmar);
 	}
 }

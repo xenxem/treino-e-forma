@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.treinoeforma.model.Exercicio;
@@ -32,7 +31,7 @@ public class TreinoController {
 		 PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/montarTreino");
 		 List<Exercicio> exercicios = page.getContent();
 		 List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		 ModelAndView mv = new ModelAndView("treino/form");
+		 ModelAndView mv = new ModelAndView("treino/form-sel-exerc");
 		 mv.addObject("exercicios",exercicios);
 		 mv.addObject("grupoMuscular",grupoMuscular);		
 		 mv.addObject("page",page);

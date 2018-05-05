@@ -16,7 +16,8 @@
 <div layout:fragment="content">
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<form th:action="@{/montar}">
+			<form id="form" th:action="@{/montar}">
+			<!-- 
 				<div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="dataInicio"><span><h3><small>Data de início</small></h3></span></label>
@@ -27,15 +28,21 @@
 				      <input type="date" class="form-control" id="dataFim" placeholder="Data fim">
 				    </div>
 				</div>
+			 -->	
 				<div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="titulo"><span><h3><small>Título</small></h3></span></label>
-				      <select name="selcTitulo" class="selectpicker form-control" id="titulo">
+				      <select name="titulo" class="selectpicker form-control" id="titulo">
 				       		<option>DIA1</option>
 				       		<option>DIA2</option>
 				       		<option>DIA3</option>
-				   	  </select>			      		
+				   	  </select>
 				    </div>
+				</div>
+				<div class="form-row">
+				    <div class="form-group col-md-6">				
+						<button type="button" class="btn btn-info" id="novoTitulo">Incluir novo título</button>
+					</div>
 				</div>
 			    <div class="form-row">
 			   		<div class="form-group col-xs-12">
@@ -50,7 +57,7 @@
 							 <tbody>				 	
 							 	<tr th:each="exercicio : ${exercicios}">
 							 		<td>
-							 			<input type="checkbox"  name="boxExercicio" class="boxExercicio"  th:value="${exercicio.id}">
+							 			<input type="checkbox"  name="boxExercicio" class="boxExercicio" th:checked="${#strings.contains({codigosMarcados},exercicio.id)} ? true : false"  th:value="${exercicio.id}">
 							 		</td>			 		
 							 		<td>	
 							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="adiciona"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
@@ -61,47 +68,54 @@
 							 	</tr>
 							 </tbody>
 						</table>
-						<input type="hidden" name="hidExercicio" id="hidExercicio" th:value="${exerciciosMarcados}">
-						<button type="button" class="btn btn-info" id="voltar">Voltar</button>				
-						<button type="button" class="btn btn-info" id="adicionar">Adicionar</button>		   						
+						<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						<input type="hidden" name="codigoExercicio" id="codigoExercicio" th:value="${codigosMarcados}">								   						
 					</div>	
 			  	 </div> 
 			</form>
 			
 			<div class="form-row">
-		   		<div class="form-group col-xs-8">
+		   		<div class="form-group col-xs-12">
 					<!-- Start div table-footer -->				
 					 <div class="table-footer">
 		                   <ul class="pagination">
 	                         <li th:class="${page.isFirstPage()}? 'disabled' : ''">
 	       						<span th:if="${page.isFirstPage()}">Primeiro</span>
-	       						<a th:if="${not page.isFirstPage()}" th:href="@{${page.getUrl()}(page=0,size=${page.getSize()})}">Primeiro</a>
+	       						<a th:if="${not page.isFirstPage()}" th:href="@{${page.getUrl()}(page=0,size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}">Primeiro</a>
 	     					 </li>
 		     					 
 							 <li th:class="${page.isHasPreviousPage()}? '' : 'disabled'">
 							    <span th:if="${not page.isHasPreviousPage()}">«</span>
-							    <a th:if="${page.isHasPreviousPage()}" th:href="@{${page.getUrl()}(page=${page.getNumber()-2},size=${page.getSize()})}" title='Ir para anterior'>«</a>
+							    <a th:if="${page.isHasPreviousPage()}" th:href="@{${page.getUrl()}(page=${page.getNumber()-2},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}" title='Ir para anterior'>«</a>
 							 </li>						 
 							 
 						     <li th:each="item : ${page.getItems()}" th:class="${item.isCurrent()} ? 'active' : ''">
 						       	<span th:if='${item.isCurrent()}' th:text='${item.getNumber()}'>1</span>
-						       	<a th:if="${not item.isCurrent()}" th:href="@{${page.getUrl()}(page=${item.getNumber()-1},size=${page.getSize()})}"><span th:text='${item.getNumber()}'>1</span></a>
+						       	<a th:if="${not item.isCurrent()}" th:href="@{${page.getUrl()}(page=${item.getNumber()-1},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}"><span th:text='${item.getNumber()}'>1</span></a>
 						     </li>
 						     
 						     <li th:class="${page.isHasNextPage()}? '' : 'disabled'">
 						       <span th:if="${not page.isHasNextPage()}">»</span>
-						       <a th:if="${page.isHasNextPage()}" th:href='@{${page.getUrl()}(page=${page.getNumber()},size=${page.getSize()})}' title='Ir para próxima'>»</a>
+						       <a th:if="${page.isHasNextPage()}" th:href='@{${page.getUrl()}(page=${page.getNumber()},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}' title='Ir para próxima'>»</a>
 						     </li>
 						      
 						     <li th:class="${page.isLastPage()}? 'disabled' : ''">
 						       <span th:if='${page.isLastPage()}'>Último</span>
-						       <a th:if="${not page.isLastPage()}" th:href="@{${page.getUrl()}(page=${page.getTotalPages()-1},size=${page.getSize()})}">Último</a>
+						       <a th:if="${not page.isLastPage()}" th:href="@{${page.getUrl()}(page=${page.getTotalPages()-1},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}">Último</a>
 						     </li>
 		                   </ul>
 				    </div>
 				    <!-- End div table-footer -->
-				</div>					
+				</div>	
+			</div>			
+		</div>
+		<div class="panel-body">
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<button type="button" class="btn btn-info" id="voltar">Voltar</button>				
+				<button type="button" class="btn btn-info" id="adicionar">Adicionar exercícios</button>
 			</div>
+		</div>		
 		</div>
 	</div>							
 </div><!-- ./content -->	
@@ -129,31 +143,40 @@ jQuery(function(){
 		}
 		
 		$(".boxExercicio").on("click",function(){			
-			if ($.trim($("#hidExercicio").val()) === ""){
-				$("#hidExercicio").val($(this).val());				
+			if ($.trim($("#codigoExercicio").val()) === ""){
+				$("#codigoExercicio").val($(this).val());				
 			}
 			else{
-				var codigos = $("#hidExercicio").val();
+				var codigos = $("#codigoExercicio").val();
 				newArray = codigos.split(',');								
 				arr = newArray.verificaParaInclusao($(this).val());
 				if (arr['result']){					
 					newArray.splice(arr['pos'],1);
 					newArray.sort();
 					var lista = newArray.join();
-					$("#hidExercicio").val(lista);
-					console.log($("#hidExercicio").val());
+					$("#codigoExercicio").val(lista);
+					console.log($("#codigoExercicio").val());
 				}
 				else{					
 					newArray.push($(this).val());
 					newArray.sort();
 					var lista = newArray.join();
-					$("#hidExercicio").val(lista);
-					console.log($("#hidExercicio").val());
+					$("#codigoExercicio").val(lista);
+					console.log($("#codigoExercicio").val());
 				}	
 				
 			}
 		});	
-									
+		
+		$("#voltar").on("click",function(){
+				console.log("voltar");
+		});
+		
+		$("#adicionar").on("click",function(){
+			$("#form").submit();
+		});
+		
+		
 });			
 </script>
 </div><!-- fim div script -->
