@@ -9,8 +9,6 @@
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />	 
 	<link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
 	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/jquery-ui.css" rel="stylesheet"/>
-	<link href="css/jquery-confirm.min.css" rel="stylesheet" >	
 	<link href="css/dataTables.checkboxes.css" rel="stylesheet" >
 	
 	
@@ -102,31 +100,36 @@
 	<!-- end menu -->
 	
 	<div class="container-fluid">
+		<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="2,4,8,14">
 		<div class="page-header">
   			<h3><span class="label label-default">Top treinos</span><small> Os mais acessados e mais curtidos  <span class="glyphicon glyphicon-star"> </span><span class="glyphicon glyphicon-star"> </span><span class="glyphicon glyphicon-star"> </span></small></h3>
 		</div>
 		<table id="exercicioTable" class="table table-striped"  width="100%">     							       
 		       <thead>
 		            <tr>					                
-						<th><span class="label label-default">Treino</span></th>
-						<th><span class="label label-default">Usuário</span></th>
-						<th><span class="label label-default">Curtidas</span></th>												                
+		            	<th><span></span></th>
+						<th><span><small>Treino</small></span></th>
+						<th><span><small>Usuário</small></span></th>
+						<th><span><small>Curtidas</small></span></th>												                
 		            </tr>
 		        </thead>							        
 		        <tfoot>
 		            <tr>
+		            	<th ><!--id--></th>
 						<th ><!--descricao--></th>            
 						<th><!--grupo muscular--></th>
-						<th></th>
+						<th><!--curtidas--></th>						
 		            </tr>
 		        </tfoot>
 		</table>		
 	</div>	
 	
-	 	 			
+	 	
+	 	<!--  			
 	    <div class="map">
 			<iframe width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=United+Kingdom&amp;aq=0&amp;oq=un&amp;sll=37.0625,-95.677068&amp;sspn=48.956293,107.138672&amp;ie=UTF8&amp;hq=&amp;hnear=United+Kingdom&amp;ll=55.378051,-3.435973&amp;spn=135.795411,68.554687&amp;t=m&amp;z=2&amp;output=embed"> </iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=United+Kingdom&amp;aq=0&amp;oq=un&amp;sll=37.0625,-95.677068&amp;sspn=48.956293,107.138672&amp;ie=UTF8&amp;hq=&amp;hnear=United+Kingdom&amp;ll=55.378051,-3.435973&amp;spn=135.795411,68.554687&amp;t=m&amp;z=2" style="color:#666;font-size:12px;text-align:left"> </a></small>			
 		</div>
+		 -->
 		
 		 <div class="footer-bottom">
 		   <div class="container">
@@ -135,7 +138,7 @@
 				   <h4 class="m_7">Boletim informativo</h4>
 				   <p class="m_8">Receba nosso boletim informativo por email</p>
 				      <form class="subscribe">
-			             <input type="text" value="Insert Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Insert Email';}">
+			             <input type="text" value="Insert Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Insert Email';}">			             
 					  </form>
 			          <div class="subscribe1">
 			            <a href="#">Enviar Email<i class="but_arrow"> </i></a>
@@ -186,68 +189,114 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/jquery-confirm.min.js"></script>
-<script src="js/dataTables.checkboxes.min"></script>
+<script src="js/dataTables.checkboxes.min.js"></script>
+
 <div layout:fragment="scripts">
 <script th:inline="javascript">
-	$(function(){		
+	$(function(){	
+		
+		
+		var newArray = new Array();
+		var arr = new Array();
+		
+		Array.prototype.verificaParaInclusao = function(val){
+			var array = new Array();
+			array['result'] = false;
+			array['pos']= null;						
+			for (i=0; i < this.length; i++){
+				if (newArray[i] == val){						
+					array['result'] = true;
+					array['pos']=i;
+					break;						
+				}
+			}
+			return array;
+		}
 			
-				var	 table = $('#exercicioTable').DataTable({							
-						 	responsive:true,		 
-						 	pageLength:5,						 	
-						 	language:{
-						 		info:"De _START_ Ao _END_ Total registros: _TOTAL_",
-						 		lengthMenu:     "Mostrar _MENU_ registros",
-						 		search:"Pesquisar",				 		
-						 		paginate:{
-						 			previous:"Anterior",
-						 			next:"Próximo"
-						 		}
-						 	},			 	
-					        ajax:{
-					        	url:"/treinoeforma/listaExercicioXHR",
-					        	dataSrc:""	        		
-					        },
-					        columns:[		            	
-					            	{data:"descricao"},
-					            	{data:"grupoMuscular.nome"},
-					            	{mRender:function(data,type,row){					            			
-					            			var str = "<span class='badge'>14</span>";
-					            			return str;
-					            		}
-					            	}
-					        ]
-					});
+		var	 table = $('#exercicioTable').DataTable({							
+				 	responsive:true,		 
+				 	pageLength:5,						 	
+				 	language:{
+				 		info:"De _START_ Ao _END_ Total registros: _TOTAL_",
+				 		lengthMenu:     "Mostrar _MENU_ registros",
+				 		search:"Pesquisar",				 		
+				 		paginate:{
+				 			previous:"Anterior",
+				 			next:"Próximo"
+				 		}
+				 	},			 	
+			        ajax:{
+			        	url:"/treinoeforma/listaExercicioXHR",
+			        	dataSrc:""	        		
+			        },
+			        columns:[
+			        		{data:"id"},
+			            	{data:"descricao"},
+			            	{data:"grupoMuscular.nome"},
+			            	{mRender:function(data,type,row){
+			            		    //if ($("#codigoExercicio").val().indexOf(row.id) != -1)
+			            		    //	console.log($(this).find(":checkbox").val());
+			            		    //	console.log(row.id);
+			            		    
+			            			var str = "<span class='badge'>14</span>";
+			            			return str;
+			            		}
+			            	}
+			        ],
+			        columnDefs: [{
+			           targets: 0,
+			           searchable: false,
+			           orderable: false,
+			           width: '1%',
+			           className: 'dt-body-center',
+			           render: function (data, type, full, meta){
+			               return "<a href='#' id='"+data+"'><input type='checkbox' value='"+data+"'></a>";
+			           }
+			        }]
+			});
+		 
+		/* Linha que foi clicada */
+		
+		$('#exercicioTable tbody').on('click','a',function () {					 
+				 									
+			
+			var item = $(this).attr("id");
+			var table = $('#exercicioTable').DataTable();
+			var id = table.row($(this).parents('tr')).data().id;
+			 
+			
+			if ($.trim($("#codigoExercicio").val()) === ""){
+				$("#codigoExercicio").val(id);				
+			}
+			else
+			{
+				var codigos = $("#codigoExercicio").val();
+				newArray = codigos.split(',');								
+				arr = newArray.verificaParaInclusao(id);
 				
-				/* Linha que foi clicada */
-
-				$('#exercicioTable tbody').on('click','a',function () {					 
-						 
-						    var linha = $(this);
-							var item = $(this).attr("id");
-							var array = item.split('|');
-							var table = $('#exercicioTable').DataTable();
-							var exercicioCodigo = array[0];
-							var categoriaCodigo = array[1];
-							var descricao = table.row($(this).parents('tr')).data().descricao;
-							
-							
-							/** Editando uma linha */
-							
-						    if ($(this).attr("class").indexOf('editar') !== -1){						    		
-					    		$("#titulo-modal").text("Exercício (Alteração)");						    								    		
-					    		$("#id").val(exercicioCodigo);
-								$("#descricao").val(descricao);								
-								$("#grupoMuscular").find("option").each(function(i,obj){
-									if(i == categoriaCodigo)
-										$(this).prop("selected",true);
-								});								
-					    		$("#myModal").modal("show");
-					 		}					    
-						
-						    
-				});					
+				if (arr['result']){					
+					newArray.splice(arr['pos'],1);
+					newArray.sort();
+					var lista = newArray.join();
+					$("#codigoExercicio").val(lista);
+					console.log($("#codigoExercicio").val());
+				}
+				else
+				{					
+					newArray.push(id);
+					newArray.sort();
+					var lista = newArray.join();
+					$("#codigoExercicio").val(lista);
+					console.log($("#codigoExercicio").val());
+					
+				}
+				
+			}				
+				    
+		});	
+				
+				
+				
 	});
 	 
 </script>
