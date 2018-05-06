@@ -31,11 +31,15 @@ public class TreinoExercicio implements Serializable {
 	@JoinColumn(name="exercicio_id")
 	private Exercicio exercicio;
 	
+	@ManyToOne
+	@JoinColumn(name="tituloexercicio_id")	
+	private TituloExercicio tituloExercicio;
+	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
 		
-	private String rotulo;	
+	
 	private Long ordem;
 	
 	public Long getId() {
@@ -63,12 +67,7 @@ public class TreinoExercicio implements Serializable {
 	public void setOrdem(Long ordem) {
 		this.ordem = ordem;
 	}
-	public String getRotulo() {
-		return rotulo;
-	}
-	public void setRotulo(String rotulo) {
-		this.rotulo = rotulo;
-	}
+	
 	public Calendar getData() {
 		return data;
 	}
@@ -76,6 +75,12 @@ public class TreinoExercicio implements Serializable {
 		this.data = data;
 	}
 		
+	public TituloExercicio getTituloExercicio() {
+		return tituloExercicio;
+	}
+	public void setTituloExercicio(TituloExercicio tituloExercicio) {
+		this.tituloExercicio = tituloExercicio;
+	}
 	
 
 }

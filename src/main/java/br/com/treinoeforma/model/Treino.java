@@ -22,18 +22,23 @@ public class Treino implements Serializable{
 	@GeneratedValue
 	private Long id;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	private Calendar dataInicio;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)	
-	private Calendar dataFim;
-	
 	private String descricao;
 	private Integer curtidas;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Calendar data;
 		
+	
+		
+	public Calendar getData() {
+		return data;
+	}
+
+	public void setData(Calendar data) {
+		this.data = data;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -41,18 +46,7 @@ public class Treino implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Calendar getDataInicio() {
-		return dataInicio;
-	}
-	public void setDataInicio(Calendar dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-	public Calendar getDataFim() {
-		return dataFim;
-	}
-	public void setDataFim(Calendar dataFim) {
-		this.dataFim = dataFim;
-	}
+	
 	public String getDescricao() {
 		return descricao;
 	}
