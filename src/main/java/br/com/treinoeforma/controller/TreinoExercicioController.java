@@ -39,7 +39,7 @@ public class TreinoExercicioController {
 		PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/montar");
 		List<Exercicio> exercicios = page.getContent();
 		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form-sel-exerc");
+		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
 		mv.addObject("exercicios",exercicios);
 		mv.addObject("grupoMuscular",grupoMuscular);
 		mv.addObject("codigosMarcados",codigoExercicio);

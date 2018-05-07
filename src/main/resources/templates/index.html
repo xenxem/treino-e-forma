@@ -100,7 +100,7 @@
 	<!-- end menu -->
 	
 	<div class="container-fluid">
-		<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="2,4,8,14">
+		<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="2,3,4,5,6,8,14">
 		<div class="page-header">
   			<h3><span class="label label-default">Top treinos</span><small> Os mais acessados e mais curtidos  <span class="glyphicon glyphicon-star"> </span><span class="glyphicon glyphicon-star"> </span><span class="glyphicon glyphicon-star"> </span></small></h3>
 		</div>
@@ -234,10 +234,6 @@
 			            	{data:"descricao"},
 			            	{data:"grupoMuscular.nome"},
 			            	{mRender:function(data,type,row){
-			            		    //if ($("#codigoExercicio").val().indexOf(row.id) != -1)
-			            		    //	console.log($(this).find(":checkbox").val());
-			            		    //	console.log(row.id);
-			            		    
 			            			var str = "<span class='badge'>14</span>";
 			            			return str;
 			            		}
@@ -250,7 +246,12 @@
 			           width: '1%',
 			           className: 'dt-body-center',
 			           render: function (data, type, full, meta){
-			               return "<a href='#' id='"+data+"'><input type='checkbox' value='"+data+"'></a>";
+			        	   if (type == 'display'){
+			        	   	var resp =$("#codigoExercicio").val().indexOf(data) != -1 ? 'checked':'';
+			        	   	console.log(resp);
+			        	   }
+			        	   
+			        	   return "<a href='#' id='"+data+"'><input type='checkbox'  " + resp + "  value='"+data+"'></a>";
 			           }
 			        }]
 			});

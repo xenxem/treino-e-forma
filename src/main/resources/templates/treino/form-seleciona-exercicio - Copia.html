@@ -69,7 +69,7 @@
 							 </tbody>
 						</table>
 						<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-						<input type="hidden" name="codigoExercicio" id="codigoExercicio" th:value="${codigosMarcados}">								   						
+						<input type="hidden" name="codigoExercicio" id="codigoExercicio" th:value="${codigosMarcados}">
 					</div>	
 			  	 </div> 
 			</form>
@@ -81,27 +81,27 @@
 		                   <ul class="pagination">
 	                         <li th:class="${page.isFirstPage()}? 'disabled' : ''">
 	       						<span th:if="${page.isFirstPage()}">Primeiro</span>
-	       						<a th:if="${not page.isFirstPage()}" th:href="@{${page.getUrl()}(page=0,size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}">Primeiro</a>
+	       						<a th:id="primeiro" th:if="${not page.isFirstPage()}" th:href="@{${page.getUrl()}(page=0,size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}">Primeiro</a>
 	     					 </li>
 		     					 
 							 <li th:class="${page.isHasPreviousPage()}? '' : 'disabled'">
 							    <span th:if="${not page.isHasPreviousPage()}">«</span>
-							    <a th:if="${page.isHasPreviousPage()}" th:href="@{${page.getUrl()}(page=${page.getNumber()-2},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}" title='Ir para anterior'>«</a>
+							    <a th:id="anterior" th:if="${page.isHasPreviousPage()}" th:href="@{${page.getUrl()}(page=${page.getNumber()-2},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}" title='Ir para anterior'>«</a>
 							 </li>						 
 							 
 						     <li th:each="item : ${page.getItems()}" th:class="${item.isCurrent()} ? 'active' : ''">
 						       	<span th:if='${item.isCurrent()}' th:text='${item.getNumber()}'>1</span>
-						       	<a th:if="${not item.isCurrent()}" th:href="@{${page.getUrl()}(page=${item.getNumber()-1},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}"><span th:text='${item.getNumber()}'>1</span></a>
+						       	<a th:id="atual" th:if="${not item.isCurrent()}" th:href="@{${page.getUrl()}(page=${item.getNumber()-1},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}"><span th:text='${item.getNumber()}'>1</span></a>
 						     </li>
 						     
 						     <li th:class="${page.isHasNextPage()}? '' : 'disabled'">
 						       <span th:if="${not page.isHasNextPage()}">»</span>
-						       <a th:if="${page.isHasNextPage()}" th:href='@{${page.getUrl()}(page=${page.getNumber()},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}' title='Ir para próxima'>»</a>
+						       <a th:id="proximo" th:if="${page.isHasNextPage()}" th:href='@{${page.getUrl()}(page=${page.getNumber()},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}' title='Ir para próxima'>»</a>
 						     </li>
 						      
 						     <li th:class="${page.isLastPage()}? 'disabled' : ''">
 						       <span th:if='${page.isLastPage()}'>Último</span>
-						       <a th:if="${not page.isLastPage()}" th:href="@{${page.getUrl()}(page=${page.getTotalPages()-1},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}">Último</a>
+						       <a th:id="ultimo" th:if="${not page.isLastPage()}" th:href="@{${page.getUrl()}(page=${page.getTotalPages()-1},size=${page.getSize()},codigoExercicio=${codigosMarcados},titulo=${titulo})}">Último</a>
 						     </li>
 		                   </ul>
 				    </div>
@@ -166,7 +166,27 @@ jQuery(function(){
 				}	
 				
 			}
-		});	
+		});
+		
+		$("#primeiro").on("click",function(){
+			
+		});
+		
+		$("#anterior").on("click",function(){
+			alert('anterio');
+		});
+		
+		$("#atual").on("click",function(){
+			alert('atual');
+		});
+		
+		$("#proximo").on("click",function(){
+			alert('proximo');
+		});
+		
+		$("#ultimo").on("click",function(){
+			alert('ultimo');
+		});
 		
 		$("#voltar").on("click",function(){
 				console.log("voltar");

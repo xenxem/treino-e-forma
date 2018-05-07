@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />	
+</head>
+
+<body>
+	<!-- 	
+	<h1 layout:fragment="header">
+		<small>Formulário para cadastro dos exercícios <span class="glyphicon glyphicon-pencil"></span></small>
+	</h1>
+	 -->
+	
+<div layout:fragment="content">
+	<div class="panel panel-default">
+		<div class="panel-body">			
+			
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="titulo"><span>Título</span></label>
+			      <select name="titulo" class="selectpicker form-control" id="titulo">
+			       		<option>DIA1</option>
+			       		<option>DIA2</option>
+			       		<option>DIA3</option>
+			   	  </select>
+			    </div>
+			</div>
+			<div class="form-row">
+			    <div class="form-group col-md-12">		
+					<table id="exercicioTable" class="table"  width="100%">     							       
+					       <thead>
+					            <tr>					                
+					            	<th><span></span></th>
+									<th><span>Exercício</span></th>
+									<th><span>Grupo muscular</span></th>					                
+					            </tr>
+					        </thead>							        
+					        <tfoot>
+					            <tr>
+					            	<th ><!--id--></th>
+									<th ><!--descricao--></th>            
+									<th><!--grupo muscular--></th>
+					            </tr>
+					        </tfoot>
+					</table>		
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<form name="form" th:action="@{/montar}" >
+						<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="3">
+						<button type="button" class="btn btn-info" id="voltar">← Voltar</button>				
+						<button type="button" class="btn btn-info" id="adicionar">Adicionar exercícios selecionados  <span class="glyphicon glyphicon-plus"></span></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>							
+</div><!-- ./content -->	
+
+<!-- JQuery -->	
+<div layout:fragment="scripts">
+	<script th:inline="javascript">
+		jQuery(function(){		
+			
+			var newArray = new Array();
+			var arr = new Array();
+			
+			Array.prototype.verificaParaInclusao = function(val){
+				var array = new Array();
+				array['result'] = false;
+				array['pos']= null;						
+				for (i=0; i < this.length; i++){
+					if (newArray[i] == val){						
+						array['result'] = true;
+						array['pos']=i;
+						break;						
+					}
+				}
+				return array;
+			}
+				
+			var	 table = $('#exercicioTable').DataTable({							
+					 	responsive:true,		 
+					 	pageLength:5,						 	
+					 	language:{
+					 		info:"De _START_ Ao _END_ Total registros: _TOTAL_",
+					 		lengthMenu:     "Mostrar _MENU_ registros",
+					 		search:"Pesquisar",				 		
+					 		paginate:{
+					 			previous:"Anterior",
+					 			next:"Próximo"
+					 		}
+					 	},			 	
+				        ajax:{
+				        	url:"/treinoeforma/listaExercicioXHR",
+				        	dataSrc:""	        		
+				        },
+				        columns:[
+				        		{data:"id"},
+				            	{data:"descricao"},
+				            	{data:"grupoMuscular.nome"}
+				        ],
+				        columnDefs: [{
+				           targets: 0,
+				           searchable: false,
+				           orderable: false,
+				           width: '1%',
+				           className: 'dt-body-center',
+				           render: function (data, type, full, meta){
+				        	   if (type == 'display')
+				        	   		var resp =$("#codigoExercicio").val().indexOf(data) != -1 ? 'checked':'';
+				        	   return "<a href='#' id='"+data+"'><input type='checkbox'  " + resp + "  value='"+data+"'></a>";
+				           }
+				        }]
+				});
+			
+			$("#adicionar").on("click",function(){
+					$("#form").append("#titulo");
+					console.log('ok');
+			});
+			 
+			/* Linha que foi clicada */
+			
+			$('#exercicioTable tbody').on('click','a',function () {					 
+				 									
+				
+				var item = $(this).attr("id");
+				var table = $('#exercicioTable').DataTable();
+				var id = table.row($(this).parents('tr')).data().id;
+				 		
+				if ($.trim($("#codigoExercicio").val()) === ""){
+					$("#codigoExercicio").val(id);				
+				}
+				else
+				{
+					var codigos = $("#codigoExercicio").val();
+					newArray = codigos.split(',');								
+					arr = newArray.verificaParaInclusao(id);
+					
+					if (arr['result']){					
+						newArray.splice(arr['pos'],1);
+						newArray.sort();
+						var lista = newArray.join();
+						$("#codigoExercicio").val(lista);
+						console.log($("#codigoExercicio").val());
+					}
+					else
+					{					
+						newArray.push(id);
+						newArray.sort();
+						var lista = newArray.join();
+						$("#codigoExercicio").val(lista);
+						console.log($("#codigoExercicio").val());
+						
+					}			
+				}				
+					    
+			});		
+				
+		});			
+	</script>
+</div><!-- fim div script -->
+	
+</body> 
+</html> 
+   		
