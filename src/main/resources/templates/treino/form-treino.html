@@ -15,7 +15,7 @@
 	
 <div layout:fragment="content">				
 				<form id="form" th:action="@{/montar}" method="post">
-					<div class="panel panel-default">
+					<div class="panel panel-info">
 	  						<div class="panel-heading"> <h3 >Ficha de Treino</h3> 
 	  							<button id="esconderPainel" class="btn btn-default btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Painel</button>
 	  						</div>  	
@@ -52,29 +52,30 @@
 																    
 								</div>
 							  </div>
-						  	</div>
-				</form>				
-				<div class="panel panel-default">					
-					<div class="panel-heading"> <h3>Exercicíos</h3></div>
-					<div class="panel-body">	
-						<table id="table" class="table table-striped">     							       
-							       <thead>
-							            <tr>					                
-							            	<th><span></span></th>
-											<th><span>Exercício</span></th>
-											<th><span>Grupo</span></th>					                
-							            </tr>
-							        </thead>							        
-							        <tfoot>
-							            <tr>
-							            	<th ><!--id--></th>
-											<th ><!--descricao--></th>            
-											<th><!--grupo muscular--></th>
-							            </tr>
-							        </tfoot>
-							</table>
+							 <div class="panel panel-info">
+								<div class="panel-heading"> <h3>Exercicíos</h3></div>
+									<div class="panel-body">	
+										<table id="table" class="table table-striped">     							       
+										       <thead>
+										            <tr>					                
+										            	<th><span></span></th>
+														<th><span>Exercício</span></th>
+														<th><span>Grupo</span></th>					                
+										            </tr>
+										        </thead>							        
+										        <tfoot>
+										            <tr>
+										            	<th ><!--id--></th>
+														<th ><!--descricao--></th>            
+														<th><!--grupo muscular--></th>
+										            </tr>
+										        </tfoot>
+										</table>
+									</div>	
+							</div>
 					</div>	
-				</div>	
+				</form>				
+				
 				
 </div><!-- ./content -->	
 
