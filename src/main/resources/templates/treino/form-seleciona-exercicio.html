@@ -29,12 +29,12 @@
 			</div>
 			<div class="form-row">
 			    <div class="form-group col-md-12">		
-					<table id="exercicioTable" class="table"  width="100%">     							       
+					<table id="exercicioTable" class="table table-striped"  width="100%">     							       
 					       <thead>
 					            <tr>					                
 					            	<th><span></span></th>
 									<th><span>Exercício</span></th>
-									<th><span>Grupo muscular</span></th>					                
+									<th><span>Grupo</span></th>					                
 					            </tr>
 					        </thead>							        
 					        <tfoot>
@@ -51,8 +51,8 @@
 				<div class="form-group col-md-6">
 					<form name="form" th:action="@{/montar}" >
 						<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="3">
-						<button type="button" class="btn btn-info" id="voltar">← Voltar</button>				
-						<button type="button" class="btn btn-info" id="adicionar">Adicionar exercícios selecionados  <span class="glyphicon glyphicon-plus"></span></button>
+						<button type="button" class="btn btn-default" id="voltar">← Voltar</button>				
+						<button type="button" class="btn btn-default" id="adicionar">Salvar</button>
 					</form>
 				</div>
 			</div>
@@ -64,6 +64,13 @@
 <div layout:fragment="scripts">
 	<script th:inline="javascript">
 		jQuery(function(){		
+			
+			
+			
+			$("#voltar").on("click",function(){
+				window.location.href ="/treinoeforma/montarTreino";
+			});
+			
 			
 			var newArray = new Array();
 			var arr = new Array();

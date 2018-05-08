@@ -1,6 +1,9 @@
 package br.com.treinoeforma.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -28,26 +31,57 @@ public class TreinoExercicioController {
 	private GrupoMuscularImpl grupoMuscularImpl;
 	
 	
-	@RequestMapping(method = RequestMethod.GET, path="/montar")
-	public ModelAndView montar(@RequestParam("codigoExercicio") String codigoExercicio, 
-							   @RequestParam("titulo") String titulo,							   
-							   Pageable pageable) {
-		
+	@RequestMapping(method = RequestMethod.POST, path="/montar",params="action=novo")
+	public ModelAndView salvar(HttpServletRequest request) {
+				
+		String novo = request.getParameter("novo");
+		String alterar = request.getParameter("alterar");
+		String excluir = request.getParameter("excluir");		
+		String codigoExercicio = request.getParameter("codigoExercicio");
 		
 		//List<String> lista = Arrays.asList(hidExercicio.split(","));
 		
-		PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/montar");
-		List<Exercicio> exercicios = page.getContent();
+		List<Exercicio> exercicios = this.exercicioImpl.listar();
 		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
 		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
 		mv.addObject("exercicios",exercicios);
 		mv.addObject("grupoMuscular",grupoMuscular);
 		mv.addObject("codigosMarcados",codigoExercicio);
-		//mv.addObject("lista",lista);
-		mv.addObject("page",page);
 		mv.addObject(new Exercicio());
 		return mv;
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST, path="/montar",params="action=alterar")
+	public ModelAndView alterar(HttpServletRequest request) {
+				
+		String novo = request.getParameter("novo");
+		String alterar = request.getParameter("alterar");
+		String excluir = request.getParameter("excluir");		
+		String codigoExercicio = request.getParameter("codigoExercicio");
+		
+		List<Exercicio> exercicios = this.exercicioImpl.listar();
+		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
+		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		mv.addObject("exercicios",exercicios);
+		mv.addObject("grupoMuscular",grupoMuscular);
+		mv.addObject("codigosMarcados",codigoExercicio);
+		mv.addObject(new Exercicio());
+		return mv;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/montar",params="action=excluir")
+	public ModelAndView excluir() {
+		
+		List<Exercicio> exercicios = this.exercicioImpl.listar();
+		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
+		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		mv.addObject("exercicios",exercicios);
+		mv.addObject("grupoMuscular",grupoMuscular);		
+		mv.addObject(new Exercicio());
+		return mv;
+	}
+	
 
 
 }
