@@ -29,8 +29,6 @@ public class Treino implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
 		
-	
-		
 	public Calendar getData() {
 		return data;
 	}

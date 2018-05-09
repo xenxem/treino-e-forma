@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class TituloExercicio implements Serializable {
+public class Titulo implements Serializable {
 	
 
 	private static final long serialVersionUID = 1L;

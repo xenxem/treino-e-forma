@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,17 +24,17 @@ public class TreinoExercicio implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="treino_id")
 	private Treino treino;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="exercicio_id")
 	private Exercicio exercicio;
 	
-	@ManyToOne
-	@JoinColumn(name="tituloexercicio_id")	
-	private TituloExercicio tituloExercicio;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="titulo_id")	
+	private Titulo titulo;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
@@ -75,11 +76,11 @@ public class TreinoExercicio implements Serializable {
 		this.data = data;
 	}
 		
-	public TituloExercicio getTituloExercicio() {
-		return tituloExercicio;
+	public Titulo getTitulo() {
+		return titulo;
 	}
-	public void setTituloExercicio(TituloExercicio tituloExercicio) {
-		this.tituloExercicio = tituloExercicio;
+	public void setTitulo(Titulo titulo) {
+		this.titulo = titulo;
 	}
 	
 

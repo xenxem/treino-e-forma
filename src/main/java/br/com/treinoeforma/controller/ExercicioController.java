@@ -96,8 +96,7 @@ public class ExercicioController {
 	 }
 	   
 	 @RequestMapping(method = RequestMethod.GET, path="/excluirXHR")
-	 public @ResponseBody String exclui(Long id) {
-		 System.out.println(id);
+	 public @ResponseBody String exclui(Long id) {		
 		 this.exercicioImpl.excluir(id);
 		 return "ok";
 	 }

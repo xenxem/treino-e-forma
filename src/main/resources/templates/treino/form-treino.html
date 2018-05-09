@@ -22,61 +22,56 @@
 	  						<div class="collapse.in" id="collapseExample">						
 	  							<div class="panel-body">
 	  								<div class="form-group">
-								    	<label for="treinos"><span><h3><small>Treino selecionado<small></h3></span></label>
-							      		<select name="treinos" class="selectpicker form-control btn-default" id="titulo">
-							       			<option>Treino A</option>
-							       			<option>Treino B</option>
-							       			<option>Treino C</option>
+								    	<label for="treinos"><span><h3>Meus treinos cadastrados</h3></span></label>
+							      		<select   name="treinos" class="selectpicker form-control btn-default" id="titulo">
+							       			<option th:each="treino : ${treino}" th:value="${treino.id}" th:text="${treino.descricao}">Treino A</option>
 							   	  		</select>
 							    	</div>
 		
 									<div class="form-group">
-								      <label for="descricao"><span><h3><small>Nome do treino</small></h3></span></label>
-								      <input  type="text" class="form-control" id="descricao" placeholder="Digite um nome para seu treino">
+								      <label for="descricao"><span><h3>Curtidas</h3></span></label>
+								      <input  type="text" class="form-control" id="curtidas" th:field="${treino.curtidas}" disabled="disabled">
 								    </div>
 								
 									<div class="form-group">
-								      <label for="dataInicio"><span><h3><small>Data de início</small></h3></span></label>
-								      <input  type="date" class="form-control" id="dataInicio" placeholder="Data início">
+								      <label for="dataInicio"><span><h3>Data</h3></span></label>
+								      <input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}" disabled="disabled">
 									</div>
 									
-									<div class="form-group">
-								      <label for="dataFim"><span><h3><small>Data fim</small></h3></span></label>
-								      <input type="date" class="form-control" id="dataFim" placeholder="Data fim">
-								    </div>							    
-								    
 								    <button name="action" id="excluir" class="btn btn-default" value="excluir" title="Exclui o treino atual selecionado">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></button>
 								    <button name="action" id="alterar" class="btn btn-default" value="alterar" title="Altera o treino selecionado">Alterar <span class="glyphicon glyphicon-ok"></span></button>							    
 								    <button name="action" id="novo" class="btn btn-default" value="novo" title="Inclui um novo treino">Novo <span class="glyphicon glyphicon-plus"></span></button>
+								    <button name="action" id="geraPdf" class="btn btn-default" value="geraPdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>
 									<input type="hidden" name="codigoTreino" id="codigoTreino" class="btn btn-default">
 																    
 								</div>
-							  </div>
-							 <div class="panel panel-info">
-								<div class="panel-heading"> <h3>Exercicíos</h3></div>
-									<div class="panel-body">	
-										<table id="table" class="table table-striped">     							       
-										       <thead>
-										            <tr>					                
-										            	<th><span></span></th>
-														<th><span>Exercício</span></th>
-														<th><span>Grupo</span></th>					                
-										            </tr>
-										        </thead>							        
-										        <tfoot>
-										            <tr>
-										            	<th ><!--id--></th>
-														<th ><!--descricao--></th>            
-														<th><!--grupo muscular--></th>
-										            </tr>
-										        </tfoot>
-										</table>
-									</div>	
-							</div>
+						  </div> 
 					</div>	
 				</form>				
-				
-				
+				<div class="panel panel-info">
+					<div class="panel-heading"> <h3>Exercicíos</h3></div>
+					<div class="panel-body">	
+						<table class="table table-striped" id="table"> 
+							<thead>
+				            <tr>					                
+								<th><h3><small>Descrição</small></h3></th>
+								<th><h3><small>Grupo muscular</small></h3></th>
+												                
+				            </tr>
+				        	</thead>		
+							 <tbody>				 	
+							 	<tr th:each="exercicio : ${exercicios}">			 		
+							 		<td>	
+							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+							 		</td>
+							 		<td>
+							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
+							 		</td>
+							 	</tr>
+							 </tbody> 
+						</table>
+					</div>
+				</div>
 </div><!-- ./content -->	
 
 <!-- JQuery -->	
@@ -84,6 +79,7 @@
 <script th:inline="javascript">
 jQuery(function(){	
 	
+	 
 	
 	/*
 		$("#novo").on("click",function(){

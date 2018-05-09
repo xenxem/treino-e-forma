@@ -81,8 +81,8 @@
 		   <a class="toggleMenu" href="#">Menu</a>
 			 <ul class="nav">
 			   <li class="active"><a th:href="@{/}">Home</a></li>
-			    <li sec:authorize="hasRole('PG_MONTAR_TREINO')"><a th:href="@{/montarTreino}">Montar treino</a></li>
-			    <li sec:authorize="hasRole('PG_LISTAR_TREINO')"><a th:href="@{/listarTreino}">Listar treinos</a></li>
+			    <li sec:authorize="hasRole('PG_MONTAR_TREINO')"><a th:href="@{/montarTreino}">Treinos</a></li>
+			    <!-- <li sec:authorize="hasRole('PG_LISTAR_TREINO')"><a th:href="@{/listarTreino}"></a></li> -->
 			    <li sec:authorize="hasRole('PG_LISTAR_EXERCICIO')"><a th:href="@{/listarExercicio}">Exercícios</a></li>			   
 			   	<li><a th:href="@{/contato}">Contato</a></li>
 			   <li>
@@ -99,11 +99,13 @@
 	</div>
 	<!-- end menu -->
 	
+	 <!--
 	<div class="container-fluid">
 		<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="2,3,4,5,6,8,14">
 		<div class="page-header">
   			<h3><span class="label label-default">Top treinos</span><small> Os mais acessados e mais curtidos  <span class="glyphicon glyphicon-star"> </span><span class="glyphicon glyphicon-star"> </span><span class="glyphicon glyphicon-star"> </span></small></h3>
 		</div>
+		   
 		<table id="exercicioTable" class="table table-striped"  width="100%">     							       
 		       <thead>
 		            <tr>					                
@@ -115,21 +117,21 @@
 		        </thead>							        
 		        <tfoot>
 		            <tr>
-		            	<th ><!--id--></th>
-						<th ><!--descricao--></th>            
-						<th><!--grupo muscular--></th>
-						<th><!--curtidas--></th>						
+		            	<th >id</th>
+						<th >descricao</th>            
+						<th>grupo muscular</th>
+						<th>curtidas</th>						
 		            </tr>
 		        </tfoot>
 		</table>		
 	</div>	
-	
+	-->
 	 	
-	 	<!--  			
+	  			
 	    <div class="map">
 			<iframe width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=United+Kingdom&amp;aq=0&amp;oq=un&amp;sll=37.0625,-95.677068&amp;sspn=48.956293,107.138672&amp;ie=UTF8&amp;hq=&amp;hnear=United+Kingdom&amp;ll=55.378051,-3.435973&amp;spn=135.795411,68.554687&amp;t=m&amp;z=2&amp;output=embed"> </iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=United+Kingdom&amp;aq=0&amp;oq=un&amp;sll=37.0625,-95.677068&amp;sspn=48.956293,107.138672&amp;ie=UTF8&amp;hq=&amp;hnear=United+Kingdom&amp;ll=55.378051,-3.435973&amp;spn=135.795411,68.554687&amp;t=m&amp;z=2" style="color:#666;font-size:12px;text-align:left"> </a></small>			
 		</div>
-		 -->
+		
 		
 		 <div class="footer-bottom">
 		   <div class="container">

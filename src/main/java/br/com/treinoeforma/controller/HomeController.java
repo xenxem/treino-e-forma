@@ -24,7 +24,7 @@ public class HomeController {
 	
 	@RequestMapping("/contato")
 	public String contato() {
-		return "redirect:contato";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/logout")
@@ -34,7 +34,7 @@ public class HomeController {
 	
 	@RequestMapping("/registro")
 	public String registro() {
-		return "registro";
+		return "redirect:/";
 	}
 
 }
