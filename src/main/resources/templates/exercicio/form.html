@@ -62,10 +62,10 @@
 		</div>		
 		
 		
-		<div class="panel panel-default">					
-			<div class="panel-body">			
-			
-				<h1><small>Exercícios</small></h1>
+		<div class="panel panel-info">
+			<div class="panel-heading"><h4>Exercicíos</h4></div>					
+			<br>
+			<div class="panel-body">				
 				 <div class="input-group">
 				 	<span class="input-group-btn">
 		       		 	<button class="btn btn-default btn-info" type="button" id="limpar">Limpar</button>
@@ -75,8 +75,6 @@
 		       		 	<button class="btn btn-default btn-info" type="button" id="novo">Novo</button>
 		     		</span>		     				
 		   		</div>
-				<br/>
-				
 					 				
 				<table class="table table-striped" id="table"> 
 					<thead>
@@ -95,8 +93,8 @@
 					 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
 					 		</td>
 					 		<td class="text-center">							 										 			
-								<a th:href="@{/excluir/{id}(id=${exercicio.id})}" class="btn btn-info btn-xs" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
-								<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="btn btn-info btn-xs edita" role="button" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>								
+								<a th:href="@{/excluir/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
+								<a th:href="@{/editar/{id}(id=${exercicio.id})}"  th:id="${exercicio.id}" class="btn btn-info btn-xs edita" role="button" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>								
 					 		</td>						 		
 					 	</tr>
 					 </tbody> 
@@ -145,29 +143,32 @@
 			
 			//var header = $("meta[name='_csrf_header']").attr("content");
 			
-						
-				$(".edita").on("click",function(event){				
-					$.ajax({
-						url:'/treinoeforma/editarXHR',
-						data:{"id":$(this).attr("id")},
-						type:'get',
-						dataType:'json',
-						success:function(data){						
-							//$.each(data,function(chave,valor){							
-								$("#id").val(data['id']);
-								$("#descricao").val(data['descricao']);
-								$("#grupoMuscular").find("option").each(function(i,obj){
-									if (data['grupoMuscular'].id === i)
-											obj.selected = true;
-								});							
-								mudaTituloModal('Alterar exercício');
-								$("#myModal").modal("show");
-							//});
-						}
-					});
+				
+			/**  alterando um item */
+			
+			  $(".edita").on("click",function(event){				
+				 $.ajax({
+					url:'/treinoeforma/editarXHR',
+					data:{"id":$(this).attr("id")},
+					type:'get',
+					dataType:'json',
+					success:function(data){						
+						//$.each(data,function(chave,valor){							
+							$("#id").val(data['id']);
+							$("#descricao").val(data['descricao']);
+							$("#grupoMuscular").find("option").each(function(i,obj){
+								if (data['grupoMuscular'].id === i)
+										obj.selected = true;
+							});							
+							mudaTituloModal('Alterar exercício');
+							$("#myModal").modal("show");
+						//});
+					}
+				});
 					event.preventDefault();
 				});
 				
+				/** novo item */
 				
 				$("#novo").on("click",function(){
 					$("#id").val("");
@@ -176,7 +177,8 @@
 					$("#myModal").modal("show");				
 				});
 				
-				    
+				/** Campo de busca */
+				
 			    $("#search").autocomplete({
 			        minLength: 3,
 			        delay: 500,			        
@@ -207,7 +209,38 @@
 			        }
 			    });
 			    
+			    /** Excluindo uma linha */
 			    
+			    $("#table tbody tr").on('click','a',function(event) {
+			    	console.log($(this).attr("id"));
+			    	console.log($(this).closest('tr').remove());
+			    	$.confirm({
+					    title: 'Atenção!',
+					    content: 'Deseja realmente excluir este item?',
+					    autoClose:'Não|10000',		
+					    buttons: {
+					        Sim: function () {	
+					        	/*
+					        	$.ajax({
+									url:'/gestao-academia/excluirAjax',
+									data:{"id":exercicioCodigo},
+									type:'post',
+									dataType:'html',
+									success:function(data){
+										table.row(linha.parents('tr')).remove().draw();
+										//$.alert('Dados excluídos com sucesso!');
+									}
+								});
+					        	*/
+					        },
+					        Não: function () {
+					            //$.alert('Operação cancelada!');
+					        }
+					    }
+					});
+			    	event.preventDefault();
+			    });
+			    			    
 			    /* Limpando autoclompete */
 			    
 			    $("#limpar").on("click",function(){
@@ -219,7 +252,6 @@
 			    function mudaTituloModal(title){
 			    	$(".modal-title").text(title);
 			    }
-			    
 		});	
 </script>
 </div><!-- fim div script -->
