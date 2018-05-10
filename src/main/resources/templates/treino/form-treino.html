@@ -16,32 +16,34 @@
 <div layout:fragment="content">				
 				<form id="form" th:action="@{/montar}" method="post">
 					<div class="panel panel-info">
-	  						<div class="panel-heading"> <h3 >Ficha de Treino</h3> 
-	  							<button id="esconderPainel" class="btn btn-default btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Painel</button>
+	  						<div class="panel-heading"> <h4>Ficha de Treino</h4> 
+	  							<button id="esconderPainel" class="btn btn-default btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Esconder painel</button>
 	  						</div>  	
 	  						<div class="collapse.in" id="collapseExample">						
 	  							<div class="panel-body">
 	  								<div class="form-group">
-								    	<label for="treinos"><span><h3>Meus treinos cadastrados</h3></span></label>
+								    	<label for="treinos"><span><h4>Meus treinos cadastrados</h4></span></label>
 							      		<select   name="treinos" class="selectpicker form-control btn-default" id="titulo">
 							       			<option th:each="treino : ${treino}" th:value="${treino.id}" th:text="${treino.descricao}">Treino A</option>
 							   	  		</select>
 							    	</div>
-		
+									
+									<!--	
 									<div class="form-group">
 								      <label for="descricao"><span><h3>Curtidas</h3></span></label>
 								      <input  type="text" class="form-control" id="curtidas" th:field="${treino.curtidas}" disabled="disabled">
 								    </div>
+								    -->
 								
 									<div class="form-group">
-								      <label for="dataInicio"><span><h3>Data</h3></span></label>
+								      <label for="dataInicio"><span><h4>Data</h4></span></label>
 								      <input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}" disabled="disabled">
 									</div>
 									
-								    <button name="action" id="excluir" class="btn btn-default" value="excluir" title="Exclui o treino atual selecionado">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></button>
-								    <button name="action" id="alterar" class="btn btn-default" value="alterar" title="Altera o treino selecionado">Alterar <span class="glyphicon glyphicon-ok"></span></button>							    
-								    <button name="action" id="novo" class="btn btn-default" value="novo" title="Inclui um novo treino">Novo <span class="glyphicon glyphicon-plus"></span></button>
-								    <button name="action" id="geraPdf" class="btn btn-default" value="geraPdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>
+								    <button name="action" id="excluir" class="btn btn-default btn-sm" value="excluir" title="Exclui o treino atual selecionado">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></button>
+								    <button name="action" id="alterar" class="btn btn-default btn-sm" value="alterar" title="Altera o treino selecionado">Alterar <span class="glyphicon glyphicon-ok"></span></button>							    
+								    <button name="action" id="novo" class="btn btn-default btn-sm" value="novo" title="Inclui um novo treino">Novo <span class="glyphicon glyphicon-plus"></span></button>
+								    <button name="action" id="geraPdf" class="btn btn-default btn-sm" value="geraPdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>
 									<input type="hidden" name="codigoTreino" id="codigoTreino" class="btn btn-default">
 																    
 								</div>
@@ -49,8 +51,19 @@
 					</div>	
 				</form>				
 				<div class="panel panel-info">
-					<div class="panel-heading"> <h3>Exercicíos</h3></div>
-					<div class="panel-body">	
+					<div class="panel-heading"> <h4>Exercicíos</h4></div>
+					<div class="panel-body">
+						<div class="form-group">
+					    	<label for="treinos"><span><h4>Título do bloco</h4></span></label>
+				      		<select   name="treinos" class="selectpicker form-control btn-default" id="titulo">
+				       			<option>DIA1</option>
+				       			<option>DIA2</option>
+				       			<option>DIA3</option>
+				       			<option>A</option>
+				       			<option>B</option>
+				       			<option>C</option>
+				   	  		</select>
+				    	</div>	
 						<table class="table table-striped" id="table"> 
 							<thead>
 				            <tr>					                
@@ -79,7 +92,14 @@
 <script th:inline="javascript">
 jQuery(function(){	
 	
-	 
+	
+	$('#collapseExample').on('hidden.bs.collapse', function () {
+		 $("#esconderPainel").text("Mostrar painel");
+	});
+	
+	$('#collapseExample').on('show.bs.collapse', function () {
+		$("#esconderPainel").text("Esconder painel");
+	});
 	
 	/*
 		$("#novo").on("click",function(){

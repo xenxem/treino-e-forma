@@ -17,13 +17,13 @@
 	
 	<div class="panel panel-default">
 		<div class="panel panel-info">
-			<div class="panel-heading"> <h3 >Exercícios</h3></div>
+			<div class="panel-heading"> <h4>Exercícios</h4></div>
 		</div>
 		<div class="panel-body">
 			<div class="form-row">
 			    <div class="form-group col-md-6">
-			      <label for="titulo"><span>Título</span></label>
-			      <select name="titulo" class="selectpicker form-control" id="titulo">
+			      <label for="titulo"><span><h4>Título do bloco</h4></span></label>
+			      <select name="titulo" class="selectpicker form-control btn-default" id="titulo">
 			       		<option>DIA1</option>
 			       		<option>DIA2</option>
 			       		<option>DIA3</option>
@@ -36,8 +36,8 @@
 					       <thead>
 					            <tr>					                
 					            	<th><span></span></th>
-									<th><span>Exercício</span></th>
-									<th><span>Grupo</span></th>					                
+									<th><span><h5>Exercício</h5></span></th>
+									<th><span><h5>Grupo</h5></span></th>					                
 					            </tr>
 					        </thead>							        
 					        <tfoot>
@@ -54,8 +54,8 @@
 				<div class="form-group col-md-6">
 					<form name="form" th:action="@{/montar}" >
 						<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="3">
-						<button type="button" class="btn btn-default" id="voltar">← Voltar</button>				
-						<button type="button" class="btn btn-default" id="adicionar">Salvar</button>
+						<button type="button" class="btn btn-default btn-sm" id="voltar">← Voltar</button>				
+						<button type="button" class="btn btn-default btn-sm" id="adicionar">Salvar</button>
 					</form>
 				</div>
 			</div>
@@ -97,7 +97,7 @@
 					 	pageLength:5,						 	
 					 	language:{
 					 		info:"De _START_ Ao _END_ Total registros: _TOTAL_",
-					 		lengthMenu:     "Mostrar _MENU_ registros",
+					 		lengthMenu:     "Mostrar _MENU_ linhas abaixo",
 					 		search:"Pesquisar",				 		
 					 		paginate:{
 					 			previous:"Anterior",
