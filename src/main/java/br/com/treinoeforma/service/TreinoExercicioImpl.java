@@ -27,10 +27,10 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		
 	}
 
-	@Override
-	public List<TreinoExercicio> listar() {
-		return this.treinoExercicioRepository.findAll();
-	}
+	
+	public List<TreinoExercicio> listarTreinoExercicioAgrupado() {
+		return this.treinoExercicioRepository.listarTreinoExercicioAgrupado();
+	}	
 
 	@Override
 	public TreinoExercicio buscar(Long id) {
@@ -40,6 +40,16 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 
 	@Override
 	public Page<TreinoExercicio> buscarPaginando(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<TreinoExercicio> listaTituloAgrupado(){
+		return this.treinoExercicioRepository.listarTituloAgrupado();
+	}
+
+	@Override
+	public List<TreinoExercicio> listar() {
 		// TODO Auto-generated method stub
 		return null;
 	}

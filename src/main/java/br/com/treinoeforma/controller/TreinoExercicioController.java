@@ -71,7 +71,18 @@ public class TreinoExercicioController {
 		mv.addObject(new Exercicio());
 		return mv;
 	}
-	
+
+	@RequestMapping(method = RequestMethod.POST, path="/montar",params="action=pdf")
+	public ModelAndView pdf() {
+		
+		List<Exercicio> exercicios = this.exercicioImpl.listar();
+		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
+		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		mv.addObject("exercicios",exercicios);
+		mv.addObject("grupoMuscular",grupoMuscular);		
+		mv.addObject(new Exercicio());
+		return mv;
+	}
 
 
 }

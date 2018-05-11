@@ -181,7 +181,7 @@
 				
 			    $("#search").autocomplete({
 			        minLength: 3,
-			        delay: 500,			        
+			        delay: 300,			        
 			        source: function (request, response) {
 			            $.ajax({
 			            	url:'/treinoeforma/listaExercicioXHRAutoComplete',
@@ -209,37 +209,40 @@
 			        }
 			    });
 			    
-			    /** Excluindo uma linha */
-			    
+			    /** Excluindo uma linha */			    	
+			    	
 			    $("#table tbody tr").on('click','a',function(event) {
-			    	console.log($(this).attr("id"));
-			    	console.log($(this).closest('tr').remove());
-			    	$.confirm({
-					    title: 'Atenção!',
-					    content: 'Deseja realmente excluir este item?',
-					    autoClose:'Não|10000',		
-					    buttons: {
-					        Sim: function () {	
-					        	/*
-					        	$.ajax({
-									url:'/gestao-academia/excluirAjax',
-									data:{"id":exercicioCodigo},
-									type:'post',
-									dataType:'html',
-									success:function(data){
-										table.row(linha.parents('tr')).remove().draw();
-										//$.alert('Dados excluídos com sucesso!');
-									}
-								});
-					        	*/
-					        },
-					        Não: function () {
-					            //$.alert('Operação cancelada!');
-					        }
-					    }
-					});
-			    	event.preventDefault();
-			    });
+				      if ($(this).attr('class').indexOf('exclui') != -1){	
+			    		console.log($(this).attr("id"));
+			    		console.log($(this).closest('tr').remove());	
+			    		$.confirm({
+						    title: 'Atenção!',
+						    content: 'Deseja realmente excluir este item?',
+						    autoClose:'Não|10000',		
+						    buttons: {
+						        Sim: function () {	
+						        	/*
+						        	$.ajax({
+										url:'/gestao-academia/excluirAjax',
+										data:{"id":exercicioCodigo},
+										type:'post',
+										dataType:'html',
+										success:function(data){
+											table.row(linha.parents('tr')).remove().draw();
+											//$.alert('Dados excluídos com sucesso!');
+										}
+									});
+						        	*/
+						        },
+						        Não: function () {
+						            //$.alert('Operação cancelada!');
+						        }
+						    }
+						});
+				    	event.preventDefault();
+				      }
+				 });
+			    
 			    			    
 			    /* Limpando autoclompete */
 			    

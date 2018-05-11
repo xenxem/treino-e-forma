@@ -17,21 +17,34 @@
 	
 	<div class="panel panel-default">
 		<div class="panel panel-info">
-			<div class="panel-heading"> <h4>Exercícios</h4></div>
+			<div class="panel-heading"> <h4>Dados do treino</h4></div>
 		</div>
 		<div class="panel-body">
-			<div class="form-row">
-			    <div class="form-group col-md-6">
+			
+				<div class="form-group">
+			      <label for="titulo"><span><h4>Nome do treino</h4></span></label>
+			      <input type="text" class="form-control" name="descricao" id="descricao"> 	
+			    </div>
+			    <div class="form-group">
+			      <label for="titulo"><span><h4>data</h4></span></label>
+			      <input type="date" class="form-control" name="data" id="data"> 	
+			    </div>
+			    <div class="form-group">
 			      <label for="titulo"><span><h4>Título do bloco</h4></span></label>
-			      <select name="titulo" class="selectpicker form-control btn-default" id="titulo">
+			      <select name="titulo" class="selectpicker form-control" id="titulo">
 			       		<option>DIA1</option>
 			       		<option>DIA2</option>
 			       		<option>DIA3</option>
 			   	  </select>
 			    </div>
-			</div>
-			<div class="form-row">
-			    <div class="form-group col-md-12">		
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel panel-info">
+			<div class="panel-heading"> <h4>Exercícios</h4></div>
+		</div>
+		<div class="panel-body">		
+			    <div class="form-group">		
 					<table id="exercicioTable" class="table table-striped"  width="100%">     							       
 					       <thead>
 					            <tr>					                
@@ -48,18 +61,14 @@
 					            </tr>
 					        </tfoot>
 					</table>		
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<form name="form" th:action="@{/montar}" >
+				</div>				<div class="form-group col-md-6">
+					<form name="form" th:action="@{/treinos}" >
 						<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="3">
 						<button type="button" class="btn btn-default btn-sm" id="voltar">← Voltar</button>				
 						<button type="button" class="btn btn-default btn-sm" id="adicionar">Salvar</button>
 					</form>
 				</div>
 			</div>
-		</div>
 	</div>							
 </div><!-- ./content -->	
 
@@ -71,7 +80,7 @@
 			
 			
 			$("#voltar").on("click",function(){
-				window.location.href ="/treinoeforma/montarTreino";
+				window.location.href ="/treinoeforma/treinos";
 			});
 			
 			

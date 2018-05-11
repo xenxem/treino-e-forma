@@ -15,7 +15,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http  
 			.authorizeRequests()		/* Configurando a segurança das requisições	*/				
 				.antMatchers("/home").permitAll()
-				.antMatchers("/treinoeforma/montarTreino").hasAnyRole("ROLE_PG_MONTAR_TREINO")
+				.antMatchers("/treinoeforma/treinos").hasAnyRole("ROLE_PG_MONTAR_TREINO")
 				.antMatchers("/treinoeforma/listarTreino").hasAnyRole("ROLE_PG_LISTAR_TREINO")
 				.antMatchers("/treinoeforma/listarExercicio").hasAnyRole("ROLE_PG_LISTAR_EXERCICIO")				
 				.anyRequest()			/* Qualquer requisição */

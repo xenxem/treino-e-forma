@@ -22,10 +22,11 @@
 	  						<div class="collapse.in" id="collapseExample">						
 	  							<div class="panel-body">
 	  								<div class="form-group">
-								    	<label for="treinos"><span><h4>Meus treinos cadastrados</h4></span></label>
-							      		<select   name="treinos" class="selectpicker form-control btn-default" id="titulo">
-							       			<option th:each="treino : ${treino}" th:value="${treino.id}" th:text="${treino.descricao}">Treino A</option>
+								    	<label for="treinos"><span><h4>Treinos cadastrados <span th:text="${listaTe.size()}" class="badge"></span></h4></span></label>
+							      		<select  id="treinos" class="selectpicker form-control btn-default">
+							       			<option  th:each="treino,obj : ${listaTe}" th:value="${treino.id}" th:text="${listaTe[obj.index].treino.descricao}">Treino A</option>
 							   	  		</select>
+							   	  		
 							    	</div>
 									
 									<!--	
@@ -43,7 +44,7 @@
 								    <button name="action" id="excluir" class="btn btn-default btn-sm" value="excluir" title="Exclui o treino atual selecionado">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></button>
 								    <button name="action" id="alterar" class="btn btn-default btn-sm" value="alterar" title="Altera o treino selecionado">Alterar <span class="glyphicon glyphicon-ok"></span></button>							    
 								    <button name="action" id="novo" class="btn btn-default btn-sm" value="novo" title="Inclui um novo treino">Novo <span class="glyphicon glyphicon-plus"></span></button>
-								    <button name="action" id="geraPdf" class="btn btn-default btn-sm" value="geraPdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>
+								    <button name="action" id="pdf" class="btn btn-default btn-sm" value="pdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>
 									<input type="hidden" name="codigoTreino" id="codigoTreino" class="btn btn-default">
 																    
 								</div>
@@ -54,14 +55,10 @@
 					<div class="panel-heading"> <h4>Exercicíos</h4></div>
 					<div class="panel-body">
 						<div class="form-group">
-					    	<label for="treinos"><span><h4>Título do bloco</h4></span></label>
-				      		<select   name="treinos" class="selectpicker form-control btn-default" id="titulo">
-				       			<option>DIA1</option>
-				       			<option>DIA2</option>
-				       			<option>DIA3</option>
-				       			<option>A</option>
-				       			<option>B</option>
-				       			<option>C</option>
+					    	<label for="treinos"><span><h4>Bloco de exercícios</h4></span></label>
+				      		<select   name="titulos" class="selectpicker form-control btn-default" id="titulo">
+				       			<option th:each="te,obj : ${listaTeTitulos}" th:value="${listaTeTitulos[obj.index].titulo.id}" th:text="${listaTeTitulos[obj.index].titulo.descricao}" ></option>
+				       			
 				   	  		</select>
 				    	</div>	
 						<table class="table table-striped" id="table"> 
@@ -72,13 +69,14 @@
 												                
 				            </tr>
 				        	</thead>		
-							 <tbody>				 	
-							 	<tr th:each="exercicio : ${exercicios}">			 		
+							 <tbody>
+							 	<tr><td colspan="2" align="center">DIA1</td></tr>				 	
+							 	<tr th:each="te,obj : ${listaTe}">			 		
 							 		<td>	
-							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+							 			<a th:href="@{/editar/{id}(id=${listaTe[obj.index].exercicio.id})}" th:id="${listaTe[obj.index].exercicio.id}" class="edita"><span th:text="${listaTe[obj.index].exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
 							 		</td>
 							 		<td>
-							 			<a th:href="@{/editar/{id}(id=${exercicio.id})}" th:id="${exercicio.id}" class="edita"><span th:text="${exercicio.grupoMuscular.nome}">grupo muscular</span></a>
+							 			<a th:href="@{/editar/{id}(id=${listaTe[obj.index].exercicio.id})}" th:id="${listaTe[obj.index].exercicio.id}" class="edita"><span th:text="${listaTe[obj.index].exercicio.grupoMuscular.nome}">grupo muscular</span></a>
 							 		</td>
 							 	</tr>
 							 </tbody> 
@@ -97,7 +95,7 @@ jQuery(function(){
 		 $("#esconderPainel").text("Mostrar painel");
 	});
 	
-	$('#collapseExample').on('show.bs.collapse', function () {
+	$('#collapseExample').on('shown.bs.collapse', function () {
 		$("#esconderPainel").text("Esconder painel");
 	});
 	

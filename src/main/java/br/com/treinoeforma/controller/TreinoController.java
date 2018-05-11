@@ -33,27 +33,33 @@ public class TreinoController {
 	private TreinoImpl treinoImpl;
 	
 
-	@RequestMapping(method = RequestMethod.GET, path = "/montarTreino")
-	public ModelAndView montarTreino() {		
+	@RequestMapping(method = RequestMethod.GET, path = "/treinos")
+	public ModelAndView treinos() {		
 		 
-		 List<Titulo> titulos = this.tituloImpl.listar();
-		 List<TreinoExercicio> treinoExercicio = this.treinoExercicioImpl.listar();
+
+		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado();
+		 List<TreinoExercicio> listaTeTitulos = this.treinoExercicioImpl.listaTituloAgrupado();
+		 
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		 
 		 ModelAndView mv = new ModelAndView("treino/form-treino");
-		 Treino treino = treinoExercicio.get(0).getTreino();
-		 mv.addObject("treinoExercicio",treinoExercicio);
-		 mv.addObject("titulos",titulos);		 
+		
+		 //Query está trazendo último objeto cadastrado
+		 Treino treino = listaTe.get(0).getTreino();
+		 
+		 mv.addObject("listaTe",listaTe);
+		 mv.addObject("listaTeTitulos",listaTeTitulos);		 
 		 mv.addObject("treino",treino);		 		 
 		 mv.addObject("data",df.format(treino.getData().getTime()));
 		 		 
-		List<Exercicio> exercicios = new ArrayList<Exercicio>();
-		for (Iterator<TreinoExercicio> iterator = treinoExercicio.iterator(); iterator.hasNext();) {
-			TreinoExercicio t =  iterator.next(); 
+		//List<Exercicio> exercicios = new ArrayList<Exercicio>();
+		/*
+		for (Iterator<TreinoExercicio> iterator = listaTe.iterator(); iterator.hasNext();) {
+			TreinoExercicio t =  iterator.next();			
 			exercicios.add(t.getExercicio());
-		}		
+		}				
 		mv.addObject("exercicios",exercicios);
-		 return mv;
+		*/
+		return mv;
 	}
 	
 	@RequestMapping("/listarTreino")
