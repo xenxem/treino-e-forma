@@ -14,17 +14,17 @@
 	 -->
 	
 <div layout:fragment="content">				
-				<form id="form" th:action="@{/montar}" method="post">
+				<form id="form" th:action="@{/montar}">
 					<div class="panel panel-info">
 	  						<div class="panel-heading"> <h4>Ficha de Treino</h4> 
-	  							<button id="esconderPainel" class="btn btn-default btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Esconder painel</button>
+	  							<button id="esconderPainel" class="btn btn-info btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Esconder painel</button>
 	  						</div>  	
 	  						<div class="collapse.in" id="collapseExample">						
 	  							<div class="panel-body">
 	  								<div class="form-group">
-								    	<label for="treinos"><span><h4>Treinos cadastrados <span th:text="${listaTe.size()}" class="badge"></span></h4></span></label>
-							      		<select  id="treinos" class="selectpicker form-control btn-default">
-							       			<option  th:each="treino,obj : ${listaTe}" th:value="${treino.id}" th:text="${listaTe[obj.index].treino.descricao}">Treino A</option>
+								    	<label for="treinos"><span><h4>Treinos cadastrados <span th:text="${listaTe.size()}" class="badge"></span></h4></span></label>								    	
+							      		<select  id="treinos" class="selectpicker form-control btn-default">							      		    
+							       			<option  th:each="treinoExercicio,obj : ${listaTe}" th:selected="${treinoExercicio.treino.id==treino.id}" th:value="${treinoExercicio.treino.id}" th:text="${listaTe[obj.index].treino.descricao}">Treino A</option>
 							   	  		</select>
 							   	  		
 							    	</div>
@@ -41,23 +41,33 @@
 								      <input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}" disabled="disabled">
 									</div>
 									
+								    <input type="hidden" name="codigoTreino" id="codigoTreino">
+									<input type="hidden" name="codigoTitulo" id="codigoTitulo">									
+									<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+									
+									
+									<a class="btn btn-info btn-sm" th:href="@{/excluir}" role="button">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/alterar}" role="button">Alterar <span class="glyphicon glyphicon-ok"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button">Novo <span class="glyphicon glyphicon-plus"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/pdf}" role="button">pdf <span class="glyphicon glyphicon-save"></span></a>
+									
+									<!--
 								    <button name="action" id="excluir" class="btn btn-default btn-sm" value="excluir" title="Exclui o treino atual selecionado">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></button>
 								    <button name="action" id="alterar" class="btn btn-default btn-sm" value="alterar" title="Altera o treino selecionado">Alterar <span class="glyphicon glyphicon-ok"></span></button>							    
 								    <button name="action" id="novo" class="btn btn-default btn-sm" value="novo" title="Inclui um novo treino">Novo <span class="glyphicon glyphicon-plus"></span></button>
-								    <button name="action" id="pdf" class="btn btn-default btn-sm" value="pdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>
-									<input type="hidden" name="codigoTreino" id="codigoTreino" class="btn btn-default">
-																    
-								</div>
+								    <button name="action" id="pdf" class="btn btn-default btn-sm" value="pdf" title="Gerar arquivo em pdf">pdf <span class="glyphicon glyphicon-save"></span></button>								</div>
+								    -->
+								    
 						  </div> 
 					</div>	
-				</form>				
-				<div class="panel panel-info">
+								
+				
 					<div class="panel-heading"> <h4>Exercicíos</h4></div>
 					<div class="panel-body">
 						<div class="form-group">
 					    	<label for="treinos"><span><h4>Bloco de exercícios</h4></span></label>
-				      		<select   name="titulos" class="selectpicker form-control btn-default" id="titulo">
-				       			<option th:each="te,obj : ${listaTeTitulos}" th:value="${listaTeTitulos[obj.index].titulo.id}" th:text="${listaTeTitulos[obj.index].titulo.descricao}" ></option>
+				      		<select   name="titulos" class="selectpicker form-control btn-default" id="titulos">
+				       			<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>
 				       			
 				   	  		</select>
 				    	</div>	
@@ -70,19 +80,20 @@
 				            </tr>
 				        	</thead>		
 							 <tbody>
-							 	<tr><td colspan="2" align="center">DIA1</td></tr>				 	
-							 	<tr th:each="te,obj : ${listaTe}">			 		
+							 	<tr><td colspan="2" align="center" th:text="${titulo.descricao}">DIA1</td></tr>				 	
+							 	<tr th:each="e : ${listaExercicios}">			 		
 							 		<td>	
-							 			<a th:href="@{/editar/{id}(id=${listaTe[obj.index].exercicio.id})}" th:id="${listaTe[obj.index].exercicio.id}" class="edita"><span th:text="${listaTe[obj.index].exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+							 			<a th:href="@{/editar/{id}(id=${e.id})}" th:id="${e.id}" class="edita"><span th:text="${e.descricao}">Supino reto 4x10 + Cross over RM</span></a>
 							 		</td>
 							 		<td>
-							 			<a th:href="@{/editar/{id}(id=${listaTe[obj.index].exercicio.id})}" th:id="${listaTe[obj.index].exercicio.id}" class="edita"><span th:text="${listaTe[obj.index].exercicio.grupoMuscular.nome}">grupo muscular</span></a>
+							 			<a th:href="@{/editar/{id}(id=${e.id})}" th:id="${e.id}" class="edita"><span th:text="${e.grupoMuscular.nome}">grupo muscular</span></a>
 							 		</td>
 							 	</tr>
 							 </tbody> 
 						</table>
 					</div>
 				</div>
+		</form>
 </div><!-- ./content -->	
 
 <!-- JQuery -->	
@@ -90,14 +101,21 @@
 <script th:inline="javascript">
 jQuery(function(){	
 	
+	$("#treinos").on("change",function(){
+		$("#codigoTreino").val($(this).val());
+		$("#codigoTitulo").val("");		
+		$("#form").submit();
+	});	
 	
-	$('#collapseExample').on('hidden.bs.collapse', function () {
-		 $("#esconderPainel").text("Mostrar painel");
-	});
+	$("#titulos").on("change",function(){
+		$("#codigoTitulo").val($(this).val());
+		$("#codigoTreino").val($("#treinos").val());		
+		$("#form").submit();
+	});	
 	
-	$('#collapseExample').on('shown.bs.collapse', function () {
-		$("#esconderPainel").text("Esconder painel");
-	});
+	
+	$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
+	$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
 	
 	/*
 		$("#novo").on("click",function(){

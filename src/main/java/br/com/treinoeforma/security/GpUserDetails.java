@@ -10,14 +10,19 @@ public class GpUserDetails implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	private String nome;
 	private String login;
 	private String senha;
 	private boolean ativo;
 	private Collection<GrantedAuthority> permissoes = new ArrayList<>();
 	
-	public GpUserDetails(String nome, String login, 
+	
+	
+	public GpUserDetails(Long id, String nome, String login, 
 			String senha, boolean ativo) {
+		
+		this.id = id;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
@@ -26,6 +31,12 @@ public class GpUserDetails implements UserDetails {
 
 	public String getNome() {
 		return nome;
+	}
+	
+	
+
+	public Long getId() {
+		return id;
 	}
 
 	@Override

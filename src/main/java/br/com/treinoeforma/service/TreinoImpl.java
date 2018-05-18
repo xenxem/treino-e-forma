@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.Treino;
+import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.repository.TreinoRepository;
 
 @Service
@@ -44,5 +45,10 @@ public class TreinoImpl implements Crud<Treino> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public Long buscaUltimo(Long codigoUsario) {
+		return this.treinoRepository.buscaUltimo(codigoUsario);
+	}
+	
+	
 }

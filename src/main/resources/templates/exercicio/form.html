@@ -241,20 +241,13 @@
 						});
 				    	event.preventDefault();
 				      }
-				 });
-			    
+				 });			    
 			    			    
-			    /* Limpando autoclompete */
+			    /* Limpando autoclompete */			    
+			    $("#limpar").on("click",function(){$("#search").val("");});
 			    
-			    $("#limpar").on("click",function(){
-			    	$("#search").val("");
-			    });
-			    
-			    /* Alterando título do modal */
-			    
-			    function mudaTituloModal(title){
-			    	$(".modal-title").text(title);
-			    }
+			    /* Alterando título do modal */			    
+			    function mudaTituloModal(title){$(".modal-title").text(title);}
 		});	
 </script>
 </div><!-- fim div script -->

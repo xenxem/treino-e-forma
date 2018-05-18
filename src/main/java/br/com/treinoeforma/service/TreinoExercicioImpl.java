@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.TreinoExercicio;
+import br.com.treinoeforma.model.TreinoExercicioValuesObject;
 import br.com.treinoeforma.repository.TreinoExercicioRepository;
 
 @Service
@@ -28,14 +29,13 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 	}
 
 	
-	public List<TreinoExercicio> listarTreinoExercicioAgrupado() {
-		return this.treinoExercicioRepository.listarTreinoExercicioAgrupado();
+	public List<TreinoExercicio> listarTreinoExercicioAgrupado(Long codigoUsuario) {
+		return this.treinoExercicioRepository.listarTreinoExercicioAgrupado(codigoUsuario);
 	}	
 
 	@Override
-	public TreinoExercicio buscar(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public TreinoExercicio buscar(Long id) {		
+		return this.treinoExercicioRepository.findOne(id);
 	}
 
 	@Override
@@ -53,7 +53,13 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
+	public List<TreinoExercicio> bucaTreinoPorCodigo(Long codigo,Long codigoUsuario){
+		return this.treinoExercicioRepository.buscaTreinoPorCodigo(codigo,codigoUsuario);
+	}
 	
+	public List<TreinoExercicioValuesObject> buscaUltimoTituloTreino(Long codigoTreino){
+		return this.treinoExercicioRepository.buscaUltimoTituloTreino(codigoTreino);
+	}
+			
 }

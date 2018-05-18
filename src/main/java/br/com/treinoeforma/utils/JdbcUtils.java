@@ -2,7 +2,7 @@ package br.com.treinoeforma.utils;
 
 public class JdbcUtils {
 	
-	public static final String USUARIO_POR_LOGIN = "SELECT login, senha, ativo, nome FROM usuario"
+	public static final String USUARIO_POR_LOGIN = "SELECT id, login, senha, ativo, nome FROM usuario"
 			+ " WHERE login = ?";
 	
 	public static final String PERMISSOES_POR_USUARIO = "SELECT u.login, p.nome as nome_permissao FROM usuario_permissao up"

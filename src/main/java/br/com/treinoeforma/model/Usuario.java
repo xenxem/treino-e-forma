@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -26,8 +25,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private Boolean ativo;
 	
-	@OneToMany
-	@JoinColumn(name="usuario_id")
+	@OneToMany(mappedBy="usuario")	
 	private List<Treino> treinos;
 		
 	

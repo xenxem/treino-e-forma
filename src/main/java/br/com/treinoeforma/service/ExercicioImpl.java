@@ -60,6 +60,12 @@ public class ExercicioImpl implements Crud<Exercicio> {
 
 
 	
+	public List<Exercicio> buscaExerciciosPorTitulo(Long codigoTreino, Long codigoTitulo){
+		return this.exercicioRepository.buscaExerciciosPorTitulo(codigoTreino, codigoTitulo);
+	}
 	
+	public List<Exercicio> buscaExerciciosPorTreino(Long codigoUsuario, Long codigoTreino){
+		return this.exercicioRepository.buscaExerciciosPorTreino(codigoUsuario, codigoTreino);
+	}
 	
 }

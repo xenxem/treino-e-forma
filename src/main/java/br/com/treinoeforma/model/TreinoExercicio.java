@@ -35,10 +35,6 @@ public class TreinoExercicio implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="titulo_id")	
 	private Titulo titulo;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	private Calendar data;
 		
 	
 	private Long ordem;
@@ -69,12 +65,6 @@ public class TreinoExercicio implements Serializable {
 		this.ordem = ordem;
 	}
 	
-	public Calendar getData() {
-		return data;
-	}
-	public void setData(Calendar data) {
-		this.data = data;
-	}
 		
 	public Titulo getTitulo() {
 		return titulo;

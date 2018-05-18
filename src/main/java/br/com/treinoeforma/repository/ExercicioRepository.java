@@ -27,4 +27,14 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
     @Query("SELECT e FROM Exercicio e"
     		+ " WHERE e.descricao LIKE CONCAT('%',:descricao,'%')")    		
     List<Exercicio> listarPorNome(@Param("descricao") String descricao);	
+	
+	@Query("select te.exercicio from TreinoExercicio te "
+			+ "where te.treino.id =:codigoTreino and te.titulo.id = :codigoTitulo ")
+	public List<Exercicio> buscaExerciciosPorTitulo(@Param("codigoTreino") Long codigoTreino,@Param("codigoTitulo") Long codigoTitulo);
+	
+	@Query("select te.exercicio from TreinoExercicio te where te.treino.usuario.id =:codigoUsuario "
+			+ "and te.treino.id =:codigoTreino")
+	public List<Exercicio> buscaExerciciosPorTreino(@Param("codigoUsuario") Long codigoUsuario, @Param("codigoTreino") Long codigoTreino);
+	
+	
 }

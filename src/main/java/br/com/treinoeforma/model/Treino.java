@@ -3,11 +3,11 @@ package br.com.treinoeforma.model;
 import java.io.Serializable;
 import java.util.Calendar;
 
-
 import javax.persistence.Entity;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,6 +24,11 @@ public class Treino implements Serializable{
 	
 	private String descricao;
 	private Integer curtidas;
+	
+	@ManyToOne	
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
+	
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
@@ -56,6 +61,16 @@ public class Treino implements Serializable{
 	}
 	public void setCurtidas(Integer curtidas) {
 		this.curtidas = curtidas;
+	}
+	
+	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

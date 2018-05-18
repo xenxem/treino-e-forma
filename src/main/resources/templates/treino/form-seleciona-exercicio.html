@@ -17,7 +17,7 @@
 	
 	<div class="panel panel-default">
 		<div class="panel panel-info">
-			<div class="panel-heading"> <h4>Dados do treino</h4></div>
+			<div class="panel-heading"> <h4>Novo treino</h4></div>
 		</div>
 		<div class="panel-body">
 			
@@ -38,19 +38,15 @@
 			   	  </select>
 			    </div>
 		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel panel-info">
-			<div class="panel-heading"> <h4>Exercícios</h4></div>
-		</div>
+		<div class="panel-heading panel panel-info"> <h4>Exercícios</h4></div>	
 		<div class="panel-body">		
 			    <div class="form-group">		
 					<table id="exercicioTable" class="table table-striped"  width="100%">     							       
 					       <thead>
 					            <tr>					                
 					            	<th><span></span></th>
-									<th><span><h3><small>Exercício</small></h3></span></th>
-									<th><span><h3><small>Grupo</small></h3></span></th>					                
+									<th><span><h4><small>Exercício</small></h4></span></th>
+									<th><span><h4><small>Grupo</small></h4></span></th>					                
 					            </tr>
 					        </thead>							        
 					        <tfoot>
@@ -63,13 +59,15 @@
 					</table>		
 				</div>				<div class="form-group col-md-6">
 					<form name="form" th:action="@{/treinos}" >
-						<input type="hidden" name="codigoExercicio" id="codigoExercicio" value="3">
-						<button type="button" class="btn btn-default btn-sm" id="voltar">← Voltar</button>				
-						<button type="button" class="btn btn-default btn-sm" id="adicionar">Salvar</button>
+						<input type="hidden" name="codigosSelecionados" id="codigosSelecionados" th:value="${codigosSelecionados}">
+						<button type="button" class="btn btn-primary btn-md" id="voltar">← Voltar</button>				
+						<button type="button" class="btn btn-primary btn-md" id="adicionar">Salvar</button>
+						<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 					</form>
 				</div>
-			</div>
-	</div>							
+	 	</div>
+	</div>
+										
 </div><!-- ./content -->	
 
 <!-- JQuery -->	
@@ -77,7 +75,7 @@
 	<script th:inline="javascript">
 		jQuery(function(){		
 			
-			
+			var _csrf_param = $("#_csrf_param").attr("value");
 			
 			$("#voltar").on("click",function(){
 				window.location.href ="/treinoeforma/treinos";
@@ -131,7 +129,7 @@
 				           className: 'dt-body-center',
 				           render: function (data, type, full, meta){
 				        	   if (type == 'display')
-				        	   		var resp =$("#codigoExercicio").val().indexOf(data) != -1 ? 'checked':'';
+				        	   		var resp =$("#codigosSelecionados").val().indexOf(data) != -1 ? 'checked':'';
 				        	   return "<a href='#' id='"+data+"'><input type='checkbox'  " + resp + "  value='"+data+"'></a>";
 				           }
 				        }]
@@ -151,12 +149,12 @@
 				var table = $('#exercicioTable').DataTable();
 				var id = table.row($(this).parents('tr')).data().id;
 				 		
-				if ($.trim($("#codigoExercicio").val()) === ""){
-					$("#codigoExercicio").val(id);				
+				if ($.trim($("#codigosSelecionados").val()) === ""){
+					$("#codigosSelecionados").val(id);				
 				}
 				else
 				{
-					var codigos = $("#codigoExercicio").val();
+					var codigos = $("#codigosSelecionados").val();
 					newArray = codigos.split(',');								
 					arr = newArray.verificaParaInclusao(id);
 					
@@ -164,16 +162,16 @@
 						newArray.splice(arr['pos'],1);
 						newArray.sort();
 						var lista = newArray.join();
-						$("#codigoExercicio").val(lista);
-						console.log($("#codigoExercicio").val());
+						$("#codigosSelecionados").val(lista);
+						console.log($("#codigosSelecionados").val());
 					}
 					else
 					{					
 						newArray.push(id);
 						newArray.sort();
 						var lista = newArray.join();
-						$("#codigoExercicio").val(lista);
-						console.log($("#codigoExercicio").val());
+						$("#codigosSelecionados").val(lista);
+						console.log($("#codigosSelecionados").val());
 						
 					}			
 				}				

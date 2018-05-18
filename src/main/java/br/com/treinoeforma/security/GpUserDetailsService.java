@@ -77,6 +77,7 @@ public class GpUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Usuário " + login + " não encontrado!");
 		}
 
+		Long id = rs.getLong("id");
 		String nome = rs.getString("nome");
 		String password = rs.getString("senha");
 		boolean ativo = rs.getBoolean("ativo");
@@ -84,7 +85,7 @@ public class GpUserDetailsService implements UserDetailsService {
 		rs.close();
 		ps.close();
 
-		return new GpUserDetails(nome, login, password, ativo);
+		return new GpUserDetails(id, nome, login, password, ativo);
 	}
 
 	public Collection<GrantedAuthority> buscarPermissoes(Connection connection, String login, String sql) throws SQLException {

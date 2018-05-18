@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -31,8 +32,9 @@ public class Exercicio implements Serializable{
 	private GrupoMuscular grupoMuscular;
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)	
 	@JoinColumn(name="usuario_id")
+	@JsonManagedReference
 	private Usuario usuario;
 	
 	

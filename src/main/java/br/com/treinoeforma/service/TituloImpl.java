@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.repository.TituloRepository;
 
@@ -42,5 +43,23 @@ public class TituloImpl implements Crud<Titulo> {
 		return this.tituloRepository.findAll(pageable);
 	}
 	
-
+	 	
+	public List<Titulo> buscaTitulosPorTreino(Long codigo){
+		return this.tituloRepository.buscaTitulosPorTreino(codigo);
+	}
+	
+	public List<Exercicio> buscaExerciciosPorTitulo(Long codigoTreino, Long codigoTitulo){
+		return this.tituloRepository.buscaExerciciosPorTitulo(codigoTreino, codigoTitulo);
+	}
+	
+	public List<Titulo> listaTitulosDoTreino(Long codigoUsuario){
+		return this.tituloRepository.listaTitulosDoTreino(codigoUsuario);
+	}
+	
+	public List<Titulo> buscaExerciciosPorTreino( Long codigo){
+		return this.tituloRepository.buscaExerciciosPorTreino(codigo);
+	}
+	
+	
+	
 }
