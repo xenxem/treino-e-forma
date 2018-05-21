@@ -4,13 +4,13 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.com.dominio</groupId>
-	<artifactId>gestao-acad</artifactId>
+	<groupId>br.com.treinoeforma</groupId>
+	<artifactId>treinoeforma</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>formaction</name>
-	<description>Iniciando com o Spring Boot</description>
+	<name>treinoeforma</name>
+	<description>Geracao de Treinos Online</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

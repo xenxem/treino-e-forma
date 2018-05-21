@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/gestao-academia-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=heroku
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/treinoeforma-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=heroku
