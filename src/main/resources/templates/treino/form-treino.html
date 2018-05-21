@@ -65,7 +65,7 @@
 					<div class="panel-heading"> <h4>Exercicíos</h4></div>
 					<div class="panel-body">
 						<div class="form-group">
-					    	<label for="treinos"><span><h4>Bloco de exercícios</h4></span></label>
+					    	<label for="treinos"><span><h4>Grade de exercícios</h4></span></label>
 				      		<select   name="titulos" class="selectpicker form-control btn-default" id="titulos">
 				       			<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>
 				       			

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.TreinoExercicio;
-import br.com.treinoeforma.model.TreinoExercicioValuesObject;
+import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.repository.TreinoExercicioRepository;
 
 @Service
@@ -58,7 +58,7 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		return this.treinoExercicioRepository.buscaTreinoPorCodigo(codigo,codigoUsuario);
 	}
 	
-	public List<TreinoExercicioValuesObject> buscaUltimoTituloTreino(Long codigoTreino){
+	public List<TreinoExercicioDTO> buscaUltimoTituloTreino(Long codigoTreino){
 		return this.treinoExercicioRepository.buscaUltimoTituloTreino(codigoTreino);
 	}
 			

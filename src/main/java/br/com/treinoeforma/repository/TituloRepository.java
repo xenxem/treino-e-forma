@@ -13,7 +13,7 @@ import br.com.treinoeforma.model.Titulo;
 @Repository
 public interface TituloRepository extends JpaRepository<Titulo, Long> {
 	
-	@Query("select te.titulo from TreinoExercicio te where te.treino.id=:codigo group by te.titulo ")
+	@Query("select te.titulo from TreinoExercicio te where te.treino.id=:codigo group by te.titulo")
 	public List<Titulo> buscaTitulosPorTreino(@Param("codigo") Long codigo);
 	
 	@Query("select te.exercicio from TreinoExercicio te where te.treino.id =:codigoTreino and te.titulo.id = :codigoTitulo ")

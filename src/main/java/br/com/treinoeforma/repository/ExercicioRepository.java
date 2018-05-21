@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.treinoeforma.model.Exercicio;
+import br.com.treinoeforma.model.Usuario;
 
 
 @Repository
@@ -35,6 +36,9 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 	@Query("select te.exercicio from TreinoExercicio te where te.treino.usuario.id =:codigoUsuario "
 			+ "and te.treino.id =:codigoTreino")
 	public List<Exercicio> buscaExerciciosPorTreino(@Param("codigoUsuario") Long codigoUsuario, @Param("codigoTreino") Long codigoTreino);
+	
+	@Query("select e from Exercicio e where usuario = :usuario")
+	public List<Exercicio> listarExercicioPorUsuario(@Param("usuario") Usuario usuario);
 	
 	
 }

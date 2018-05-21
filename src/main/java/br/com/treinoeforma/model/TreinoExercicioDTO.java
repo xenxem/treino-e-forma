@@ -1,19 +1,33 @@
 package br.com.treinoeforma.model;
 
-public class TreinoExercicioValuesObject {
+public class TreinoExercicioDTO {
 	
 	private Treino treino;
 	private Exercicio exercicio;
+	private Titulo titulo;
 	private Long ultimo;
 	
-	public TreinoExercicioValuesObject(Treino treino, Exercicio exercicio,Long ultimo) {
+	public TreinoExercicioDTO(Treino treino, Exercicio exercicio,Titulo titulo, Long ultimo) {
 		this.treino = treino;
 		this.exercicio = exercicio;
+		this.titulo = titulo;
 		this.ultimo = ultimo;
 	}
 	
 	
 	
+	public Titulo getTitulo() {
+		return titulo;
+	}
+
+
+
+	public void setTitulo(Titulo titulo) {
+		this.titulo = titulo;
+	}
+
+
+
 	public Treino getTreino() {
 		return treino;
 	}

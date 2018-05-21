@@ -23,6 +23,7 @@ import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.service.ExercicioImpl;
 import br.com.treinoeforma.service.GrupoMuscularImpl;
 import br.com.treinoeforma.utils.PageWrapper;
+import br.com.treinoeforma.utils.UsuarioAutenticado;
 
 
 @Controller
@@ -33,6 +34,9 @@ public class ExercicioController {
 	private ExercicioImpl exercicioImpl;	
 	@Autowired 
 	private GrupoMuscularImpl grupoMuscularImpl;
+	@Autowired
+	private UsuarioAutenticado usuarioAutenticado;
+	
 	
 	@RequestMapping(method = RequestMethod.POST, path ="/salvar")
 	public String salvar(Exercicio exercicio) {		
@@ -58,9 +62,13 @@ public class ExercicioController {
 	 }
 	
 	 @RequestMapping(method = RequestMethod.GET, path="/listarExercicio")
-	 public ModelAndView listaExercicios(Pageable pageable) {		 
+	 public ModelAndView listaExercicios(Pageable pageable) {	
+		 
+		 
+		 
 		 PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/listarExercicio");
 		 List<Exercicio> exercicios = page.getContent();
+		 
 		 List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
 		 ModelAndView mv = new ModelAndView("exercicio/form");
 		 mv.addObject("exercicios",exercicios);

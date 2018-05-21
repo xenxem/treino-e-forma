@@ -18,6 +18,7 @@ import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
+import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;
 import br.com.treinoeforma.service.GrupoMuscularImpl;
@@ -51,6 +52,12 @@ public class TreinoExercicioController {
 		 
 		 if (codigoTreino == null) 
 			 		codigoTreino = treinoImpl.buscaUltimo(usuarioAutenticado.getId());
+		 
+		 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoTreino);
+		 
+		 if (codigoTitulo == null)
+			 codigoTitulo = listaUltimoTitulo.get(0).getUltimo();		 
+		 
 		 
 		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(codigoTreino);
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());

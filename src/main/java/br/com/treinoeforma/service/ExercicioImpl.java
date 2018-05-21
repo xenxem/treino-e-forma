@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.Exercicio;
+import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.repository.ExercicioRepository;
 
 @Service
@@ -57,8 +58,6 @@ public class ExercicioImpl implements Crud<Exercicio> {
 	public Page<Exercicio> buscarPaginando(Pageable pageable) {
 		return this.exercicioRepository.findAll(pageable);
 	}
-
-
 	
 	public List<Exercicio> buscaExerciciosPorTitulo(Long codigoTreino, Long codigoTitulo){
 		return this.exercicioRepository.buscaExerciciosPorTitulo(codigoTreino, codigoTitulo);
@@ -67,5 +66,10 @@ public class ExercicioImpl implements Crud<Exercicio> {
 	public List<Exercicio> buscaExerciciosPorTreino(Long codigoUsuario, Long codigoTreino){
 		return this.exercicioRepository.buscaExerciciosPorTreino(codigoUsuario, codigoTreino);
 	}
+	
+	public List<Exercicio> listarExercicioPorUsuario(Usuario usuario){
+		return this.listarExercicioPorUsuario(usuario);		
+	}
+	
 	
 }

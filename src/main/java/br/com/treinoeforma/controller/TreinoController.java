@@ -15,8 +15,9 @@ import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
-import br.com.treinoeforma.model.TreinoExercicioValuesObject;
+import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.security.GpUserDetails;
+import br.com.treinoeforma.service.ExercicioImpl;
 import br.com.treinoeforma.service.TituloImpl;
 import br.com.treinoeforma.service.TreinoExercicioImpl;
 import br.com.treinoeforma.service.TreinoImpl;
@@ -33,6 +34,8 @@ public class TreinoController {
 	private TituloImpl tituloImpl;
 	@Autowired 
 	private TreinoImpl treinoImpl;
+	@Autowired 
+	private ExercicioImpl exercicioImpl;
 	
 	
 	
@@ -47,28 +50,21 @@ public class TreinoController {
 		 
 		 if (codigoUltimoTreino != null) {
 			 
-			 List<TreinoExercicioValuesObject> teste = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoUltimoTreino);
-			 
-			 for (TreinoExercicioValuesObject t : teste)
-				 	System.out.println(t.getExercicio().getId());
+			 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoUltimoTreino);			 
+			 Long codigoTitulo = listaUltimoTitulo.get(0).getUltimo();					 
 			 
 			 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(codigoUltimoTreino);
-			 List<Titulo> exerciciosPorTitulo = tituloImpl.buscaExerciciosPorTreino(codigoUltimoTreino);			 
+			 List<Exercicio> listaExercicios =this.exercicioImpl.buscaExerciciosPorTitulo(codigoUltimoTreino, codigoTitulo);
 			 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
 			 
-			 Treino treino = new Treino();
-			 Titulo titulo = new Titulo();
-			 
-			 if (!exerciciosPorTitulo.isEmpty()) { 
-				 treino = listaTe.get(0).getTreino();
-				 titulo = listaTe.get(0).getTitulo();
-			 }
+			 Treino treino = this.treinoImpl.buscar(codigoUltimoTreino);				
+			 Titulo titulo = tituloImpl.buscar(codigoTitulo);
 			 		 
 			 mv.addObject("treino",treino);
 			 mv.addObject("titulo",titulo);
 			 mv.addObject("listaTe",listaTe);		 
 			 mv.addObject("titulosDoTreino",titulosDoTreino);
-			 mv.addObject("exerciciosPorTitulo",exerciciosPorTitulo);
+			 mv.addObject("listaExercicios",listaExercicios);
 			 mv.addObject("data",df.format(treino.getData().getTime()));
 			 
 			 return mv;
