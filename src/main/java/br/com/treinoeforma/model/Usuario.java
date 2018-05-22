@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Usuario implements Serializable {
 	
@@ -27,7 +30,6 @@ public class Usuario implements Serializable {
 	
 	@OneToMany(mappedBy="usuario")	
 	private List<Treino> treinos;
-		
 	
 	public Long getId() {
 		return id;

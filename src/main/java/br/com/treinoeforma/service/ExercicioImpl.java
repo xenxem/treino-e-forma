@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.Exercicio;
@@ -71,5 +72,10 @@ public class ExercicioImpl implements Crud<Exercicio> {
 		return this.listarExercicioPorUsuario(usuario);		
 	}
 	
+
+	@Override
+	public Page<Exercicio> listarPorUsuario(Long id, Pageable pageable) {		
+		return this.exercicioRepository.findById(id, pageable);
+	}
 	
 }

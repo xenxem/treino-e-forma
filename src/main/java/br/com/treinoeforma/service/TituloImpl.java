@@ -59,6 +59,12 @@ public class TituloImpl implements Crud<Titulo> {
 	public List<Titulo> buscaExerciciosPorTreino( Long codigo){
 		return this.tituloRepository.buscaExerciciosPorTreino(codigo);
 	}
+
+	@Override
+	public Page<Titulo> listarPorUsuario(Long id, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

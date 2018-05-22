@@ -61,5 +61,11 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 	public List<TreinoExercicioDTO> buscaUltimoTituloTreino(Long codigoTreino){
 		return this.treinoExercicioRepository.buscaUltimoTituloTreino(codigoTreino);
 	}
+
+	@Override
+	public Page<TreinoExercicio> listarPorUsuario(Long id, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 			
 }

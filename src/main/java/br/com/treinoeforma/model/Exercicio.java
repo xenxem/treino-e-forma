@@ -34,7 +34,7 @@ public class Exercicio implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.EAGER)	
 	@JoinColumn(name="usuario_id")
-	@JsonManagedReference
+	@JsonBackReference
 	private Usuario usuario;
 	
 	

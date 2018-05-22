@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.GrupoMuscular;
+import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;
 import br.com.treinoeforma.service.GrupoMuscularImpl;
 import br.com.treinoeforma.utils.PageWrapper;
@@ -34,8 +35,6 @@ public class ExercicioController {
 	private ExercicioImpl exercicioImpl;	
 	@Autowired 
 	private GrupoMuscularImpl grupoMuscularImpl;
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
 	
 	
 	@RequestMapping(method = RequestMethod.POST, path ="/salvar")
@@ -63,13 +62,13 @@ public class ExercicioController {
 	
 	 @RequestMapping(method = RequestMethod.GET, path="/listarExercicio")
 	 public ModelAndView listaExercicios(Pageable pageable) {	
+	 	 
+		 GpUserDetails usuarioAutenticado = UsuarioAutenticado.obterUsuarioAutenticado();		 
+		 PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.listarPorUsuario(usuarioAutenticado.getId(), pageable),"/listarExercicio");
 		 
-		 
-		 
-		 PageWrapper<Exercicio> page = new PageWrapper<>(this.exercicioImpl.buscarPaginando(pageable),"/listarExercicio");
-		 List<Exercicio> exercicios = page.getContent();
-		 
+		 List<Exercicio> exercicios = page.getContent();		 
 		 List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
+		 
 		 ModelAndView mv = new ModelAndView("exercicio/form");
 		 mv.addObject("exercicios",exercicios);
 		 mv.addObject("grupoMuscular",grupoMuscular);		

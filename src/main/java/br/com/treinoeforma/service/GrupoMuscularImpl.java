@@ -41,6 +41,12 @@ public class GrupoMuscularImpl implements Crud<GrupoMuscular> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Page<GrupoMuscular> listarPorUsuario(Long id, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

@@ -12,8 +12,7 @@ import br.com.treinoeforma.model.TreinoExercicioDTO;
 
 @Repository
 public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio,Long> {
-	
-	
+		
 	
 	@Query("select te from TreinoExercicio te where te.treino.usuario.id = :codigoUsuario group by te.treino order by te desc  ")
 	public List<TreinoExercicio> listarTreinoExercicioAgrupado(@Param("codigoUsuario") Long codigoUsuario);

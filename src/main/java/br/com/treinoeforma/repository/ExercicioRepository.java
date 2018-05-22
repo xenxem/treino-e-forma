@@ -3,6 +3,8 @@ package br.com.treinoeforma.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +12,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.treinoeforma.model.Exercicio;
-import br.com.treinoeforma.model.Usuario;
 
 
 @Repository
@@ -37,8 +38,7 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 			+ "and te.treino.id =:codigoTreino")
 	public List<Exercicio> buscaExerciciosPorTreino(@Param("codigoUsuario") Long codigoUsuario, @Param("codigoTreino") Long codigoTreino);
 	
-	@Query("select e from Exercicio e where usuario = :usuario")
-	public List<Exercicio> listarExercicioPorUsuario(@Param("usuario") Usuario usuario);
-	
+	@Query("select e from Exercicio e where e.usuario.id = :id")
+	public Page<Exercicio> findById(@Param("id") Long id, Pageable pageabel);
 	
 }

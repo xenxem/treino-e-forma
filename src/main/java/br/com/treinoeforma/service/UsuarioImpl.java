@@ -42,6 +42,12 @@ public class UsuarioImpl implements Crud<Usuario>  {
 		return null;
 	}
 
+	@Override
+	public Page<Usuario> listarPorUsuario(Long id, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 		
 	

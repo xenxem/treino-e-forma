@@ -17,4 +17,6 @@ public interface Crud<T> {
 	
 	Page<T> buscarPaginando(Pageable pageable);
 	
+	Page<T> listarPorUsuario(Long id,Pageable pageable);
+	
 }
