@@ -14,6 +14,7 @@
 	 -->
 	
 <div layout:fragment="content">
+	<form name="form" th:action="@{/novo}" id="form">
 	
 	<div class="panel panel-default">
 		<div class="panel panel-info">
@@ -23,18 +24,16 @@
 			
 				<div class="form-group">
 			      <label for="titulo"><span><h4>Nome do treino</h4></span></label>
-			      <input type="text" class="form-control" name="descricao" id="descricao"> 	
+			      <input type="text" class="form-control" name="descricao" id="descricao" required="required" placeholder="Digite o nome do treino aqui..." th:value="${descricao}"> 	
 			    </div>
 			    <div class="form-group">
 			      <label for="titulo"><span><h4>data</h4></span></label>
-			      <input type="date" class="form-control" name="data" id="data"> 	
+			      <input type="date" class="form-control" name="data" id="data" required="required" th:value="${data}"> 	
 			    </div>
 			    <div class="form-group">
 			      <label for="titulo"><span><h4>Título do bloco</h4></span></label>
-			      <select name="titulo" class="selectpicker form-control" id="titulo">
-			       		<option>DIA1</option>
-			       		<option>DIA2</option>
-			       		<option>DIA3</option>
+			      <select name="titulo" class="selectpicker form-control" id="titulo" required="required">
+			       		<option th:each="t : ${titulos}" th:value="${t.id}" th:text="${t.descricao}">DIA1</option>			       		
 			   	  </select>
 			    </div>
 		</div>
@@ -57,17 +56,16 @@
 					            </tr>
 					        </tfoot>
 					</table>		
-				</div>				<div class="form-group col-md-6">
-					<form name="form" th:action="@{/treinos}" >
+				</div>				
+				<div class="form-group col-md-6">
 						<input type="hidden" name="codigosSelecionados" id="codigosSelecionados" th:value="${codigosSelecionados}">
-						<button type="button" class="btn btn-info btn-md" id="voltar">← Voltar</button>				
-						<button type="button" class="btn btn-info btn-md" id="adicionar">Salvar</button>
+						<button type="button" class="btn btn-info btn-md" id="voltar">Voltar</button>				
+						<input type="submit" class="btn btn-info btn-md" id="salvar" value="Salvar">
 						<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					</form>
 				</div>
 	 	</div>
 	</div>
-										
+</form>										
 </div><!-- ./content -->	
 
 <!-- JQuery -->	
@@ -80,6 +78,15 @@
 			$("#voltar").on("click",function(){
 				window.location.href ="/treinoeforma/treinos";
 			});
+			
+			/*
+			$("#salvar").on("click",function(){
+				if ($("#codigosSelecionados").val() === "")
+					return false;
+				
+			});
+			*/
+			
 			
 			
 			var newArray = new Array();
@@ -128,6 +135,7 @@
 				           width: '1%',
 				           className: 'dt-body-center',
 				           render: function (data, type, full, meta){
+				        	  
 				        	   if (type == 'display')
 				        	   		var resp =$("#codigosSelecionados").val().indexOf(data) != -1 ? 'checked':'';
 				        	   return "<a href='#' id='"+data+"'><input type='checkbox'  " + resp + "  value='"+data+"'></a>";
@@ -143,14 +151,14 @@
 			/* Linha que foi clicada */
 			
 			$('#exercicioTable tbody').on('click','a',function () {					 
-				 									
 				
 				var item = $(this).attr("id");
 				var table = $('#exercicioTable').DataTable();
 				var id = table.row($(this).parents('tr')).data().id;
 				 		
 				if ($.trim($("#codigosSelecionados").val()) === ""){
-					$("#codigosSelecionados").val(id);				
+					$("#codigosSelecionados").val(id);
+					console.log($("#codigosSelecionados").val());
 				}
 				else
 				{

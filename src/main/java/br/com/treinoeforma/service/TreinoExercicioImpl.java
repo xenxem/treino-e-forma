@@ -67,5 +67,9 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void salvarTodos() {
+		
+	}
 			
 }

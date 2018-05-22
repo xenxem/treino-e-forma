@@ -1,6 +1,11 @@
 package br.com.treinoeforma.controller;
 
+
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,23 +61,19 @@ public class TreinoExercicioController {
 		 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoTreino);
 		 
 		 if (codigoTitulo == null)
-			 codigoTitulo = listaUltimoTitulo.get(0).getUltimo();		 
-		 
+			 codigoTitulo = listaUltimoTitulo.get(0).getUltimo();
 		 
 		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(codigoTreino);
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
-		 List<Exercicio> listaExercicios = (codigoTitulo == null) ? this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), codigoTreino) : exercicioImpl.buscaExerciciosPorTitulo(codigoTreino, codigoTitulo);
+		 List<Exercicio> listaExercicios = (codigoTitulo == null) ? 
+				 this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), codigoTreino) 
+				 : exercicioImpl.buscaExerciciosPorTitulo(codigoTreino, codigoTitulo);
 		 
 		 Treino treino = this.treinoImpl.buscar(codigoTreino);
-		
 		 Titulo titulo;
 		 
-		 if (codigoTitulo == null) {
-			 titulo = listaTe.get(0).getTitulo();
-		 }else
-		 {
-			 titulo = this.tituloImpl.buscar(codigoTitulo);
-		 }
+		 if (codigoTitulo == null) {titulo = listaTe.get(0).getTitulo();}
+		 else { titulo = this.tituloImpl.buscar(codigoTitulo);}
 		 
 		 String dataFormatada = df.format(treino.getData().getTime());
 		 		 		 
@@ -86,22 +87,62 @@ public class TreinoExercicioController {
 		return mv;
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, path="/salvar")
+	public ModelAndView salvar(HttpServletRequest request) throws ParseException {
+		
+		String data = request.getParameter("data");
+		String descricao = request.getParameter("descricao");		
+		String codigosSelecionados = request.getParameter("codigosSelecionados");
+		
+		Treino t = new Treino();
+		t.setDescricao(descricao);
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		c.setTime(df.parse(data));
+		t.setData(c);
+		
+		String[] listaDeCodigos = codigosSelecionados.split(",");
+		List<TreinoExercicio> treinoExercicioLista = new ArrayList<TreinoExercicio>();		
+		
+		for (int i = 0; i < listaDeCodigos.length; i++) {						
+			Exercicio e = new Exercicio();
+			e.setId(Long.parseLong(listaDeCodigos[i]));			
+			TreinoExercicio te = new TreinoExercicio();
+			te.setExercicio(e);			
+			treinoExercicioLista.add(te);			
+		}
+		
+		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		
+		List<Titulo> titulos = this.tituloImpl.listar();
+		
+		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		mv.addObject("descricao",descricao);
+		mv.addObject("data",data);
+		mv.addObject("titulos",titulos);		
+		mv.addObject("codigosSelecionados",codigosSelecionados);	
+		return mv;
+	}
+	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/novo")
-	public ModelAndView novo(HttpServletRequest request) {
-				
+	public ModelAndView novo(HttpServletRequest request) throws ParseException {
+		
 		//String codigoExercicio = request.getParameter("codigoExercicio");		
 		//List<String> lista = Arrays.asList(hidExercicio.split(","));
 		
-		Long codigosSelecionados = 0L;
+		String data = ""; 
+		String descricao = "";		
+		String codigosSelecionados = "";
 		
-		List<Exercicio> exercicios = this.exercicioImpl.listar();
-		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
+		List<Titulo> titulos = this.tituloImpl.listar();
+		
 		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
-		mv.addObject("exercicios",exercicios);
-		mv.addObject("grupoMuscular",grupoMuscular);
-		mv.addObject("codigosSelecionados",codigosSelecionados);
-		mv.addObject(new Exercicio());
+		mv.addObject("descricao",descricao);
+		mv.addObject("data",data);
+		mv.addObject("titulos",titulos);		
+		mv.addObject("codigosSelecionados",codigosSelecionados);	
 		return mv;
 	}
 	
