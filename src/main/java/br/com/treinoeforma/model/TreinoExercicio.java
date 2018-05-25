@@ -35,9 +35,7 @@ public class TreinoExercicio implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="titulo_id")	
 	private Titulo titulo;
-		
 	
-	private Long ordem;
 	
 	public Long getId() {
 		return id;
@@ -58,14 +56,7 @@ public class TreinoExercicio implements Serializable {
 		this.exercicio = exercicio;
 	}
 	
-	public Long getOrdem() {
-		return ordem;
-	}
-	public void setOrdem(Long ordem) {
-		this.ordem = ordem;
-	}
-	
-		
+			
 	public Titulo getTitulo() {
 		return titulo;
 	}

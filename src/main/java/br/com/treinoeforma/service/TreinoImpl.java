@@ -20,7 +20,7 @@ public class TreinoImpl implements Crud<Treino> {
 
 	@Override
 	public Treino salvar(Treino t) {		
-		return null;
+		return this.treinoRepository.saveAndFlush(t);
 	}
 
 	@Override

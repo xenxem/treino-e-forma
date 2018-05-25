@@ -1,11 +1,12 @@
 package br.com.treinoeforma.controller;
 
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
+import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;
 import br.com.treinoeforma.service.GrupoMuscularImpl;
@@ -90,30 +94,48 @@ public class TreinoExercicioController {
 	@RequestMapping(method = RequestMethod.GET, path="/salvar")
 	public ModelAndView salvar(HttpServletRequest request) throws ParseException {
 		
+		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		
 		String data = request.getParameter("data");
+		String tituloId = request.getParameter("titulo");
 		String descricao = request.getParameter("descricao");		
 		String codigosSelecionados = request.getParameter("codigosSelecionados");
 		
-		Treino t = new Treino();
-		t.setDescricao(descricao);
+				
+		Treino treino = new Treino();
+		Usuario u = new Usuario();
+				
+		u.setId(usuarioAutenticado.getId());		
+		treino.setUsuario(u);
+		treino.setCurtidas(0);
+		treino.setDescricao(descricao);
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.setTime(df.parse(data));
-		t.setData(c);
+		treino.setData(c);		
+			
+		treino = this.treinoImpl.salvar(treino);
 		
-		String[] listaDeCodigos = codigosSelecionados.split(",");
-		List<TreinoExercicio> treinoExercicioLista = new ArrayList<TreinoExercicio>();		
+		Titulo titulo = new Titulo();
+		titulo.setId(Long.parseLong(tituloId));				
+		String[] listaDeIds = codigosSelecionados.split(",");
+		Long[] novaLista = new Long[listaDeIds.length];
 		
-		for (int i = 0; i < listaDeCodigos.length; i++) {						
-			Exercicio e = new Exercicio();
-			e.setId(Long.parseLong(listaDeCodigos[i]));			
-			TreinoExercicio te = new TreinoExercicio();
-			te.setExercicio(e);			
-			treinoExercicioLista.add(te);			
+		for (int i=0; i < listaDeIds.length; i++)
+			novaLista[i] = Long.parseLong(listaDeIds[i]);
+		Arrays.sort(novaLista);
+		
+		for (int i = 0; i < novaLista.length; i++) {
+			System.out.println(""+novaLista[i]);
+			TreinoExercicio te = new TreinoExercicio();			
+			te.setTreino(treino);
+			te.setTitulo(titulo);			
+			Exercicio exercicio  = new Exercicio();
+			exercicio.setId(novaLista[i]);
+			te.setExercicio(exercicio);
+			this.treinoExercicioImpl.salvar(te);
 		}
-		
-		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		
 		List<Titulo> titulos = this.tituloImpl.listar();
 		

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.TreinoExercicio;
@@ -19,7 +20,7 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 
 	@Override
 	public TreinoExercicio salvar(TreinoExercicio t) {
-		return null;
+		return this.treinoExercicioRepository.save(t);
 	}
 
 	@Override
@@ -68,8 +69,7 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		return null;
 	}
 	
-	public void salvarTodos() {
-		
-	}
+	
+	
 			
 }

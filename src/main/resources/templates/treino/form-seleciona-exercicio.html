@@ -14,7 +14,7 @@
 	 -->
 	
 <div layout:fragment="content">
-	<form name="form" th:action="@{/novo}" id="form">
+	<form name="form" th:action="@{/salvar}" id="form">
 	
 	<div class="panel panel-default">
 		<div class="panel panel-info">
@@ -61,7 +61,7 @@
 						<input type="hidden" name="codigosSelecionados" id="codigosSelecionados" th:value="${codigosSelecionados}">
 						<button type="button" class="btn btn-info btn-md" id="voltar">Voltar</button>				
 						<input type="submit" class="btn btn-info btn-md" id="salvar" value="Salvar">
-						<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 				</div>
 	 	</div>
 	</div>
@@ -73,19 +73,21 @@
 	<script th:inline="javascript">
 		jQuery(function(){		
 			
-			var _csrf_param = $("#_csrf_param").attr("value");
+			//var _csrf_param = $("#_csrf_param").attr("value");
 			
 			$("#voltar").on("click",function(){
 				window.location.href ="/treinoeforma/treinos";
 			});
 			
-			/*
+			
 			$("#salvar").on("click",function(){
-				if ($("#codigosSelecionados").val() === "")
+				
+				var str = $("#form").serialize();
+			    console.log(str);
 					return false;
 				
 			});
-			*/
+			
 			
 			
 			
@@ -143,11 +145,7 @@
 				        }]
 				});
 			
-			$("#adicionar").on("click",function(){
-					$("#form").append("#titulo");
-					console.log('ok');
-			});
-			 
+					 
 			/* Linha que foi clicada */
 			
 			$('#exercicioTable tbody').on('click','a',function () {					 
@@ -182,7 +180,11 @@
 						console.log($("#codigosSelecionados").val());
 						
 					}			
-				}				
+				}	
+				
+				if ($(this).find("input:checkbox").is(":checked"))
+					console.log("marcado");				
+				else console.log("desmarcado");
 					    
 			});		
 				
