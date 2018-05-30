@@ -5,21 +5,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.GrupoMuscular;
@@ -99,8 +98,8 @@ public class TreinoExercicioController {
 		String data = request.getParameter("data");
 		String tituloId = request.getParameter("titulo");
 		String descricao = request.getParameter("descricao");		
+		String codigoTreino = request.getParameter("codigoTreino");
 		String codigosSelecionados = request.getParameter("codigosSelecionados");
-		
 				
 		Treino treino = new Treino();
 		Usuario u = new Usuario();
@@ -114,35 +113,63 @@ public class TreinoExercicioController {
 		Calendar c = Calendar.getInstance();
 		c.setTime(df.parse(data));
 		treino.setData(c);		
-			
-		treino = this.treinoImpl.salvar(treino);
 		
 		Titulo titulo = new Titulo();
 		titulo.setId(Long.parseLong(tituloId));				
 		String[] listaDeIds = codigosSelecionados.split(",");
-		Long[] novaLista = new Long[listaDeIds.length];
+		Long[] lista1 = new Long[listaDeIds.length];
 		
 		for (int i=0; i < listaDeIds.length; i++)
-			novaLista[i] = Long.parseLong(listaDeIds[i]);
-		Arrays.sort(novaLista);
+			lista1[i] = Long.parseLong(listaDeIds[i]);
+		Arrays.sort(lista1);
 		
-		for (int i = 0; i < novaLista.length; i++) {
-			System.out.println(""+novaLista[i]);
+		List<Titulo> titulos = this.tituloImpl.listar();
+		
+		ModelAndView mv;
+				
+		//Indo para alterar
+		if (codigoTreino != null) {
+			treino.setId(Long.parseLong(codigoTreino));			
+			mv = new ModelAndView("forward:alterar");
+			mv.addObject("descricao",descricao);
+			mv.addObject("data",data);
+			mv.addObject("titulos",titulos);
+			mv.addObject("treino",treino);
+			mv.addObject("codigosSelecionados",codigosSelecionados);	
+			return mv;
+		}
+		
+		treino = this.treinoImpl.salvar(treino);
+		
+		for (int i = 0; i < lista1.length; i++) {			
 			TreinoExercicio te = new TreinoExercicio();			
 			te.setTreino(treino);
 			te.setTitulo(titulo);			
 			Exercicio exercicio  = new Exercicio();
-			exercicio.setId(novaLista[i]);
+			exercicio.setId(lista1[i]);
 			te.setExercicio(exercicio);
 			this.treinoExercicioImpl.salvar(te);
 		}
 		
-		List<Titulo> titulos = this.tituloImpl.listar();
+				
+		List<Exercicio> lista2 = exercicioImpl.buscaExerciciosPorTitulo(treino.getId(),titulo.getId());
+				
+		int i=0;
+		String[] listaIds = new String[listaDeIds.length];
 		
-		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		for (Iterator<Exercicio> iterator = lista2.iterator(); iterator.hasNext();) {
+			Exercicio exercicio = (Exercicio) iterator.next();
+			listaIds[i] = exercicio.getId().toString();
+			i++;
+		}
+				
+		codigosSelecionados = Arrays.stream(listaDeIds).collect(Collectors.joining(","));
+		
+		mv = new ModelAndView("treino/form-seleciona-exercicio");
 		mv.addObject("descricao",descricao);
 		mv.addObject("data",data);
 		mv.addObject("titulos",titulos);		
+		mv.addObject("treino",treino);
 		mv.addObject("codigosSelecionados",codigosSelecionados);	
 		return mv;
 	}
@@ -157,12 +184,14 @@ public class TreinoExercicioController {
 		String data = ""; 
 		String descricao = "";		
 		String codigosSelecionados = "";
+		Treino treino = new Treino();
 		
 		List<Titulo> titulos = this.tituloImpl.listar();
 		
 		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
 		mv.addObject("descricao",descricao);
 		mv.addObject("data",data);
+		mv.addObject("treino",treino);
 		mv.addObject("titulos",titulos);		
 		mv.addObject("codigosSelecionados",codigosSelecionados);	
 		return mv;
@@ -170,18 +199,8 @@ public class TreinoExercicioController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/alterar")
-	public ModelAndView alterar(HttpServletRequest request) {
-				
-		String codigoExercicio = request.getParameter("codigoExercicio");
-		
-		List<Exercicio> exercicios = this.exercicioImpl.listar();
-		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
-		mv.addObject("exercicios",exercicios);
-		mv.addObject("grupoMuscular",grupoMuscular);
-		mv.addObject("codigosMarcados",codigoExercicio);
-		mv.addObject(new Exercicio());
-		return mv;
+	public String alterar(Model model) {
+		return "treino/form-seleciona-exercicio";		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/excluir")
