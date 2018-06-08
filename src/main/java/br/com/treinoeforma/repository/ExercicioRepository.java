@@ -41,4 +41,7 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 	@Query("select e from Exercicio e where e.usuario.id = :id")
 	public Page<Exercicio> findById(@Param("id") Long id, Pageable pageabel);
 	
+	@Query("SELECT e FROM Exercicio e WHERE e NOT IN (:exercicios)")
+	public List<Exercicio> buscaExercicioNaoCadastrado(@Param("exercicios") List<Exercicio> exercicios);
+	
 }

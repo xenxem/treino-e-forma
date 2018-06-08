@@ -1,7 +1,10 @@
 package br.com.treinoeforma.controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +38,8 @@ public class ExercicioController {
 	private ExercicioImpl exercicioImpl;	
 	@Autowired 
 	private GrupoMuscularImpl grupoMuscularImpl;
-	
+
+
 	
 	@RequestMapping(method = RequestMethod.POST, path ="/salvar")
 	public String salvar(Exercicio exercicio) {		
@@ -45,12 +49,28 @@ public class ExercicioController {
 		
 	
 	@RequestMapping(method = RequestMethod.GET, path ="/listaExercicioXHR")
-	public @ResponseBody String obterLista() throws JsonGenerationException, JsonMappingException, IOException{
-		List<Exercicio> exercicios = this.exercicioImpl.listar();			
+	public @ResponseBody String obterLista(HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException{	
+		
+		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		
+		String pCodigoTreino = request.getParameter("pCodigoTreino");
+		String pTitulo = request.getParameter("pTitulo");
+		
+		List<Exercicio> exercicios;
+		
+		if (pCodigoTreino == null)			
+			exercicios = this.exercicioImpl.listar();
+		else {			
+			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(1l,3l);
+			exercicios = exercicioImpl.buscaExercicioNaoCadastrado(exercicios);			
+		}
+			
 		ObjectMapper mapper = new ObjectMapper();			
+		
 		//User user = new User("Harrison", "Ford");
 		//user.setEmailAddrs(Arrays.asList("harrison@example.com"));		
-		//mapper.writeValue(System.out, user);			
+		//mapper.writeValue(System.out, user);
+				
 		return mapper.writeValueAsString(exercicios);
 	}
 		

@@ -23,7 +23,7 @@
 	  							<div class="panel-body">
 	  								<div class="form-group">
 								    	<label for="treinos"><span><h4>Treinos cadastrados <span th:text="${listaTe.size()}" class="badge"></span></h4></span></label>								    	
-							      		<select  id="treinos" class="selectpicker form-control btn-default">							      		    
+							      		<select  id="treinos" class="selectpicker form-control">							      		    
 							       			<option  th:each="treinoExercicio,obj : ${listaTe}" th:selected="${treinoExercicio.treino.id==treino.id}" th:value="${treinoExercicio.treino.id}" th:text="${listaTe[obj.index].treino.descricao}">Treino A</option>
 							   	  		</select>
 							   	  		
@@ -60,13 +60,11 @@
 								    
 						  </div> 
 					</div>	
-								
-				
-					<div class="panel-heading"> <h4>Exercicíos</h4></div>
+						
 					<div class="panel-body">
 						<div class="form-group">
 					    	<label for="treinos"><span><h4>Grade de exercícios</h4></span></label>
-				      		<select   name="titulos" class="selectpicker form-control btn-default" id="titulos">
+				      		<select   name="titulos" class="selectpicker form-control" id="titulos">
 				       			<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>
 				       			
 				   	  		</select>

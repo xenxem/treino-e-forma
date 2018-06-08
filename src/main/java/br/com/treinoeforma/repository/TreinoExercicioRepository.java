@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.treinoeforma.model.Titulo;
+import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
 
@@ -27,5 +29,7 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 			"WHERE te.treino.id = :codigoTreino GROUP BY te.treino")
 	public List<TreinoExercicioDTO> buscaUltimoTituloTreino(@Param("codigoTreino") Long codigoTreino);
 	
+	@Query("SELECT te FROM TreinoExercicio te LEFT JOIN te.exercicio WHERE te.treino = :treino AND te.titulo = :titulo")
+	public List<TreinoExercicio> buscaExercicioPorDia(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
 
 }

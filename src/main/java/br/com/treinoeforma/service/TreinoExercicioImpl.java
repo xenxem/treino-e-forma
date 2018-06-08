@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import br.com.treinoeforma.model.Titulo;
+import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.repository.TreinoExercicioRepository;
@@ -68,7 +70,10 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+		
+	public List<TreinoExercicio> buscaExercicioPorDia(@Param("treino") Treino treino, @Param("titulo") Titulo titulo){
+		return this.treinoExercicioRepository.buscaExercicioPorDia(treino, titulo);
+	}
 	
 	
 			

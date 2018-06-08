@@ -52,6 +52,7 @@ public class TreinoExercicioController {
 	
 	@RequestMapping(method = RequestMethod.GET, path="/montar")
 	public ModelAndView mostrar(@RequestParam("codigoTreino") Long codigoTreino, @RequestParam("codigoTitulo") Long codigoTitulo){
+					
 		 
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		 ModelAndView mv = new ModelAndView("treino/form-treino");
@@ -74,10 +75,10 @@ public class TreinoExercicioController {
 		 
 		 Treino treino = this.treinoImpl.buscar(codigoTreino);
 		 Titulo titulo;
-		 
+		 		 		 
 		 if (codigoTitulo == null) {titulo = listaTe.get(0).getTitulo();}
-		 else { titulo = this.tituloImpl.buscar(codigoTitulo);}
-		 
+		 else{ titulo = this.tituloImpl.buscar(codigoTitulo);}
+				 
 		 String dataFormatada = df.format(treino.getData().getTime());
 		 		 		 
 		 mv.addObject("treino",treino);
@@ -165,7 +166,7 @@ public class TreinoExercicioController {
 				
 		codigosSelecionados = Arrays.stream(listaDeIds).collect(Collectors.joining(","));
 		
-		mv = new ModelAndView("treino/form-seleciona-exercicio");
+		mv = new ModelAndView("treino/form-exercicio");
 		mv.addObject("descricao",descricao);
 		mv.addObject("data",data);
 		mv.addObject("titulos",titulos);		
@@ -188,7 +189,7 @@ public class TreinoExercicioController {
 		
 		List<Titulo> titulos = this.tituloImpl.listar();
 		
-		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		ModelAndView mv = new ModelAndView("treino/form-exercicio");
 		mv.addObject("descricao",descricao);
 		mv.addObject("data",data);
 		mv.addObject("treino",treino);
@@ -208,7 +209,7 @@ public class TreinoExercicioController {
 		
 		List<Exercicio> exercicios = this.exercicioImpl.listar();
 		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		ModelAndView mv = new ModelAndView("treino/form-exercicio");
 		mv.addObject("exercicios",exercicios);
 		mv.addObject("grupoMuscular",grupoMuscular);		
 		mv.addObject(new Exercicio());
@@ -220,7 +221,7 @@ public class TreinoExercicioController {
 		
 		List<Exercicio> exercicios = this.exercicioImpl.listar();
 		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form-seleciona-exercicio");
+		ModelAndView mv = new ModelAndView("treino/form-exercicio");
 		mv.addObject("exercicios",exercicios);
 		mv.addObject("grupoMuscular",grupoMuscular);		
 		mv.addObject(new Exercicio());
