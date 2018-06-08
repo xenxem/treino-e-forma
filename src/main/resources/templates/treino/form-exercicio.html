@@ -52,7 +52,7 @@
 								   	  </select>
 								    </div>
 								    <div class="form-group col-md-4">
-										 <select name="basic[]" multiple="multiple" class="3col active" id="basic">									 	 
+										 <select name="exercicios[]" multiple="multiple" class="3col active" id="exercicios">									 	 
 										        <option value="AL">Alabama</option>
 										        <option value="AK">Alaska</option>
 										        <option value="AZ">Arizona</option>
@@ -103,6 +103,11 @@
 			
 			$("#titulo").on("change",function(){				
 				console.log($(this).val());
+			});
+			
+			
+			$("#salvar").on("click",function(){				
+				console.log($("#exercicios").val());
 			});
 			
 			$("#adicionar").on("click",function(){
