@@ -19,17 +19,14 @@
 	<form name="form" th:action="@{/salvar}" id="form" th:object="${treinoExercicio}">
 	
 	<div class="panel panel-default">
-		<div class="panel panel-info">
-			<div class="panel-heading"> <h4>Novo treino</h4></div>
-		</div>
+	
 		<div class="panel-body">
-			
 				<div class="form-group">
-			      <label for="titulo"><span><h4>Nome do treino</h4></span></label>
+			      <label for="titulo">Nome do treino</label>
 			      <input type="text" class="form-control" name="descricao" id="descricao" required="required" placeholder="Digite o nome do treino aqui..." th:field="*{treino.descricao}"> 	
 			    </div>
 			    <div class="form-group">
-			      <label for="titulo"><span><h4>Data de vencimento</h4></span></label>
+			      <label for="titulo">Data de vencimento</label>
 			      <input type="date" class="form-control" name="data" id="data"  required="required"  th:value="*{#calendars.format(treino.data, 'yyyy-MM-dd')}"> 	
 			    </div>		
 			    
@@ -39,8 +36,8 @@
 					   <div class="modal-content">
 							<div class="modal-header">
 							   <button type="button" class="close" data-dismiss="modal">&times;</button>							   
-							   <h4 class="modal-title">Exercícios</h4>
-							   <div class="mensagem-aviso"></div>	
+							   <h4 class="modal-title">Cadastrar Exercício</h4>
+							   <div class="mensagem-aviso"><small>Escolha um título e um exercício para cadastro</small></div>	
 							 </div>					 
 							 <div class="modal-body">
 							 	<div class="form-row">
@@ -67,15 +64,13 @@
 					</div>	
 				</div>		   
 					
-				 				
-				
-						<!--						
-						<input type="hidden" name="codigoTreino" id="codigoTreino" th:if="${treino.id != null}" th:value="${treino.id}">						
-						-->	
-						<input type="hidden" name="treino.codigo" id="treino.codigo" th:field="*{treino.id}">
-						<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar </button>
-						<button type="button" class="btn btn-info btn-sm" id="adicionar">Adicionar exercício</button>
-						<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+				<!--						
+				<input type="hidden" name="codigoTreino" id="codigoTreino" th:if="${treino.id != null}" th:value="${treino.id}">						
+				-->	
+				<input type="hidden" name="treino.codigo" id="treino.codigo" th:field="*{treino.id}">
+				<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar </button>
+				<button type="button" class="btn btn-info btn-sm" id="adicionar">Adicionar exercício</button>
+				<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 				
 				
 				   
@@ -152,10 +147,9 @@
 			            onOptionClick : function( element, option ){			            	
 			            	console.log(option.checked);
 			            }
-			        });
-				
-				 $("#myModal").modal("show");
-				 
+			        });				
+				 $("#myModal").modal("show");				 
+				 $(this).text("Adicionar mais exercícios...");
 			});
 			
 			/*
