@@ -25,7 +25,7 @@
 					   <div class="mensagem-aviso"></div>	
 					 </div>
 					 <div class="modal-body">
-					 	<form class="form-horizontal" role="form" th:action="@{/salvar}" method="POST" th:object="${exercicio}">
+					 	<form id="form" class="form-horizontal" role="form" th:action="@{/salvar}" method="POST" th:object="${exercicio}">
 			              <!-- Basic inputs -->
 			              <div class="panel panel-default">
 			                <div class="panel-body">
@@ -44,8 +44,7 @@
 			            		 		</select>                                
 			 						</div>
 							    </div>
-			                    <div class="form-actions text-left">
-			                    	 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-check"></span> Salvar</button>
+			                    <div class="form-actions text-left">			                    	 
 			                     	<input type="hidden" id="id" name="id" th:field="*{id}" />
 			                     	<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			                	</div>
@@ -54,8 +53,9 @@
 			              </div>
 			   		    </form>
 					  </div>					  						 	
-					 <div class="modal-footer">						 	
-					   	<button id="cmdFechar" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>					   	
+					 <div class="modal-footer">						
+					 	<button type="submit" class="btn btn-info" id="salvar"><span class="glyphicon glyphicon-check"></span> Salvar</button> 	
+					   	<!-- <button id="cmdFechar" type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>-->					   	
 					 </div>
 			   </div>			   				   				   
 			</div>	
@@ -143,6 +143,10 @@
 			
 			//var header = $("meta[name='_csrf_header']").attr("content");
 			
+			$("#salvar").on("click",function(){
+				$("#form").submit();
+			});
+			
 				
 			/**  alterando um item */
 			
@@ -188,7 +192,7 @@
 			            	type:'post',
 			            	data:{"term":request.term,"_csrf":_csrf_param},
 			            	dataType:'json',
-			            	success:function(data){			            					            		
+			            	success:function(data){			            		
 			            		response($.map(data,function(item){			            			
 			            			return{
 			            				label:item.descricao +' '+ '('+item.grupoMuscular.nome+')',
@@ -214,7 +218,9 @@
 			    $("#table tbody tr").on('click','a',function(event) {
 				      if ($(this).attr('class').indexOf('exclui') != -1){	
 			    		console.log($(this).attr("id"));
-			    		console.log($(this).closest('tr').remove());	
+			    		var id = $(this).attr("id");
+			    		//console.log($(this).closest('tr').remove());
+			    		var item = $(this).closest('tr');			    		
 			    		$.confirm({
 						    title: 'Atenção!',
 						    content: 'Deseja realmente excluir este item?',
@@ -225,18 +231,17 @@
 						    autoClose:'Não|10000',		
 						    buttons: {
 						        Sim: function () {	
-						        	/*
 						        	$.ajax({
-										url:'/gestao-academia/excluirAjax',
-										data:{"id":exercicioCodigo},
-										type:'post',
+										url:'/treinoeforma/excluirXHR',
+										data:{"id":id},
+										type:'get',
 										dataType:'html',
 										success:function(data){
-											table.row(linha.parents('tr')).remove().draw();
+											item.remove();
 											//$.alert('Dados excluídos com sucesso!');
 										}
 									});
-						        	*/
+						        	
 						        },
 						        Não: function () {
 						            //$.alert('Operação cancelada!');

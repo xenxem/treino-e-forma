@@ -13,11 +13,59 @@
 	</h1>
 	 -->
 	
-<div layout:fragment="content">				
+<div layout:fragment="content">		
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">				
+					<div class="modal-dialog">				  
+					  <!-- Modal content-->
+					   <div class="modal-content">
+							<div class="modal-header">
+							   <button type="button" class="close" data-dismiss="modal">&times;</button>
+							   <h4 class="modal-title"> Alterar exercício</h4>
+							   <div class="mensagem-aviso"></div>	
+							 </div>
+							 <div class="modal-body">
+							 	<form class="form-horizontal" role="form" th:action="@{/salvar}" method="POST" th:object="${exercicio}">
+					              <!-- Basic inputs -->
+					              <div class="panel panel-default">
+					                <div class="panel-body">
+						                <div class="form-group">
+						                   <label class="col-sm-2 control-label">Descrição </label> 
+						                   <div class="col-sm-10">	                      
+						                     <input id="descricao" type="text" required="required" min="3" class="form-control" placeholder="descreva o exercício" th:field="*{descricao}" />
+						                   </div>
+						                </div>
+					  					<div class="form-group">
+											<label class="col-sm-2 control-label">Grupo muscular </label>
+											<div class="col-sm-10">
+					                            <select th:field="*{grupoMuscular}" id="grupoMuscular" required="required"  class="form-control"> 
+					                           		<option th:value="''"></option>                              			                               			
+					                				<option th:each="grupoMuscular : ${grupoMuscular}" th:value="${grupoMuscular.id}" th:text="${grupoMuscular.nome}"></option>                						                						                						
+					            		 		</select>                                
+					 						</div>
+									    </div>
+					                    <div class="form-actions text-left">
+					                    	 
+					                     	<input type="hidden" id="id" name="id" th:field="*{id}" />
+					                     	<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					                	</div>
+										<br/>
+					                </div>
+					              </div>
+					   		    </form>
+							  </div>					  						 	
+							 <div class="modal-footer">
+							 	<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-check"></span> Salvar</button>						 	
+							   	<!-- <button id="cmdFechar" type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>-->					   	
+							 </div>
+					   </div>			   				   				   
+					</div>	
+				</div>
+							
 				<form id="form" th:action="@{/montar}">
 					<div class="panel panel-info">
 	  						<div class="panel-heading"> <h4>Ficha de Treino</h4> 
-	  							<button id="esconderPainel" class="btn btn-info btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Esconder painel</button>
+	  							<!-- <button id="esconderPainel" class="btn btn-info btn-md" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Esconder painel</button> -->
 	  						</div>  	
 	  						<div class="collapse.in" id="collapseExample">						
 	  							<div class="panel-body">
@@ -46,10 +94,10 @@
 									<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 									
 									
-									<a class="btn btn-info btn-sm" th:href="@{/excluir}" role="button">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></a>
-									<a class="btn btn-info btn-sm" th:href="@{/alterar}" role="button">Alterar <span class="glyphicon glyphicon-ok"></span></a>
-									<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button">Novo <span class="glyphicon glyphicon-plus"></span></a>
-									<a class="btn btn-info btn-sm" th:href="@{/pdf}" role="button">pdf <span class="glyphicon glyphicon-save"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/excluir}" role="button" id="excluir">Excluir treino <span class="glyphicon glyphicon-trash glyphicon"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/alterar}" role="button" id="alterar">Alterar dados do treino <span class="glyphicon glyphicon-ok"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button">Novo treino <span class="glyphicon glyphicon-plus"></span></a>
+									<a class="btn btn-info btn-sm" th:href="@{/pdf}" role="button" id="pdf">Gerar em PDF <span class="glyphicon glyphicon-save"></span></a>
 									
 									<!--
 								    <button name="action" id="excluir" class="btn btn-default btn-sm" value="excluir" title="Exclui o treino atual selecionado">Excluir <span class="glyphicon glyphicon-trash glyphicon"></span></button>
@@ -64,7 +112,7 @@
 					<div class="panel-body">
 						<div class="form-group">
 					    	<label for="treinos"><span><h4>Grade de exercícios</h4></span></label>
-				      		<select   name="titulos" class="selectpicker form-control" id="titulos">
+				      		<select   name="titulos" class="selectpicker form-control"  id="titulos">
 				       			<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>
 				       			
 				   	  		</select>
@@ -74,18 +122,22 @@
 				            <tr>					                
 								<th><h3><small>Descrição</small></h3></th>
 								<th><h3><small>Grupo muscular</small></h3></th>
-												                
+								<th><h3><small></small></h3></th>												                
 				            </tr>
 				        	</thead>		
 							 <tbody>
-							 	<tr><td colspan="2" align="center" th:text="${titulo.descricao}">DIA1</td></tr>				 	
+							 	<tr><td colspan="3" align="center" th:text="${titulo.descricao}">DIA1</td></tr>				 	
 							 	<tr th:each="e : ${listaExercicios}">			 		
 							 		<td>	
-							 			<a th:href="@{/editar/{id}(id=${e.id})}" th:id="${e.id}" class="edita"><span th:text="${e.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+							 			<a th:href="@{/editarExercicioTreino/{id}(id=${e.id})}" th:id="${e.id}" class="edita"><span th:text="${e.descricao}">Supino reto 4x10 + Cross over RM</span></a>
 							 		</td>
 							 		<td>
-							 			<a th:href="@{/editar/{id}(id=${e.id})}" th:id="${e.id}" class="edita"><span th:text="${e.grupoMuscular.nome}">grupo muscular</span></a>
+							 			<a th:href="@{/editarExercicioTreino/{id}(id=${e.id})}" th:id="${e.id}" class="edita"><span th:text="${e.grupoMuscular.nome}">grupo muscular</span></a>
 							 		</td>
+							 		<td class="text-center">							 										 			
+										<a th:href="@{/excluirExercicioTreino/{id}(id=${e.id})}" th:id="${e.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
+										<a th:href="@{/editarExercicioTreino/{id}(id=${e.id})}"  th:id="${e.id}" class="btn btn-info btn-xs edita" role="button" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>								
+					 				</td>
 							 	</tr>
 							 </tbody> 
 						</table>
@@ -111,6 +163,42 @@ jQuery(function(){
 		$("#form").submit();
 	});	
 	
+	$("#excluir").on("click",function(){
+		$.alert({
+		    title: 'Atenção:',
+		    content: "Funcionalidade ainda em construção...",
+		    type:'blue',
+		    icon: 'glyphicon glyphicon-info-sign',
+		    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+		    closeIcon: true
+		});					
+		return false;		
+	});
+	
+	$("#pdf").on("click",function(){
+		$.alert({
+		    title: 'Atenção:',
+		    content: "Funcionalidade ainda em construção...",
+		    type:'blue',
+		    icon: 'glyphicon glyphicon-info-sign',
+		    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+		    closeIcon: true
+		});					
+		return false;		
+	});
+	
+	$("#alterar").on("click",function(){
+		$.alert({
+		    title: 'Atenção:',
+		    content: "Funcionalidade ainda em construção...",
+		    type:'blue',
+		    icon: 'glyphicon glyphicon-info-sign',
+		    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+		    closeIcon: true
+		});					
+		return false;		
+	});
+	
 	
 	$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
 	$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
@@ -121,6 +209,74 @@ jQuery(function(){
 				$(this).remove();
 		});
 	*/
+	
+	/**  alterando um item */
+	
+	  $(".edita").on("click",function(event){	
+		  /*
+			 $.ajax({
+				url:'/treinoeforma/editarExercicioTreino',
+				data:{"id":$(this).attr("id")},
+				type:'get',
+				dataType:'json',
+				success:function(data){						
+					//$.each(data,function(chave,valor){							
+						$("#id").val(data['id']);
+						$("#descricao").val(data['descricao']);
+						$("#grupoMuscular").find("option").each(function(i,obj){
+							if (data['grupoMuscular'].id === i)
+									obj.selected = true;
+						});							
+						mudaTituloModal('Alterar exercício');
+						$("#myModal").modal("show");
+					//});
+				}
+			});
+			  */
+				$("#myModal").modal("show");  
+			event.preventDefault();
+		});
+	
+	  /** Excluindo uma linha */			    	
+  	
+	    $("#table tbody tr").on('click','a',function(event) {
+		      if ($(this).attr('class').indexOf('exclui') != -1){	
+	    		console.log($(this).attr("id"));
+	    		var id = $(this).attr("id");
+	    		//console.log($(this).closest('tr').remove());
+	    		var item = $(this).closest('tr');			    		
+	    		$.confirm({
+				    title: 'Atenção!',
+				    content: 'Deseja realmente excluir este item?',
+				    type:'blue',
+				    icon: 'glyphicon glyphicon-info-sign',
+				    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+				    closeIcon: true,
+				    autoClose:'Não|10000',		
+				    buttons: {
+				        Sim: function () {
+				        	/*
+				        	$.ajax({
+								url:'/treinoeforma/excluirXHR',
+								data:{"id":id},
+								type:'get',
+								dataType:'html',
+								success:function(data){
+									item.remove();
+									//$.alert('Dados excluídos com sucesso!');
+								}
+							});
+				        	*/
+				        	
+				        },
+				        Não: function () {
+				            //$.alert('Operação cancelada!');
+				        }
+				    }
+				});
+		    	event.preventDefault();
+		      }
+		 });
 		
 });			
 </script>

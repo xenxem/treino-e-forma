@@ -3,11 +3,9 @@ package br.com.treinoeforma.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,6 +82,7 @@ public class TreinoExercicioController {
 		 mv.addObject("treino",treino);
 		 mv.addObject("titulo",titulo);		 
 		 mv.addObject("listaTe",listaTe);
+		 mv.addObject("exercicio",new Exercicio());
 		 mv.addObject("data",dataFormatada);		 
 		 mv.addObject("titulosDoTreino",titulosDoTreino);
 		 mv.addObject("listaExercicios",listaExercicios);
@@ -92,10 +91,28 @@ public class TreinoExercicioController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/salvar")
-	public ModelAndView salvar(HttpServletRequest request) throws ParseException {
+	public ModelAndView salvar(HttpServletRequest request,TreinoExercicio te) throws ParseException {
 		
 		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		c.setTime(df.parse(request.getParameter("data")));		
+		
+		Treino treino = te.getTreino();
+		treino.setData(c);
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(usuarioAutenticado.getId());
+		treino.setUsuario(usuario);		
+		
+		
+		treino = this.treinoImpl.salvar(treino);
+		
+		te.setTreino(treino);		
+		te = this.treinoExercicioImpl.salvar(te);
+		
+		/*
 		String data = request.getParameter("data");
 		String tituloId = request.getParameter("titulo");
 		String descricao = request.getParameter("descricao");		
@@ -171,7 +188,16 @@ public class TreinoExercicioController {
 		mv.addObject("data",data);
 		mv.addObject("titulos",titulos);		
 		mv.addObject("treino",treino);
-		mv.addObject("codigosSelecionados",codigosSelecionados);	
+		mv.addObject("codigosSelecionados",codigosSelecionados);
+		*/	
+		
+		List<Titulo> titulos = this.tituloImpl.listar();
+		List<Exercicio> exercicios = this.exercicioImpl.listar();
+		
+		ModelAndView mv = new ModelAndView("treino/form-exercicio");
+		mv.addObject("treinoExercicio",te);
+		mv.addObject("titulos",titulos);
+		mv.addObject("exercicios",exercicios);		
 		return mv;
 	}
 	
@@ -182,31 +208,37 @@ public class TreinoExercicioController {
 		//String codigoExercicio = request.getParameter("codigoExercicio");		
 		//List<String> lista = Arrays.asList(hidExercicio.split(","));
 		
-		String data = ""; 
-		String descricao = "";		
-		String codigosSelecionados = "";
+		TreinoExercicio te = new TreinoExercicio();
 		Treino treino = new Treino();
+		Titulo titulo = new Titulo();
+		titulo.setId(1l);
+		te.setTitulo(titulo);
 		
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		treino.setData(c);
+		te.setTreino(treino);
+				
 		List<Titulo> titulos = this.tituloImpl.listar();
+		List<Exercicio> exercicios = this.exercicioImpl.listar();
 		
 		ModelAndView mv = new ModelAndView("treino/form-exercicio");
-		mv.addObject("descricao",descricao);
-		mv.addObject("data",data);
-		mv.addObject("treino",treino);
-		mv.addObject("titulos",titulos);		
-		mv.addObject("codigosSelecionados",codigosSelecionados);	
+		mv.addObject("treinoExercicio",te);
+		mv.addObject("titulos",titulos);
+		mv.addObject("exercicios",exercicios);		
 		return mv;
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.GET, path="/alterar")
+	@RequestMapping(method = RequestMethod.GET, path="/editarExercicioTreino")
 	public String alterar(Model model) {
+		System.out.println("altera");
 		return "treino/form-seleciona-exercicio";		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/excluir")
+	@RequestMapping(method = RequestMethod.GET, path="/excluirExercicioTreino")
 	public ModelAndView excluir() {
-		
+		System.out.println("exclui");
 		List<Exercicio> exercicios = this.exercicioImpl.listar();
 		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
 		ModelAndView mv = new ModelAndView("treino/form-exercicio");

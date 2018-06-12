@@ -48,6 +48,8 @@ public class TreinoController {
 		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();		 		 
 		 Long codigoUltimoTreino = this.treinoImpl.buscaUltimo(usuarioAutenticado.getId());
 		 
+		 Exercicio exercicio = new Exercicio();
+		 
 		 if (codigoUltimoTreino != null) {
 			 
 			 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoUltimoTreino);			 
@@ -62,7 +64,8 @@ public class TreinoController {
 			 		 
 			 mv.addObject("treino",treino);
 			 mv.addObject("titulo",titulo);
-			 mv.addObject("listaTe",listaTe);		 
+			 mv.addObject("listaTe",listaTe);
+			 mv.addObject("exercicio",exercicio);
 			 mv.addObject("titulosDoTreino",titulosDoTreino);
 			 mv.addObject("listaExercicios",listaExercicios);
 			 mv.addObject("data",df.format(treino.getData().getTime()));
@@ -73,6 +76,7 @@ public class TreinoController {
 		 
 		 mv.addObject("treino",new Treino());
 		 mv.addObject("titulo",new Titulo());
+		 mv.addObject("exercicio",exercicio);
 		 mv.addObject("listaTe",new ArrayList<TreinoExercicio>());		 
 		 mv.addObject("titulosDoTreino",new ArrayList<Titulo>());
 		 mv.addObject("exerciciosPorTitulo",new ArrayList<Exercicio>());

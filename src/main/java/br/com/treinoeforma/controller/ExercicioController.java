@@ -61,7 +61,7 @@ public class ExercicioController {
 		if (pCodigoTreino == null)			
 			exercicios = this.exercicioImpl.listar();
 		else {			
-			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(1l,3l);
+			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(),3l);
 			exercicios = exercicioImpl.buscaExercicioNaoCadastrado(exercicios);			
 		}
 			
