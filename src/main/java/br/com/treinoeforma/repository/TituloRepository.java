@@ -13,16 +13,26 @@ import br.com.treinoeforma.model.Titulo;
 @Repository
 public interface TituloRepository extends JpaRepository<Titulo, Long> {
 	
-	@Query("select te.titulo from TreinoExercicio te where te.treino.id=:codigo group by te.titulo")
+	@Query("SELECT te.titulo "
+			+ "FROM TreinoExercicio te "
+			+ "WHERE te.treino.id=:codigo GROUP BY te.titulo")
 	public List<Titulo> buscaTitulosPorTreino(@Param("codigo") Long codigo);
 	
-	@Query("select te.exercicio from TreinoExercicio te where te.treino.id =:codigoTreino and te.titulo.id = :codigoTitulo ")
+	@Query("SELECT te.exercicio "
+			+ "FROM TreinoExercicio te "
+			+ "WHERE te.treino.id =:codigoTreino "
+			+ "AND te.titulo.id = :codigoTitulo ")
 	public List<Exercicio> buscaExerciciosPorTitulo(@Param("codigoTreino") Long codigoTreino,@Param("codigoTitulo") Long codigoTitulo);
 	
-	@Query("select te.titulo from TreinoExercicio te where te.treino.usuario.id =:codigoUsuario group by te.titulo.id order by te.titulo.id desc")
+	@Query("SELECT te.titulo FROM TreinoExercicio te "
+			+ "WHERE te.treino.usuario.id =:codigoUsuario "
+			+ "GROUP BY te.titulo.id "
+			+ " ORDER BY te.titulo.id DESC")
 	public List<Titulo> listaTitulosDoTreino(@Param("codigoUsuario") Long codigoUsuario);
 	
-	@Query("select te.exercicio from TreinoExercicio te where te.treino.id=:codigo")
+	@Query("SELECT te.exercicio "
+			+ "FROM TreinoExercicio te "
+			+ "WHERE te.treino.id=:codigo")
 	public List<Titulo> buscaExerciciosPorTreino(@Param("codigo") Long codigo);
 	
 }

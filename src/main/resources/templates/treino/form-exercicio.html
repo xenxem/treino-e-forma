@@ -18,9 +18,12 @@
 <div layout:fragment="content">
 	<form name="form" th:action="@{/salvar}" id="form" th:object="${treinoExercicio}">
 	
-	<div class="panel panel-default">
 	
-		<div class="panel-body">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">Cadastro do Treino</h3>
+	  	</div>	  
+		<div class="panel-body">		
 				<div class="form-group">
 			      <label for="titulo">Nome do treino</label>
 			      <input type="text" class="form-control" name="descricao" id="descricao" required="required" placeholder="Digite o nome do treino aqui..." th:field="*{treino.descricao}"> 	
@@ -68,15 +71,42 @@
 				<input type="hidden" name="codigoTreino" id="codigoTreino" th:if="${treino.id != null}" th:value="${treino.id}">						
 				-->	
 				<input type="hidden" name="treino.codigo" id="treino.codigo" th:field="*{treino.id}">
-				<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar </button>
-				<button type="button" class="btn btn-info btn-sm" id="adicionar">Adicionar exercício</button>
+				<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar para tela de treino <span class="glyphicon glyphicon-arrow-left"></span></button>
+				<button type="button" class="btn btn-info btn-sm" id="adicionar">Adicionar exercício <span class="glyphicon glyphicon-plus"></span></button>				
 				<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 				
-				
-				   
-	 	</div>
+				<table class="table table-striped" id="table"> 
+					<thead>
+		            <tr>					                
+						<th><h3><small>Descrição</small></h3></th>
+						<th><h3><small>Grupo muscular</small></h3></th>
+						<th><h3><small></small></h3></th>												                
+		            </tr>
+		        	</thead>		
+					 <tbody>					 	
+					 	<th:block th:each="t : ${titulosDoTreino}">
+						 	<tr><td colspan="3" align="left" th:text="${t.descricao}"></td></tr>					 	
+						 	<tr th:each="te : ${listaTe}" th:if="${te.titulo.id == t.id}">
+						 		<td>	
+						 			<a th:href="@{/editarExercicioTreino/{id}(id=${te.exercicio.id})}" th:id="${te.exercicio.id}" class="edita"><span th:text="${te.exercicio.descricao}">Supino reto 4x10 + Cross over RM</span></a>
+						 		</td>
+						 		<td>
+						 			<a th:href="@{/editarExercicioTreino/{id}(id=${te.exercicio.id})}" th:id="${te.exercicio.id}" class="edita"><span th:text="${te.exercicio.grupoMuscular.nome}">grupo muscular</span></a>
+						 		</td>					 		
+						 		<td class="text-center">							 										 			
+									<a th:href="@{/excluirExercicioTreino/{id}(id=${te.exercicio.id})}" th:id="${te.exercicio.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
+									<a th:href="@{/editarExercicioTreino/{id}(id=${te.exercicio.id})}"  th:id="${te.exercicio.id}" class="btn btn-info btn-xs edita" role="button" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>								
+				 				</td>
+						 	</tr>
+					 	</th:block>
+					 	
+					 </tbody> 
+				</table>
+	   </div>	
 	</div>
-</form>										
+</form>			
+				
+							
 </div><!-- ./content -->	
 
 <!-- JQuery -->	
@@ -95,8 +125,7 @@
 			});
 			
 			
-			$("#salvar").on("click",function(){				
-				console.log($("#exercicios").val());
+			$("#salvar").on("click",function(){
 				/*
 	        	$.ajax({
 					url:'/gestao-academia/excluirAjax',
@@ -108,7 +137,7 @@
 					}
 				});
 	        	*/
-			});
+	        });
 			
 			$("#adicionar").on("click",function(){
 				
@@ -148,8 +177,7 @@
 			            	console.log(option.checked);
 			            }
 			        });				
-				 $("#myModal").modal("show");				 
-				 $(this).text("Adicionar mais exercícios...");
+				 $("#myModal").modal("show");
 			});
 			
 			/*
@@ -282,8 +310,6 @@
 					console.log($("#codigosParaExclusao").val());
 					
 				}
-				
-				
 					    
 			});		
 			*/

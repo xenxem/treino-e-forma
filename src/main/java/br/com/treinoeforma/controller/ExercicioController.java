@@ -60,8 +60,8 @@ public class ExercicioController {
 		
 		if (pCodigoTreino == null)			
 			exercicios = this.exercicioImpl.listar();
-		else {			
-			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(),3l);
+		else {
+			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(),Long.parseLong(pCodigoTreino));
 			exercicios = exercicioImpl.buscaExercicioNaoCadastrado(exercicios);			
 		}
 			

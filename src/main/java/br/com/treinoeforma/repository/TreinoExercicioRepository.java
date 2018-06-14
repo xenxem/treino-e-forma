@@ -16,20 +16,31 @@ import br.com.treinoeforma.model.TreinoExercicioDTO;
 public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio,Long> {
 		
 	
-	@Query("select te from TreinoExercicio te where te.treino.usuario.id = :codigoUsuario group by te.treino order by te desc  ")
+	@Query("SELECT te FROM TreinoExercicio te "
+			+ "WHERE te.treino.usuario.id = :codigoUsuario "
+			+ "GROUP BY te.treino ORDER BY te DESC  ")
 	public List<TreinoExercicio> listarTreinoExercicioAgrupado(@Param("codigoUsuario") Long codigoUsuario);
 	
-	@Query("select te from TreinoExercicio te group by te.titulo")
+	@Query("SELECT te FROM TreinoExercicio te "
+			+ "GROUP BY te.titulo")
 	public List<TreinoExercicio> listarTituloAgrupado();
 	
-	@Query("select te from TreinoExercicio te where te.treino.id = :codigo and te.treino.usuario.id = :codigoUsuario")
+	@Query("SELECT te FROM TreinoExercicio te "
+			+ "WHERE te.treino.id = :codigo "
+			+ "AND te.treino.usuario.id = :codigoUsuario "
+			+ "ORDER BY te,te.titulo,te.exercicio")
 	public List<TreinoExercicio> buscaTreinoPorCodigo(@Param("codigo") Long codigo,@Param("codigoUsuario") Long codigoUsuario);
 	
-	@Query("SELECT NEW br.com.treinoeforma.model.TreinoExercicioDTO(te.treino, te.exercicio, te.titulo, MAX(te.titulo.id)) FROM TreinoExercicio te " + 
-			"WHERE te.treino.id = :codigoTreino GROUP BY te.treino")
+	@Query("SELECT NEW br.com.treinoeforma.model.TreinoExercicioDTO(te.treino, te.exercicio, te.titulo, MAX(te.titulo.id)) "
+			+ "FROM TreinoExercicio te " + 
+			"WHERE te.treino.id = :codigoTreino "
+			+ "GROUP BY te.treino")
 	public List<TreinoExercicioDTO> buscaUltimoTituloTreino(@Param("codigoTreino") Long codigoTreino);
 	
-	@Query("SELECT te FROM TreinoExercicio te LEFT JOIN te.exercicio WHERE te.treino = :treino AND te.titulo = :titulo")
+	@Query("SELECT te FROM TreinoExercicio te "
+			+ "LEFT JOIN te.exercicio "
+			+ "WHERE te.treino = :treino "
+			+ "AND te.titulo = :titulo")
 	public List<TreinoExercicio> buscaExercicioPorDia(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
 
 }

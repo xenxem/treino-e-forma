@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,14 +105,36 @@ public class TreinoExercicioController {
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(usuarioAutenticado.getId());
-		treino.setUsuario(usuario);		
-		
+		treino.setUsuario(usuario);	
 		
 		treino = this.treinoImpl.salvar(treino);
 		
 		te.setTreino(treino);		
 		te = this.treinoExercicioImpl.salvar(te);
 		
+		List<TreinoExercicio> listaTe = this.treinoExercicioImpl.buscaTreinoPorCodigo(treino.getId(), usuarioAutenticado.getId());
+		List<Exercicio> listaExercicios1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treino.getId());
+		List<Exercicio> exercicios = exercicioImpl.buscaExercicioNaoCadastrado(listaExercicios1);
+		List<Titulo> titulosDoTreino = this.tituloImpl.buscaTitulosPorTreino(treino.getId()); 
+		 
+		for (Iterator<Titulo> iterator = titulosDoTreino.iterator(); iterator.hasNext();) {
+			Titulo titulo = (Titulo) iterator.next();
+			System.out.println(titulo.getDescricao());
+			
+		}
+		
+		 List<Titulo> titulos = this.tituloImpl.listar();
+		 
+		 ModelAndView mv = new ModelAndView("treino/form-exercicio");		 
+		 mv.addObject("titulos",titulos);
+		 mv.addObject("listaTe",listaTe);
+		 mv.addObject("treinoExercicio",te);
+		 mv.addObject("exercicios",exercicios);		
+		 mv.addObject("titulosDoTreino",titulosDoTreino);
+		 //mv.addObject("listaExercicios",listaExercicios1);
+		 return mv;
+		 
+		 
 		/*
 		String data = request.getParameter("data");
 		String tituloId = request.getParameter("titulo");
@@ -191,14 +214,7 @@ public class TreinoExercicioController {
 		mv.addObject("codigosSelecionados",codigosSelecionados);
 		*/	
 		
-		List<Titulo> titulos = this.tituloImpl.listar();
-		List<Exercicio> exercicios = this.exercicioImpl.listar();
 		
-		ModelAndView mv = new ModelAndView("treino/form-exercicio");
-		mv.addObject("treinoExercicio",te);
-		mv.addObject("titulos",titulos);
-		mv.addObject("exercicios",exercicios);		
-		return mv;
 	}
 	
 	

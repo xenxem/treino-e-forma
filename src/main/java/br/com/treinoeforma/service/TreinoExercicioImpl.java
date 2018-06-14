@@ -57,7 +57,7 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		return null;
 	}
 	
-	public List<TreinoExercicio> bucaTreinoPorCodigo(Long codigo,Long codigoUsuario){
+	public List<TreinoExercicio> buscaTreinoPorCodigo(Long codigo,Long codigoUsuario){
 		return this.treinoExercicioRepository.buscaTreinoPorCodigo(codigo,codigoUsuario);
 	}
 	
