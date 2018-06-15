@@ -29,7 +29,7 @@
 							<div class="modal-header">
 							   <button type="button" class="close" data-dismiss="modal">&times;</button>							   
 							   <h4 class="modal-title">Incluir Exercício</h4>
-							   <div class="mensagem-aviso"><small>Escolha um título e um exercício para cadastro</small></div>	
+							   <div class="mensagem-aviso"><small></small></div>	
 							 </div>
 							 <!-- Basic inputs -->
 							  <div class="modal-body">
@@ -50,8 +50,7 @@
 									</div>
 								</div>
 							  </div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-info btn-md" id="salvar">Salvar</button>
+							<div class="modal-footer">								
 							</div>
 					   </div>			   				   				   
 					</div>	
@@ -102,6 +101,7 @@
 			$("#voltar").on("click",function(){
 				window.location.href ="/treinoeforma/treinos";
 			});
+						
 			
 			$("#adicionar").on("click",function(){
 				
@@ -129,6 +129,7 @@
 					return false;
 				}
 				
+				/*
 				 $('select[multiple].active.3col').multiselect({
 			            columns: 1,
 			            placeholder: 'Selecionar...',
@@ -141,10 +142,15 @@
 			            	console.log(option.checked);
 			            }
 			     });
+				*/
 				 
+				 $("#salvarAlteracao").remove();
+				 $("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvar','value':'Salvar'}).appendTo(".modal-footer");
+				 $(document).on("click","#salvar",function(){
+						$("#form").submit(); 
+				 });
 				 $("#titulo").attr("disabled",false);
-				 $("#myModal .modal-title").text("Incluir exercício");
-	   			 $("#myModal .mensagem-aviso").text("Escolha um novo exerício para inclusão e clique em salvar");
+				 $("#myModal .modal-title").text("Incluir exercício");	   			 
 				 $("#myModal").modal("show");
 			});
 			
@@ -190,30 +196,32 @@
 		    		  console.log(item.find(".grupo-muscular").text("grupo"));
 		    		  var id = $(this).attr("id");
 		    		  console.log(id);
-		    		  
-		    		  /*
-			   			 $.ajax({
-			   				url:'/treinoeforma/editarExercicioTreino',
-			   				data:{"id":$(this).attr("id")},
-			   				type:'get',
-			   				dataType:'json',
-			   				success:function(data){						
-			   					//$.each(data,function(chave,valor){							
-			   						$("#id").val(data['id']);
-			   						$("#descricao").val(data['descricao']);
-			   						$("#grupoMuscular").find("option").each(function(i,obj){
-			   							if (data['grupoMuscular'].id === i)
-			   									obj.selected = true;
-			   						});							
-			   						mudaTituloModal('Alterar exercício');
-			   						$("#myModal").modal("show");
-			   					//});
-			   				}
-			   			});
-			   			  */
+			   			$("#salvar").remove();
+						$("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvarAlteracao','value':'Salvar'}).appendTo(".modal-footer");
+						$(document).on("click","#salvarAlteracao",function(){
+							/*
+				   			 $.ajax({
+				   				url:'/treinoeforma/editarExercicioTreino',
+				   				data:{"id":$(this).attr("id")},
+				   				type:'get',
+				   				dataType:'json',
+				   				success:function(data){						
+				   					//$.each(data,function(chave,valor){							
+				   						$("#id").val(data['id']);
+				   						$("#descricao").val(data['descricao']);
+				   						$("#grupoMuscular").find("option").each(function(i,obj){
+				   							if (data['grupoMuscular'].id === i)
+				   									obj.selected = true;
+				   						});							
+				   						mudaTituloModal('Alterar exercício');
+				   						$("#myModal").modal("show");
+				   					//});
+				   				}
+				   			});
+				   			  */ 
+					 	});
 		   				$("#titulo").attr("disabled",true);  	
-		   			    $("#myModal .modal-title").text("Trocar exercício");
-		   			    $("#myModal .mensagem-aviso").text("Escolha e clique em salvar");
+		   			    $("#myModal .modal-title").text("Aletar exercício");		   			    
 		   				$("#myModal").modal("show");  
 			   			event.preventDefault();
 		    	}
