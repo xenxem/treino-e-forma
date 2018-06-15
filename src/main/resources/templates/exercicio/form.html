@@ -30,27 +30,24 @@
 			              <div class="panel panel-default">
 			                <div class="panel-body">
 				                <div class="form-group">
-				                   <label class="col-sm-2 control-label">Descrição </label> 
-				                   <div class="col-sm-10">	                      
-				                     <input id="descricao" type="text" required="required" min="3" class="form-control" placeholder="descreva o exercício" th:field="*{descricao}" />
-				                   </div>
+				                    <label for="descricao" class="control-label col-sm-2">Descrição </label>
+				                    <div class="col-sm-10 ">
+				                    	<input id="descricao" type="text" required="required" min="3" class="form-control" placeholder="descreva o exercício" th:field="*{descricao}" />
+				                    </div>
 				                </div>
 			  					<div class="form-group">
-									<label class="col-sm-2 control-label">Grupo muscular </label>
-									<div class="col-sm-10">
+									<label for="grupoMuscular" class="control-label col-sm-2">Grupo muscular </label>
+									<div class="col-sm-10 ">
 			                            <select th:field="*{grupoMuscular}" id="grupoMuscular" required="required"  class="form-control"> 
 			                           		<option th:value="''"></option>                              			                               			
 			                				<option th:each="grupoMuscular : ${grupoMuscular}" th:value="${grupoMuscular.id}" th:text="${grupoMuscular.nome}"></option>                						                						                						
-			            		 		</select>                                
-			 						</div>
+			            		 		</select>               
+		            		 		</div>                 
 							    </div>
-			                    <div class="form-actions text-left">			                    	 
-			                     	<input type="hidden" id="id" name="id" th:field="*{id}" />
-			                     	<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-			                	</div>
-								<br/>
 			                </div>
 			              </div>
+			              <input type="hidden" id="id" name="id" th:field="*{id}" />
+			              <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			   		    </form>
 					  </div>					  						 	
 					 <div class="modal-footer">						
@@ -217,9 +214,8 @@
 			    	
 			    $("#table tbody tr").on('click','a',function(event) {
 				      if ($(this).attr('class').indexOf('exclui') != -1){	
-			    		console.log($(this).attr("id"));
-			    		var id = $(this).attr("id");
-			    		//console.log($(this).closest('tr').remove());
+			    		
+			    		var id = $(this).attr("id");			    		
 			    		var item = $(this).closest('tr');			    		
 			    		$.confirm({
 						    title: 'Atenção!',
