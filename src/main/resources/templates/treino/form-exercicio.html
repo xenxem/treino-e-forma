@@ -100,8 +100,9 @@
 			//var _csrf_param = $("#_csrf_param").attr("value");			
 			$("#voltar").on("click",function(){
 				window.location.href ="/treinoeforma/treinos";
-			});
-						
+			});						
+			
+			/* Adicionando exercício */
 			
 			$("#adicionar").on("click",function(){
 				
@@ -154,10 +155,13 @@
 				 $("#myModal").modal("show");
 			});
 			
+			
 			$("#table tbody tr").on('click','a',function(event) {				
 				var item = $(this).closest('tr');								
+			
 				/* Excluindo um item */
-		    	if ($(this).attr('class').indexOf('exclui') != -1){
+		    	
+				if ($(this).attr('class').indexOf('exclui') != -1){
 		    		var id = $(this).attr("id");	    		
 		    		$.confirm({
 					    title: 'Atenção!',
@@ -192,6 +196,7 @@
 			      }
 		    	
 		    	/* Editando um item */
+		    	
 		    	if ($(this).attr('class').indexOf('edita') != -1){
 		    		  console.log(item.find(".grupo-muscular").text("grupo"));
 		    		  var id = $(this).attr("id");
