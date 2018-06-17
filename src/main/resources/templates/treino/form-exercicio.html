@@ -74,10 +74,10 @@
 						 	<tr><td colspan="3" align="center" th:text="${t.descricao}"></td></tr>					 	
 						 	<tr th:each="te : ${listaTe}" th:if="${te.titulo.id == t.id}">
 						 		<td>	
-						 			<span th:text="${te.exercicio.descricao}">Supino reto 4x10 + Cross over RM</span>
+						 			<span th:text="${te.exercicio.descricao}" class="exercicio-desc">Supino reto 4x10 + Cross over RM</span>
 						 		</td>
 						 		<td>
-						 			<span th:text="${te.exercicio.grupoMuscular.nome}">grupo muscular</span>
+						 			<span th:text="${te.exercicio.grupoMuscular.nome}" class="grupo-nome">grupo muscular</span>
 						 		</td>					 		
 						 		<td class="text-center">							 										 			
 									<a th:href="@{/treinoExercicioExcluir/{id}(id=${te.id})}" th:id="${te.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir exercício atual"><span class="glyphicon glyphicon-trash"></span></a>
@@ -205,8 +205,20 @@
 						$("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvarAlteracao','value':'Salvar'}).appendTo(".modal-footer");
 						$(document).on("click","#salvarAlteracao",function(){							
 								var exercicioId = $("#exercicio option:selected").val();
+								var exercicioDesc = $(".exercicio-desc").text();
+								var grupoNome = $(".grupo-nome").text();
 								var tituloId = $("#titulo option:selected").val();
 								var treinoId = $("#treinoId").val();
+								
+								var obj = {'id':id,
+											'exercicio':{'id':exercicioId,
+														 'descricao':exercicioDesc,
+														 'grupoMuscular':{'nome':grupoNome}
+														}
+										   }
+								
+								console.log(JSON.stringify(obj));
+								/*
 								$("#myModal").modal("hide");
 								$.ajax({
 				   				url:'/treinoeforma/editarTE',
@@ -224,8 +236,9 @@
 			   						//$("#descricao").val(data['descricao']);
 			   						//item.find(".grupo-muscular").text("grupo");
 				   					//item.find(".descricao-exercicio").text(data['descricao']);
-				   				}				   				
-				   			});
+				   				}
+				   				
+				   			});*/
 					 	});
 		   				$("#titulo").attr("disabled",true);  	
 		   			    $("#myModal .modal-title").text("Aletar exercício");		   			    
