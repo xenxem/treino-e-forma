@@ -11,6 +11,8 @@ public interface Crud<T> {
 	
 	void excluir(Long id);
 	
+	T alterar(T t);
+	
 	List<T> listar();
 	
 	T buscar(Long id);

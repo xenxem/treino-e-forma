@@ -54,6 +54,12 @@ public class TreinoImpl implements Crud<Treino> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Treino alterar(Treino t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

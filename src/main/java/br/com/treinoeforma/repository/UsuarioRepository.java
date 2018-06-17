@@ -13,8 +13,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	Usuario findByLogin(String login);
 	
 	@Modifying(clearAutomatically = true)
-	@Query("Update Usuario u Set u.senha=:senha "
-			+ "Where u.id=:id")	
+	@Query("UPDATE Usuario u "
+			+ "SET u.senha=:senha "
+			+ "WHERE u.id=:id")	
 	String alterarSenha(@Param("senha") String senha,@Param("id") Long id);
 	
 }

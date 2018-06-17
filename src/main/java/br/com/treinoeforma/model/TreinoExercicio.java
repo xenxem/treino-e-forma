@@ -1,7 +1,6 @@
 package br.com.treinoeforma.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,10 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class TreinoExercicio implements Serializable {
@@ -26,14 +23,17 @@ public class TreinoExercicio implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="treino_id")
+	@JsonManagedReference
 	private Treino treino;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="exercicio_id")
+	@JsonManagedReference
 	private Exercicio exercicio;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="titulo_id")	
+	@JoinColumn(name="titulo_id")
+	@JsonManagedReference
 	private Titulo titulo;
 	
 	

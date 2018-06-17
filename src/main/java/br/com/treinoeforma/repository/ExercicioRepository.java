@@ -30,18 +30,26 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
     		+ " WHERE e.descricao LIKE CONCAT('%',:descricao,'%')")    		
     List<Exercicio> listarPorNome(@Param("descricao") String descricao);	
 	
-	@Query("select te.exercicio from TreinoExercicio te "
-			+ "where te.treino.id =:codigoTreino and te.titulo.id = :codigoTitulo ")
-	public List<Exercicio> buscaExerciciosPorTitulo(@Param("codigoTreino") Long codigoTreino,@Param("codigoTitulo") Long codigoTitulo);
+	@Query("SELECT te.exercicio FROM TreinoExercicio te "
+			+ "WHERE te.treino.id =:treinoId "
+			+ "AND te.titulo.id = :tituloId ")
+	public List<Exercicio> buscaExerciciosPorTitulo(@Param("treinoId") Long treinoId,@Param("tituloId") Long tituloId);
 	
-	@Query("select te.exercicio from TreinoExercicio te where te.treino.usuario.id =:codigoUsuario "
-			+ "and te.treino.id =:codigoTreino")
-	public List<Exercicio> buscaExerciciosPorTreino(@Param("codigoUsuario") Long codigoUsuario, @Param("codigoTreino") Long codigoTreino);
+	@Query("SELECT te.exercicio "
+			+ "FROM TreinoExercicio te "
+			+ "WHERE te.treino.usuario.id =:usuarioId "
+			+ "AND te.treino.id =:treinoId")
+	public List<Exercicio> buscaExerciciosPorTreino(@Param("usuarioId") Long usuarioId, @Param("treinoId") Long treinoId);
 	
-	@Query("select e from Exercicio e where e.usuario.id = :id")
-	public Page<Exercicio> findById(@Param("id") Long id, Pageable pageabel);
+	@Query("SELECT e "
+			+ "FROM Exercicio e "
+			+ "WHERE e.usuario.id = :usuarioId")
+	public Page<Exercicio> findById(@Param("usuarioId") Long usuarioId, Pageable pageabel);
 	
-	@Query("SELECT e FROM Exercicio e WHERE e NOT IN (:exercicios) ORDER BY e.grupoMuscular")
+	@Query("SELECT e "
+			+ "FROM Exercicio e "
+			+ "WHERE e NOT IN (:exercicios) "
+			+ "ORDER BY e.descricao")
 	public List<Exercicio> buscaExercicioNaoCadastrado(@Param("exercicios") List<Exercicio> exercicios);
 			
 }

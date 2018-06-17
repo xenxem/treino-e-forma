@@ -48,6 +48,12 @@ public class UsuarioImpl implements Crud<Usuario>  {
 		return null;
 	}
 
+	@Override
+	public Usuario alterar(Usuario t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 		
 	

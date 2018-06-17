@@ -65,6 +65,12 @@ public class TituloImpl implements Crud<Titulo> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Titulo alterar(Titulo t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

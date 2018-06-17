@@ -73,8 +73,8 @@
 							      <label for="dataInicio">Data</label>
 							      <input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}">
 								</div>
-							    <input type="hidden" name="codigoTreino" id="codigoTreino">
-								<input type="hidden" name="codigoTitulo" id="codigoTitulo">									
+							    <input type="hidden" name="treinoId" id="treinoId">
+								<input type="hidden" name="tituloId" id="tituloId">									
 								<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 								<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button">Novo treino <span class="glyphicon glyphicon-plus"></span></a>
 								<a class="btn btn-info btn-sm" th:href="@{/pdf}" role="button" id="pdf">Gerar treino em PDF <span class="glyphicon glyphicon-download"></span></a>
@@ -131,14 +131,14 @@ jQuery(function(){
 	
 	
 	$("#treinos").on("change",function(){
-		$("#codigoTreino").val($(this).val());
-		$("#codigoTitulo").val("");		
+		$("#treinoId").val($(this).val());
+		$("#tituloId").val("");		
 		$("#form").submit();
 	});	
 	
 	$("#titulos").on("change",function(){
-		$("#codigoTitulo").val($(this).val());
-		$("#codigoTreino").val($("#treinos").val());		
+		$("#tituloId").val($(this).val());
+		$("#treinoId").val($("#treinos").val());		
 		$("#form").submit();
 	});	
 	

@@ -47,6 +47,12 @@ public class GrupoMuscularImpl implements Crud<GrupoMuscular> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public GrupoMuscular alterar(GrupoMuscular t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

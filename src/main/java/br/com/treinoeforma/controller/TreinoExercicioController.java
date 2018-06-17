@@ -9,15 +9,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.GrupoMuscular;
@@ -50,7 +54,7 @@ public class TreinoExercicioController {
 	private TreinoImpl treinoImpl;	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/montar")
-	public ModelAndView mostrar(@RequestParam("codigoTreino") Long codigoTreino, @RequestParam("codigoTitulo") Long codigoTitulo){
+	public ModelAndView mostrar(@RequestParam("treinoId") Long treinoId, @RequestParam("tituloId") Long tituloId){
 					
 		 
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -58,25 +62,25 @@ public class TreinoExercicioController {
 		 
 		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		 
-		 if (codigoTreino == null) 
-			 		codigoTreino = treinoImpl.buscaUltimo(usuarioAutenticado.getId());
+		 if (treinoId == null) 
+			 		treinoId = treinoImpl.buscaUltimo(usuarioAutenticado.getId());
 		 
-		 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoTreino);
+		 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(treinoId);
 		 
-		 if (codigoTitulo == null)
-			 codigoTitulo = listaUltimoTitulo.get(0).getUltimo();
+		 if (tituloId == null)
+			 tituloId = listaUltimoTitulo.get(0).getUltimo();
 		 
-		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(codigoTreino);
+		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(treinoId);
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
-		 List<Exercicio> listaExercicios = (codigoTitulo == null) ? 
-				 this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), codigoTreino) 
-				 : exercicioImpl.buscaExerciciosPorTitulo(codigoTreino, codigoTitulo);
+		 List<Exercicio> listaExercicios = (tituloId == null) ? 
+				 this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treinoId) 
+				 : exercicioImpl.buscaExerciciosPorTitulo(treinoId, tituloId);
 		 
-		 Treino treino = this.treinoImpl.buscar(codigoTreino);
+		 Treino treino = this.treinoImpl.buscar(treinoId);
 		 Titulo titulo;
 		 		 		 
-		 if (codigoTitulo == null) {titulo = listaTe.get(0).getTitulo();}
-		 else{ titulo = this.tituloImpl.buscar(codigoTitulo);}
+		 if (tituloId == null) {titulo = listaTe.get(0).getTitulo();}
+		 else{ titulo = this.tituloImpl.buscar(tituloId);}
 				 
 		 String dataFormatada = df.format(treino.getData().getTime());
 		 		 		 
@@ -116,23 +120,17 @@ public class TreinoExercicioController {
 		List<Exercicio> listaExercicios1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treino.getId());
 		List<Exercicio> exercicios = exercicioImpl.buscaExercicioNaoCadastrado(listaExercicios1);
 		List<Titulo> titulosDoTreino = this.tituloImpl.buscaTitulosPorTreino(treino.getId()); 
-		 
-		for (Iterator<Titulo> iterator = titulosDoTreino.iterator(); iterator.hasNext();) {
-			Titulo titulo = (Titulo) iterator.next();
-			System.out.println(titulo.getDescricao());
-			
-		}
 		
-		 List<Titulo> titulos = this.tituloImpl.listar();
+		List<Titulo> titulos = this.tituloImpl.listar();
 		 
-		 ModelAndView mv = new ModelAndView("treino/form-exercicio");		 
-		 mv.addObject("titulos",titulos);
-		 mv.addObject("listaTe",listaTe);
-		 mv.addObject("treinoExercicio",te);
-		 mv.addObject("exercicios",exercicios);		
-		 mv.addObject("titulosDoTreino",titulosDoTreino);
+		ModelAndView mv = new ModelAndView("treino/form-exercicio");		 
+		mv.addObject("titulos",titulos);
+		mv.addObject("listaTe",listaTe);
+		mv.addObject("treinoExercicio",te);
+		mv.addObject("exercicios",exercicios);		
+		mv.addObject("titulosDoTreino",titulosDoTreino);
 		 //mv.addObject("listaExercicios",listaExercicios1);
-		 return mv;
+		return mv;
 		 
 		 
 		/*
@@ -246,24 +244,32 @@ public class TreinoExercicioController {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.GET, path="/editarExercicioTreino")
-	public String alterar(Model model) {
-		System.out.println("altera");
-		return "treino/form-seleciona-exercicio";		
+	@RequestMapping(method = RequestMethod.GET, path="/editarTE")
+	public @ResponseBody TreinoExercicio alterar(Long id,Long exercicioId,Long treinoId,Long tituloId) throws JsonProcessingException {
+		
+		TreinoExercicio te = new TreinoExercicio();		
+		Exercicio ex = new Exercicio();		
+		Treino tr = new Treino();
+		Titulo ti = new Titulo();
+		
+		System.out.println("id->"+id +" exercicioId-> "+exercicioId+" treinoId-> "+treinoId+" tituloId-> "+tituloId);
+		
+		te = this.treinoExercicioImpl.buscar(id);
+		
+		ex.setId(exercicioId);
+		tr.setId(treinoId);
+		ti.setId(tituloId);
+		
+		te.setExercicio(ex);
+		te.setTreino(tr);
+		te.setTitulo(ti);	
+		
+		//te = this.treinoExercicioImpl.salvar(te);
+		//ObjectMapper mapper = new ObjectMapper();
+		return te;		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/excluirExercicioTreino")
-	public ModelAndView excluir() {
-		System.out.println("exclui");
-		List<Exercicio> exercicios = this.exercicioImpl.listar();
-		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form-exercicio");
-		mv.addObject("exercicios",exercicios);
-		mv.addObject("grupoMuscular",grupoMuscular);		
-		mv.addObject(new Exercicio());
-		return mv;
-	}
-
+	
 	@RequestMapping(method = RequestMethod.GET, path="/pdf")
 	public ModelAndView pdf() {
 		
@@ -274,6 +280,13 @@ public class TreinoExercicioController {
 		mv.addObject("grupoMuscular",grupoMuscular);		
 		mv.addObject(new Exercicio());
 		return mv;
+	}
+	
+	
+	@RequestMapping("/excluirTE")
+	public void excluirTE(Long id, HttpServletResponse response) {		
+		this.treinoExercicioImpl.excluir(id);		
+		response.setStatus(200);
 	}
 
 

@@ -17,30 +17,33 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 		
 	
 	@Query("SELECT te FROM TreinoExercicio te "
-			+ "WHERE te.treino.usuario.id = :codigoUsuario "
+			+ "WHERE te.treino.usuario.id = :usuarioId "
 			+ "GROUP BY te.treino ORDER BY te DESC  ")
-	public List<TreinoExercicio> listarTreinoExercicioAgrupado(@Param("codigoUsuario") Long codigoUsuario);
+	public List<TreinoExercicio> listarTreinoExercicioAgrupado(@Param("usuarioId") Long usuarioId);
 	
 	@Query("SELECT te FROM TreinoExercicio te "
 			+ "GROUP BY te.titulo")
 	public List<TreinoExercicio> listarTituloAgrupado();
 	
 	@Query("SELECT te FROM TreinoExercicio te "
-			+ "WHERE te.treino.id = :codigo "
-			+ "AND te.treino.usuario.id = :codigoUsuario "
+			+ "WHERE te.treino.id = :treinoId "
+			+ "AND te.treino.usuario.id = :usuarioId "
 			+ "ORDER BY te,te.titulo,te.exercicio")
-	public List<TreinoExercicio> buscaTreinoPorCodigo(@Param("codigo") Long codigo,@Param("codigoUsuario") Long codigoUsuario);
+	public List<TreinoExercicio> buscaTreinoPorCodigo(@Param("treinoId") Long treinoId,@Param("usuarioId") Long usuarioId);
 	
 	@Query("SELECT NEW br.com.treinoeforma.model.TreinoExercicioDTO(te.treino, te.exercicio, te.titulo, MAX(te.titulo.id)) "
 			+ "FROM TreinoExercicio te " + 
-			"WHERE te.treino.id = :codigoTreino "
+			"WHERE te.treino.id = :treinoId "
 			+ "GROUP BY te.treino")
-	public List<TreinoExercicioDTO> buscaUltimoTituloTreino(@Param("codigoTreino") Long codigoTreino);
+	public List<TreinoExercicioDTO> buscaUltimoTituloTreino(@Param("treinoId") Long treinoId);
 	
 	@Query("SELECT te FROM TreinoExercicio te "
 			+ "LEFT JOIN te.exercicio "
 			+ "WHERE te.treino = :treino "
 			+ "AND te.titulo = :titulo")
 	public List<TreinoExercicio> buscaExercicioPorDia(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
+	
+	
+	
 
 }

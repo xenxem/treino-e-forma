@@ -1,7 +1,6 @@
 package br.com.treinoeforma.controller;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,15 +52,15 @@ public class ExercicioController {
 		
 		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		
-		String pCodigoTreino = request.getParameter("pCodigoTreino");
-		String pTitulo = request.getParameter("pTitulo");
+		String treinoId = request.getParameter("treinoId");
+		//String tituloId = request.getParameter("tituloId");
 		
 		List<Exercicio> exercicios;
 		
-		if (pCodigoTreino == null)			
+		if (treinoId == null)			
 			exercicios = this.exercicioImpl.listar();
 		else {
-			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(),Long.parseLong(pCodigoTreino));
+			exercicios = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(),Long.parseLong(treinoId));
 			exercicios = exercicioImpl.buscaExercicioNaoCadastrado(exercicios);			
 		}
 			

@@ -87,5 +87,11 @@ public class ExercicioImpl implements Crud<Exercicio> {
 	public List<Exercicio> buscaExercicioNaoCadastrado(List<Exercicio> exercicios){		
 		return this.exercicioRepository.buscaExercicioNaoCadastrado(exercicios);
 	}
+
+	@Override
+	public Exercicio alterar(Exercicio t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

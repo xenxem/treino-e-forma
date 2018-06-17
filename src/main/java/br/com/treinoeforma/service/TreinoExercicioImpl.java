@@ -27,8 +27,7 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 
 	@Override
 	public void excluir(Long id) {
-		// TODO Auto-generated method stub
-		
+		this.treinoExercicioRepository.delete(id);		
 	}
 
 	
@@ -74,6 +73,14 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 	public List<TreinoExercicio> buscaExercicioPorDia(@Param("treino") Treino treino, @Param("titulo") Titulo titulo){
 		return this.treinoExercicioRepository.buscaExercicioPorDia(treino, titulo);
 	}
+
+	@Override
+	public TreinoExercicio alterar(TreinoExercicio t) {
+		// TODO Auto-generated method stub 
+		
+		return null;
+	}
+	
 	
 	
 			

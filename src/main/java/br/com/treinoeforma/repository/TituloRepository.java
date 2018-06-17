@@ -15,24 +15,25 @@ public interface TituloRepository extends JpaRepository<Titulo, Long> {
 	
 	@Query("SELECT te.titulo "
 			+ "FROM TreinoExercicio te "
-			+ "WHERE te.treino.id=:codigo GROUP BY te.titulo")
-	public List<Titulo> buscaTitulosPorTreino(@Param("codigo") Long codigo);
+			+ "WHERE te.treino.id=:tituloId "
+			+ "GROUP BY te.titulo")
+	public List<Titulo> buscaTitulosPorTreino(@Param("tituloId") Long tituloId);
 	
 	@Query("SELECT te.exercicio "
 			+ "FROM TreinoExercicio te "
-			+ "WHERE te.treino.id =:codigoTreino "
-			+ "AND te.titulo.id = :codigoTitulo ")
-	public List<Exercicio> buscaExerciciosPorTitulo(@Param("codigoTreino") Long codigoTreino,@Param("codigoTitulo") Long codigoTitulo);
+			+ "WHERE te.treino.id =:treinoId "
+			+ "AND te.titulo.id = :tituloId")
+	public List<Exercicio> buscaExerciciosPorTitulo(@Param("treinoId") Long treinoId,@Param("tituloId") Long tituloId);
 	
 	@Query("SELECT te.titulo FROM TreinoExercicio te "
-			+ "WHERE te.treino.usuario.id =:codigoUsuario "
+			+ "WHERE te.treino.usuario.id =:usuarioId "
 			+ "GROUP BY te.titulo.id "
 			+ " ORDER BY te.titulo.id DESC")
-	public List<Titulo> listaTitulosDoTreino(@Param("codigoUsuario") Long codigoUsuario);
+	public List<Titulo> listaTitulosDoTreino(@Param("usuarioId") Long usuarioId);
 	
 	@Query("SELECT te.exercicio "
 			+ "FROM TreinoExercicio te "
-			+ "WHERE te.treino.id=:codigo")
-	public List<Titulo> buscaExerciciosPorTreino(@Param("codigo") Long codigo);
+			+ "WHERE te.treino.id=:treinoId")
+	public List<Titulo> buscaExerciciosPorTreino(@Param("treinoId") Long treinoId);
 	
 }

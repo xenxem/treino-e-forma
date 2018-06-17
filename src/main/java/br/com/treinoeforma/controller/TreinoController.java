@@ -43,12 +43,14 @@ public class TreinoController {
 	public ModelAndView treinos() {		
 		 
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		 ModelAndView mv = new ModelAndView("treino/form-treino");
+		 
 		
 		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();		 		 
 		 Long codigoUltimoTreino = this.treinoImpl.buscaUltimo(usuarioAutenticado.getId());
 		 
 		 Exercicio exercicio = new Exercicio();
+		 
+		 ModelAndView mv = new ModelAndView("treino/form-treino");
 		 
 		 if (codigoUltimoTreino != null) {
 			 
