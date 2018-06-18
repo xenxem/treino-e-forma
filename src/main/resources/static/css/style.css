@@ -4285,3 +4285,11 @@ span.m_26 {
     border-radius: 0;
     color:#fff;
 }
+
+
+.table-striped>tbody > tr{
+   color: #848484;
+}
+
+
+

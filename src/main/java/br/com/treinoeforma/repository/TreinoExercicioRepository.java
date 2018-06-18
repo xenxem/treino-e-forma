@@ -44,6 +44,11 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 	public List<TreinoExercicio> buscaExercicioPorDia(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
 	
 	
+	@Query("SELECT te FROM TreinoExercicio te "
+			+ "LEFT JOIN te.exercicio "
+			+ "WHERE te.treino = :treino "
+			+ "AND te.titulo = :titulo")
+	public List<TreinoExercicio> buscaPorTreinoTitulo(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
 	
 
 }

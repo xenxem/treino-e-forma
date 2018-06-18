@@ -81,6 +81,10 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		return null;
 	}
 	
+	public List<TreinoExercicio> buscaPorTreinoTitulo(Treino treino,Titulo titulo){
+		return this.treinoExercicioRepository.buscaPorTreinoTitulo(treino, titulo);
+	}
+	
 	
 	
 			

@@ -9,7 +9,7 @@
 <body>
 	
 <div layout:fragment="content">
-	<form name="form" th:action="@{/salvar}" id="form" th:object="${treinoExercicio}">
+	<form name="form" th:action="@{/salvarTreino}" id="form" th:object="${treinoExercicio}">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 	    	<h3 class="panel-title">Cadastro do Treino</h3>
@@ -74,10 +74,10 @@
 						 	<tr><td colspan="3" align="center" th:text="${t.descricao}"></td></tr>					 	
 						 	<tr th:each="te : ${listaTe}" th:if="${te.titulo.id == t.id}">
 						 		<td>	
-						 			<span th:text="${te.exercicio.descricao}" class="exercicio-desc">Supino reto 4x10 + Cross over RM</span>
+						 			<span th:text="${te.exercicio.descricao}" class="descricao-exercicio">Supino reto 4x10 + Cross over RM</span>
 						 		</td>
 						 		<td>
-						 			<span th:text="${te.exercicio.grupoMuscular.nome}" class="grupo-nome">grupo muscular</span>
+						 			<span th:text="${te.exercicio.grupoMuscular.nome}" class="grupo-muscular">grupo muscular</span>
 						 		</td>					 		
 						 		<td class="text-center">							 										 			
 									<a th:href="@{/treinoExercicioExcluir/{id}(id=${te.id})}" th:id="${te.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir exercício atual"><span class="glyphicon glyphicon-trash"></span></a>
@@ -203,42 +203,26 @@
 			   			$("#salvar").remove();
 			   			$("#salvarAlteracao").remove();
 						$("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvarAlteracao','value':'Salvar'}).appendTo(".modal-footer");
-						$(document).on("click","#salvarAlteracao",function(){							
-								var exercicioId = $("#exercicio option:selected").val();
-								var exercicioDesc = $(".exercicio-desc").text();
-								var grupoNome = $(".grupo-nome").text();
+						$(document).on("click","#salvarAlteracao",function(){
+							var exercicioId = $("#exercicio option:selected").val();
 								var tituloId = $("#titulo option:selected").val();
 								var treinoId = $("#treinoId").val();
-								
-								var obj = {'id':id,
-											'exercicio':{'id':exercicioId,
-														 'descricao':exercicioDesc,
-														 'grupoMuscular':{'nome':grupoNome}
-														}
-										   }
-								
-								console.log(JSON.stringify(obj));
-								/*
+								//console.log(JSON.stringify(obj));
 								$("#myModal").modal("hide");
 								$.ajax({
 				   				url:'/treinoeforma/editarTE',
-				   				//contentType:'application/json; charset=utf-8',
-				   				//dataType :'json',
 				   				data:{"id":id,"exercicioId":exercicioId,'treinoId':treinoId,'tituloId':tituloId},
 				   				type:'get',
 				   				dataType:'json',
-				   				success:function(data){
-				   					console.log(data);
-				   					//newArray[3]=data["id"];
-						    		//href = newArray.join('/');
-						    		//$(this).attr("href",href);
-			   						//$("#id").val(data['id']);
-			   						//$("#descricao").val(data['descricao']);
-			   						//item.find(".grupo-muscular").text("grupo");
-				   					//item.find(".descricao-exercicio").text(data['descricao']);
+				   				success:function(data){				   					
+				   					newArray[3]=data["id"];
+						    		href = newArray.join('/');
+						    		$(this).attr("href",href);
+			   						$("#id").val(data['id']);
+			   						item.find(".grupo-muscular").text(data['exercicio'].grupoMuscular.nome);
+				   					item.find(".descricao-exercicio").text(data['exercicio'].descricao);
 				   				}
-				   				
-				   			});*/
+				   			});
 					 	});
 		   				$("#titulo").attr("disabled",true);  	
 		   			    $("#myModal .modal-title").text("Aletar exercício");		   			    

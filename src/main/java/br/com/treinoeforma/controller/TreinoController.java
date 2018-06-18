@@ -46,32 +46,33 @@ public class TreinoController {
 		 
 		
 		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();		 		 
-		 Long codigoUltimoTreino = this.treinoImpl.buscaUltimo(usuarioAutenticado.getId());
+		 Long ultimoTreinoId = this.treinoImpl.buscaUltimo(usuarioAutenticado.getId());
 		 
 		 Exercicio exercicio = new Exercicio();
 		 
 		 ModelAndView mv = new ModelAndView("treino/form-treino");
 		 
-		 if (codigoUltimoTreino != null) {
+		 if (ultimoTreinoId != null) {
 			 
-			 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(codigoUltimoTreino);			 
-			 Long codigoTitulo = listaUltimoTitulo.get(0).getUltimo();					 
+			 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(ultimoTreinoId);			 
+			 Long tituloId = listaUltimoTitulo.get(0).getUltimo();					 
 			 
-			 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(codigoUltimoTreino);
-			 List<Exercicio> listaExercicios =this.exercicioImpl.buscaExerciciosPorTitulo(codigoUltimoTreino, codigoTitulo);
+			 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(ultimoTreinoId);
+			 List<Exercicio> listaExercicios =this.exercicioImpl.buscaExerciciosPorTitulo(ultimoTreinoId, tituloId);
 			 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
 			 
-			 Treino treino = this.treinoImpl.buscar(codigoUltimoTreino);				
-			 Titulo titulo = tituloImpl.buscar(codigoTitulo);
+			 Treino treino = this.treinoImpl.buscar(ultimoTreinoId);				
+			 Titulo titulo = tituloImpl.buscar(tituloId);
+			 List<TreinoExercicio> listaTePorDia = this.treinoExercicioImpl.buscaPorTreinoTitulo(treino, titulo);
 			 		 
 			 mv.addObject("treino",treino);
 			 mv.addObject("titulo",titulo);
 			 mv.addObject("listaTe",listaTe);
+			 mv.addObject("listaTePorDia",listaTePorDia);
 			 mv.addObject("exercicio",exercicio);
 			 mv.addObject("titulosDoTreino",titulosDoTreino);
 			 mv.addObject("listaExercicios",listaExercicios);
 			 mv.addObject("data",df.format(treino.getData().getTime()));
-			 
 			 return mv;
 			 
 		 }

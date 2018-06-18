@@ -70,32 +70,42 @@ public class TreinoExercicioController {
 		 if (tituloId == null)
 			 tituloId = listaUltimoTitulo.get(0).getUltimo();
 		 
+		 
 		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(treinoId);
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
+		 
+		 /*
 		 List<Exercicio> listaExercicios = (tituloId == null) ? 
 				 this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treinoId) 
 				 : exercicioImpl.buscaExerciciosPorTitulo(treinoId, tituloId);
+				 */
+				
 		 
+		  
+		
 		 Treino treino = this.treinoImpl.buscar(treinoId);
-		 Titulo titulo;
+		 Titulo titulo = new Titulo();
+		 titulo.setId(tituloId);		
 		 		 		 
 		 if (tituloId == null) {titulo = listaTe.get(0).getTitulo();}
-		 else{ titulo = this.tituloImpl.buscar(tituloId);}
+		 else{ titulo = this.tituloImpl.buscar(tituloId);}		 
+		 List<TreinoExercicio> listaTePorDia = this.treinoExercicioImpl.buscaPorTreinoTitulo(treino, titulo);
 				 
 		 String dataFormatada = df.format(treino.getData().getTime());
 		 		 		 
 		 mv.addObject("treino",treino);
 		 mv.addObject("titulo",titulo);		 
-		 mv.addObject("listaTe",listaTe);
+		 mv.addObject("listaTe",listaTe);		 
+		 mv.addObject("listaTePorDia",listaTePorDia);
 		 mv.addObject("exercicio",new Exercicio());
 		 mv.addObject("data",dataFormatada);		 
 		 mv.addObject("titulosDoTreino",titulosDoTreino);
-		 mv.addObject("listaExercicios",listaExercicios);
+		 //mv.addObject("listaExercicios",listaExercicios);
 		 
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/salvar")
+	@RequestMapping(method = RequestMethod.GET, path="/salvarTreino")
 	public ModelAndView salvar(HttpServletRequest request,TreinoExercicio te) throws ParseException {
 		
 		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
@@ -109,10 +119,8 @@ public class TreinoExercicioController {
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(usuarioAutenticado.getId());
-		treino.setUsuario(usuario);	
-		
-		treino = this.treinoImpl.salvar(treino);
-		
+		treino.setUsuario(usuario);			
+		treino = this.treinoImpl.salvar(treino);		
 		te.setTreino(treino);		
 		te = this.treinoExercicioImpl.salvar(te);
 		
@@ -245,16 +253,14 @@ public class TreinoExercicioController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/editarTE")
-	public @ResponseBody TreinoExercicio alterar(Long id,Long exercicioId,Long treinoId,Long tituloId) throws JsonProcessingException {
-		
-		TreinoExercicio te = new TreinoExercicio();		
-		Exercicio ex = new Exercicio();		
+	public @ResponseBody String alterar(Long id,Long exercicioId,Long treinoId,Long tituloId) throws JsonProcessingException {
 		Treino tr = new Treino();
 		Titulo ti = new Titulo();
-		
-		System.out.println("id->"+id +" exercicioId-> "+exercicioId+" treinoId-> "+treinoId+" tituloId-> "+tituloId);
+		Exercicio ex = new Exercicio();
+		TreinoExercicio te = new TreinoExercicio();	
 		
 		te = this.treinoExercicioImpl.buscar(id);
+		ex = this.exercicioImpl.buscar(exercicioId);
 		
 		ex.setId(exercicioId);
 		tr.setId(treinoId);
@@ -264,9 +270,8 @@ public class TreinoExercicioController {
 		te.setTreino(tr);
 		te.setTitulo(ti);	
 		
-		//te = this.treinoExercicioImpl.salvar(te);
-		//ObjectMapper mapper = new ObjectMapper();
-		return te;		
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(te);		
 	}
 	
 	
