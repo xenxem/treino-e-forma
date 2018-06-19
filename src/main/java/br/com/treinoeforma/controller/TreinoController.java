@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.treinoeforma.model.Exercicio;
+import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;
+import br.com.treinoeforma.service.GrupoMuscularImpl;
 import br.com.treinoeforma.service.TituloImpl;
 import br.com.treinoeforma.service.TreinoExercicioImpl;
 import br.com.treinoeforma.service.TreinoImpl;
@@ -36,6 +38,8 @@ public class TreinoController {
 	private TreinoImpl treinoImpl;
 	@Autowired 
 	private ExercicioImpl exercicioImpl;
+	@Autowired 
+	private GrupoMuscularImpl grupoMuscularImpl;
 	
 	
 	
@@ -58,8 +62,11 @@ public class TreinoController {
 			 Long tituloId = listaUltimoTitulo.get(0).getUltimo();					 
 			 
 			 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(ultimoTreinoId);
-			 List<Exercicio> listaExercicios =this.exercicioImpl.buscaExerciciosPorTitulo(ultimoTreinoId, tituloId);
+			 //List<Exercicio> listaExercicios =this.exercicioImpl.buscaExerciciosPorTitulo(ultimoTreinoId, tituloId);
 			 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
+			 List<Exercicio> exerciciosList1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), ultimoTreinoId);
+			 List<Exercicio> exerciciosList = this.exercicioImpl.buscaExercicioNaoCadastrado(exerciciosList1);
+			 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 			 
 			 Treino treino = this.treinoImpl.buscar(ultimoTreinoId);				
 			 Titulo titulo = tituloImpl.buscar(tituloId);
@@ -67,11 +74,12 @@ public class TreinoController {
 			 		 
 			 mv.addObject("treino",treino);
 			 mv.addObject("titulo",titulo);
+			 mv.addObject("grupos",grupos);
 			 mv.addObject("listaTe",listaTe);
 			 mv.addObject("listaTePorDia",listaTePorDia);
 			 mv.addObject("exercicio",exercicio);
 			 mv.addObject("titulosDoTreino",titulosDoTreino);
-			 mv.addObject("listaExercicios",listaExercicios);
+			 mv.addObject("exerciciosList",exerciciosList);
 			 mv.addObject("data",df.format(treino.getData().getTime()));
 			 return mv;
 			 
@@ -80,7 +88,8 @@ public class TreinoController {
 		 mv.addObject("treino",new Treino());
 		 mv.addObject("titulo",new Titulo());
 		 mv.addObject("exercicio",exercicio);
-		 mv.addObject("listaTe",new ArrayList<TreinoExercicio>());		 
+		 mv.addObject("listaTe",new ArrayList<TreinoExercicio>());
+		 mv.addObject("exerciciosList",new ArrayList<TreinoExercicio>());
 		 mv.addObject("titulosDoTreino",new ArrayList<Titulo>());
 		 mv.addObject("exerciciosPorTitulo",new ArrayList<Exercicio>());
 		 mv.addObject("data","");

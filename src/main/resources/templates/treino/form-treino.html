@@ -21,21 +21,27 @@
 							 	<form class="form-horizontal" role="form" th:action="@{/salvar}" method="POST" th:object="${exercicio}">
 					              <!-- Basic inputs -->
 					              <div class="panel panel-default">
-					                <div class="panel-body">
-						                <div class="form-group">
-						                   <label class="col-sm-2 control-label">Descrição </label> 
-						                   <div class="col-sm-10">	                      
-						                     <input id="descricao" type="text" required="required" min="3" class="form-control" placeholder="descreva o exercício" th:field="*{descricao}" />
-						                   </div>
-						                </div>
-					  					<div class="form-group">
-											<label class="col-sm-2 control-label">Grupo muscular </label>
-											<div class="col-sm-10">
-					                            <select th:field="*{grupoMuscular}" id="grupoMuscular" required="required"  class="form-control"> 
-					                           		<option th:value="''"></option>                              			                               			
-					                				<option th:each="grupoMuscular : ${grupoMuscular}" th:value="${grupoMuscular.id}" th:text="${grupoMuscular.nome}"></option>                						                						                						
-					            		 		</select>                                
-					 						</div>
+					                <div class="panel-body">	
+					                	<div class="form-group col-sm-12">
+											<label>Título</label>
+					                        <input type="text" id="titulo" th:value="${titulo.descricao}" class="form-control">
+									    </div>
+									    <div class="form-group col-sm-12">
+											<label >Exercício atual</label>
+											<input type="text" id="exercicio" class="form-control">											
+											<small id="exercicioDescHelp" class="form-text text-muted">Exercício atualmente cadastrado</small>
+									    </div>					                
+					  					<div class="form-group col-sm-12">
+											<label>Exercícios </label>
+					                            <select  required="required" id="exercicios"  class="form-control">
+					                            	<option th:value="''"></option>
+					                            	<th:block th:each="g : ${grupos}">
+					                           			<optgroup th:label="${g.nome}">						                           		                              			                               			
+					                						<option th:each="e : ${exerciciosList}" th:if="${e.grupoMuscular.id == g.id}" th:value="${e.id}" th:text="${e.descricao}"></option>
+					                					</optgroup>
+					                				</th:block>                						                						                						
+					            		 		</select>
+					            		 		<small id="exercicioHelp" class="form-text text-muted">Deseja trocar o exercício acima?</small>
 									    </div>
 					                    <div class="form-actions text-left">
 					                     	<input type="hidden" id="id" name="id" th:field="*{id}" />
@@ -46,8 +52,7 @@
 					              </div>
 					   		    </form>
 							  </div>					  						 	
-							 <div class="modal-footer">
-							 	<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-check"></span> Salvar</button>						 	
+							 <div class="modal-footer">							 							 	
 							   	<!-- <button id="cmdFechar" type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>-->					   	
 							 </div>
 					   </div>			   				   				   
@@ -56,7 +61,7 @@
 			
 			  <div class="panel panel-default">
 					<div class="panel-heading">
-					    <h3 class="panel-title">Treinos</h3>
+					    <h3 class="panel-title">Grade de Treinos</h3>
 					</div>
 			  <div class="panel-body">
 				<form id="form" th:action="@{/montar}">
@@ -100,10 +105,10 @@
 									 	<tr><td colspan="3" align="center" th:text="${titulo.descricao}">DIA1</td></tr>				 	
 									 	<tr th:each="te : ${listaTePorDia}">			 		
 									 		<td>	
-									 			<span th:text="${te.exercicio.descricao}">Supino reto 4x10 + Cross over RM</span>
+									 			<span th:text="${te.exercicio.descricao}" class="exercicio-descricao">Supino reto 4x10 + Cross over RM</span>
 									 		</td>
 									 		<td>
-									 			<span th:text="${te.exercicio.grupoMuscular.nome}">grupo muscular</span>
+									 			<span th:text="${te.exercicio.grupoMuscular.nome}" class="descricao-grupo">grupo muscular</span>
 									 		</td>
 									 		<td class="text-center">							 										 			
 												<a th:href="@{/excluirExercicioTreino/{id}(id=${te.id})}" th:id="${te.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
@@ -223,8 +228,8 @@ jQuery(function(){
 	   			$("#salvarAlteracao").remove();
 				$("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvarAlteracao','value':'Salvar'}).appendTo(".modal-footer");
 				$(document).on("click","#salvarAlteracao",function(){
-					var exercicioId = $("#exercicio option:selected").val();
-						var tituloId = $("#titulo option:selected").val();
+						var exercicioId = $("#exercicios option:selected").val();
+						var tituloId = $("#titulos option:selected").val();
 						var treinoId = $("#treinoId").val();
 						//console.log(JSON.stringify(obj));
 						$("#myModal").modal("hide");
@@ -238,11 +243,13 @@ jQuery(function(){
 				    		href = newArray.join('/');
 				    		$(this).attr("href",href);
 	   						$("#id").val(data['id']);
-	   						item.find(".grupo-muscular").text(data['exercicio'].grupoMuscular.nome);
-		   					item.find(".descricao-exercicio").text(data['exercicio'].descricao);
+	   						item.find(".descricao-grupo").text(data['exercicio'].grupoMuscular.nome);
+		   					item.find(".exercicio-descricao").text(data['exercicio'].descricao);
 		   				}
 		   			});
 			 	});
+				$("#exercicio").val(item.find(".exercicio-descricao").text());
+				$("#exercicio").attr("disabled",true);
    				$("#titulo").attr("disabled",true);  	
    			    $("#myModal .modal-title").text("Aletar exercício");		   			    
    				$("#myModal").modal("show");  
