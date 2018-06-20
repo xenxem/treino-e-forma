@@ -5,11 +5,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 </head>
-
-<body>
-	
+<body>	
 <div layout:fragment="content">
-	<form name="form" th:action="@{/salvarTreino}" id="form" th:object="${treinoExercicio}">
+	<form name="form" th:action="@{/salvarTreino}" id="form" th:object="${treinoExercicio}" method="post">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 	    	<h3 class="panel-title">Cadastro do Treino</h3>
@@ -42,20 +40,28 @@
 									   	  </select>
 									    </div>
 									    <div class="form-group">
-									    	 <label for="titulo" class="control-label">Exercício</label>
-											 <select name="exercicio" th:field="*{exercicio}" class="form-control" id="exercicio">									 	 
-											        <option th:each="ex : ${exercicios}"  th:value="${ex.id}" th:text="${ex.descricao}">Alabama</option>										        									      								    
+									    	 <label for="exercicio" class="control-label">Exercício</label>
+											 <select name="exercicio" th:field="*{exercicio}" class="form-control" id="exercicio">	
+											 		<option th:value="''"></option>
+					                            	<th:block th:each="g : ${grupos}">
+					                           			<optgroup th:label="${g.nome}">										 	 
+											        		<option th:each="ex : ${exercicios}" th:if="${ex.grupoMuscular.id == g.id}"  th:value="${ex.id}" th:text="${ex.descricao}">Alabama</option>
+											        	</optgroup>
+											        </th:block>										        									      								    
 										    </select>
 										</div>
 									</div>
 								</div>
 							  </div>
-							<div class="modal-footer">								
+							<div class="modal-footer">
+									<button id="salvar" type="button" class="btn btn-info" data-dismiss="modal">Salvar</button>								
 							</div>
 					   </div>			   				   				   
 					</div>	
 				</div>		   
-					
+				
+				<input type="hidden" name="action" id="action">
+				<input type="hidden" name="treinoExercicioId" id="treinoExercicioId">	
 				<input type="hidden" name="treinoId" id="treinoId" th:field="*{treino.id}">
 				<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar <span class="glyphicon glyphicon-arrow-left"></span></button>
 				<button type="button" class="btn btn-info btn-sm" id="adicionar">Adicionar exercício <span class="glyphicon glyphicon-plus"></span></button>				
@@ -74,10 +80,10 @@
 						 	<tr><td colspan="3" align="center" th:text="${t.descricao}"></td></tr>					 	
 						 	<tr th:each="te : ${listaTe}" th:if="${te.titulo.id == t.id}">
 						 		<td>	
-						 			<span th:text="${te.exercicio.descricao}" class="descricao-exercicio">Supino reto 4x10 + Cross over RM</span>
+						 			<span th:text="${te.exercicio.descricao}" th:id="${te.exercicio.id}" class="span-exercicio">Supino reto 4x10 + Cross over RM</span>
 						 		</td>
 						 		<td>
-						 			<span th:text="${te.exercicio.grupoMuscular.nome}" class="grupo-muscular">grupo muscular</span>
+						 			<span th:text="${te.exercicio.grupoMuscular.nome}"  th:id="${te.exercicio.id}" class="span-grupo-muscular">grupo muscular</span>
 						 		</td>					 		
 						 		<td class="text-center">							 										 			
 									<a th:href="@{/treinoExercicioExcluir/{id}(id=${te.id})}" th:id="${te.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir exercício atual"><span class="glyphicon glyphicon-trash"></span></a>
@@ -97,13 +103,45 @@
 	<script th:inline="javascript">
 		jQuery(function(){		
 			
-			//var _csrf_param = $("#_csrf_param").attr("value");			
+			var _csrf = $("#_csrf_param").attr("value");			
+			
 			$("#voltar").on("click",function(){
 				window.location.href ="/treinoeforma/treinos";
 			});						
 			
-			/* Adicionando exercício */
+			var item;
+			var descricaoGrupo;
+			var newArray = Array();
+			var descricaoExercicio;
 			
+			$("#salvar").on("click",function(){
+				var action = $("#action").val();
+				
+				if (action === "adicionar")
+					$("#form").submit();				
+				
+				if (action === "editar"){
+					var id = $("#treinoExercicioId").val();
+					var treinoId = $("#treinoId").val();
+					var exercicioId = $("#exercicio option:selected").val();
+					var tituloId = $("#titulo option:selected").val();					
+					$.ajax({
+	   				url:'/treinoeforma/editarTE',
+	   				data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
+	   				type:'post',
+	   				dataType:'json',
+	   				success:function(data){				   					
+		   					newArray[3]=data["id"];
+				    		href = newArray.join('/');				    		
+				    		item.find('.edita').attr("href",href);				    		
+				    		descricaoExercicio.text(data['exercicio'].descricao);				    		
+				    		descricaoGrupo.text(data['exercicio'].grupoMuscular.nome);
+	   					}
+	   				});
+				}					
+			});
+			
+		
 			$("#adicionar").on("click",function(){
 				
 				if ($("#descricao").val().trim() === ""){					
@@ -144,27 +182,17 @@
 			            }
 			     });
 				*/
-				 $("#salvar").remove();
-				 $("#salvarAlteracao").remove();
-				 $("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvar','value':'Salvar'}).appendTo(".modal-footer");
-				 $(document).on("click","#salvar",function(){
-						$("#form").submit(); 
-				 });
-				 $("#titulo").attr("disabled",false);
-				 $("#myModal .modal-title").text("Incluir exercício");	   			 
-				 $("#myModal").modal("show");
+				$("#titulo").attr("disabled",false);
+				$("#action").val("adicionar");
+				$("#myModal .modal-title").text("Incluir exercício");	   			 
+				$("#myModal").modal("show");
 			});
 			
 			
 			$("#table tbody tr").on('click','a',function(event) {				
-				
-				//var array = new Array();				
-				var item = $(this).closest('tr');				
-				
+				item = $(this).closest('tr');				
 				if ($(this).attr('class').indexOf('exclui') != -1){
-					
 					var id = $(this).attr("id");
-		    		
 		    		$.confirm({
 					    title:'Atenção!',
 					    content:'Deseja realmente excluir este item?',
@@ -194,42 +222,20 @@
 			    	event.preventDefault();
 			      }
 		    	
-		    	if ($(this).attr('class').indexOf('edita') != -1){
-		    		  	
+		    	if ($(this).attr('class').indexOf('edita') != -1){		    		  	
 			    		var id = $(this).attr("id");
+			    		descricaoExercicio = $(this).closest("tr").find(".span-exercicio"); 
+			    		descricaoGrupo = $(this).closest("tr").find(".span-grupo-muscular");
 			    		var href = $(this).attr("href");
-			    		var newArray = Array();
 			    		newArray = href.split('/');
-			   			$("#salvar").remove();
-			   			$("#salvarAlteracao").remove();
-						$("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvarAlteracao','value':'Salvar'}).appendTo(".modal-footer");
-						$(document).on("click","#salvarAlteracao",function(){
-							var exercicioId = $("#exercicio option:selected").val();
-								var tituloId = $("#titulo option:selected").val();
-								var treinoId = $("#treinoId").val();
-								//console.log(JSON.stringify(obj));
-								$("#myModal").modal("hide");
-								$.ajax({
-				   				url:'/treinoeforma/editarTE',
-				   				data:{"id":id,"exercicioId":exercicioId,'treinoId':treinoId,'tituloId':tituloId},
-				   				type:'get',
-				   				dataType:'json',
-				   				success:function(data){				   					
-				   					newArray[3]=data["id"];
-						    		href = newArray.join('/');
-						    		$(this).attr("href",href);
-			   						$("#id").val(data['id']);
-			   						item.find(".grupo-muscular").text(data['exercicio'].grupoMuscular.nome);
-				   					item.find(".descricao-exercicio").text(data['exercicio'].descricao);
-				   				}
-				   			});
-					 	});
-		   				$("#titulo").attr("disabled",true);  	
-		   			    $("#myModal .modal-title").text("Aletar exercício");		   			    
+						$("#treinoExercicioId").val(id);
+						$("#action").val("editar");   	
+						$("#titulo").attr("disabled",true);  	
+		   			    $("#myModal .modal-title").text("Aletar exercício");
 		   				$("#myModal").modal("show");  
 			   			event.preventDefault();
-		    	}
-			 });
+		    		}
+			 	});
 
 			
 			/*

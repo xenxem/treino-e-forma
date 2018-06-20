@@ -50,5 +50,7 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 			+ "AND te.titulo = :titulo")
 	public List<TreinoExercicio> buscaPorTreinoTitulo(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
 	
+	
+	
 
 }

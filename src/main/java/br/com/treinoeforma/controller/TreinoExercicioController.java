@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,7 +101,7 @@ public class TreinoExercicioController {
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/salvarTreino")
+	@RequestMapping(method = RequestMethod.POST, path="/salvarTreino")
 	public ModelAndView salvar(HttpServletRequest request,TreinoExercicio te) throws ParseException {
 		
 		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
@@ -125,12 +124,14 @@ public class TreinoExercicioController {
 		List<Exercicio> listaExercicios1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treino.getId());
 		List<Exercicio> exercicios = exercicioImpl.buscaExercicioNaoCadastrado(listaExercicios1);
 		List<Titulo> titulosDoTreino = this.tituloImpl.buscaTitulosPorTreino(treino.getId());
+		List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		
 		List<Titulo> titulos = this.tituloImpl.listar();
 		 
 		ModelAndView mv = new ModelAndView("treino/form-exercicio");		 
 		mv.addObject("titulos",titulos);
 		mv.addObject("listaTe",listaTe);
+		mv.addObject("grupos",grupos);
 		mv.addObject("treinoExercicio",te);
 		mv.addObject("exercicios",exercicios);		
 		mv.addObject("titulosDoTreino",titulosDoTreino);
@@ -240,17 +241,19 @@ public class TreinoExercicioController {
 				
 		List<Titulo> titulos = this.tituloImpl.listar();
 		List<Exercicio> exercicios = this.exercicioImpl.listar();
+		List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		
 		ModelAndView mv = new ModelAndView("treino/form-exercicio");
-		mv.addObject("treinoExercicio",te);
+		mv.addObject("grupos",grupos);
 		mv.addObject("titulos",titulos);
+		mv.addObject("treinoExercicio",te);
 		mv.addObject("exercicios",exercicios);		
 		return mv;
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.GET, path="/editarTE")
-	public @ResponseBody String alterar(Long id,Long exercicioId,Long treinoId,Long tituloId) throws JsonProcessingException {
+	@RequestMapping(method = RequestMethod.POST, path="/editarTE")
+	public @ResponseBody String editarTE(Long id,Long exercicioId,Long treinoId,Long tituloId, HttpServletResponse response) throws JsonProcessingException {
 		Treino tr = new Treino();
 		Titulo ti = new Titulo();
 		Exercicio ex = new Exercicio();
@@ -259,14 +262,18 @@ public class TreinoExercicioController {
 		te = this.treinoExercicioImpl.buscar(id);
 		ex = this.exercicioImpl.buscar(exercicioId);
 		
+		System.out.println("id->"+id+" Exercicio-id->"+exercicioId+" Treino-id->" +treinoId +" Titulo-id->"+tituloId);
+		
 		ex.setId(exercicioId);
 		tr.setId(treinoId);
 		ti.setId(tituloId);
+		
 		
 		te.setExercicio(ex);
 		te.setTreino(tr);
 		te.setTitulo(ti);	
 		
+		//response.setStatus(200);
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(te);		
 	}

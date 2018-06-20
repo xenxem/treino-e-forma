@@ -175,12 +175,6 @@ jQuery(function(){
 	$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
 	$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
 	
-	/*
-		$("#novo").on("click",function(){
-				$("<input/>").addClass("btn btn-default").attr({"type":"button","value":"Incluir exercícios"}).insertAfter($(this));
-				$(this).remove();
-		});
-	*/
 	
 	$("#table tbody tr").on('click','a',function(event) {				
 		
@@ -219,7 +213,7 @@ jQuery(function(){
 	      }
     	
     	if ($(this).attr('class').indexOf('edita') != -1){
-    		  	
+    		
 	    		var id = $(this).attr("id");
 	    		var href = $(this).attr("href");
 	    		var newArray = Array();
@@ -235,8 +229,8 @@ jQuery(function(){
 						$("#myModal").modal("hide");
 						$.ajax({
 		   				url:'/treinoeforma/editarTE',
-		   				data:{"id":id,"exercicioId":exercicioId,'treinoId':treinoId,'tituloId':tituloId},
-		   				type:'get',
+		   				data:{"id":id},
+		   				type:'post',
 		   				dataType:'json',
 		   				success:function(data){				   					
 		   					newArray[3]=data["id"];
