@@ -86,8 +86,8 @@
 						 			<span th:text="${te.exercicio.grupoMuscular.nome}"  th:id="${te.exercicio.id}" class="span-grupo-muscular">grupo muscular</span>
 						 		</td>					 		
 						 		<td class="text-center">							 										 			
-									<a th:href="@{/treinoExercicioExcluir/{id}(id=${te.id})}" th:id="${te.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir exercício atual"><span class="glyphicon glyphicon-trash"></span></a>
-									<a th:href="@{/treinoExercicio/{id}(id=${te.id})}"  th:id="${te.id}" class="btn btn-info btn-xs edita" role="button" title="Alterar exerício atual"><span class="glyphicon glyphicon-pencil" ></span></a>								
+									<a th:href="@{/treinoExercicioExcluir/{id}(id=${te.id})}" th:id="|${te.id},${te.titulo.id}|" class="btn btn-info btn-xs exclui" role="button" title="Excluir exercício atual"><span class="glyphicon glyphicon-trash"></span></a>
+									<a th:href="@{/treinoExercicio/{id}(id=${te.id})}"  th:id="|${te.id},${te.titulo.id}|" class="btn btn-info btn-xs edita" role="button" title="Alterar exerício atual"><span class="glyphicon glyphicon-pencil" ></span></a>								
 				 				</td>
 						 	</tr>
 					 	</th:block>
@@ -192,7 +192,9 @@
 			$("#table tbody tr").on('click','a',function(event) {				
 				item = $(this).closest('tr');				
 				if ($(this).attr('class').indexOf('exclui') != -1){
-					var id = $(this).attr("id");
+					var ids = $(this).attr("id");
+					var array = ids.split(',');
+					var id = array[0];
 		    		$.confirm({
 					    title:'Atenção!',
 					    content:'Deseja realmente excluir este item?',
@@ -223,7 +225,14 @@
 			      }
 		    	
 		    	if ($(this).attr('class').indexOf('edita') != -1){		    		  	
-			    		var id = $(this).attr("id");
+			    		var ids = $(this).attr("id");
+			    		var array = ids.split(',');
+			    		var id = array[0];
+			    		var tituloId = array[1];
+			    		$("#titulo option").each(function(){
+			    			if ($(this).val() === tituloId)
+			    				$(this).prop("selected",true);
+			    		});			    		
 			    		descricaoExercicio = $(this).closest("tr").find(".span-exercicio"); 
 			    		descricaoGrupo = $(this).closest("tr").find(".span-grupo-muscular");
 			    		var href = $(this).attr("href");
