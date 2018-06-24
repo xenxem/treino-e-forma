@@ -194,7 +194,7 @@ jQuery(function(){
 			    buttons: {
 			        Sim: function () {
 			        	$.ajax({
-							url:'/treinoeforma/excluirTE',
+							url:'/excluirTE',
 							data:{"id":id},
 							type:'get',
 							dataType:'html',
@@ -228,7 +228,7 @@ jQuery(function(){
 						//console.log(JSON.stringify(obj));
 						$("#myModal").modal("hide");
 						$.ajax({
-		   				url:'/treinoeforma/editarTE',
+		   				url:'/editarTE',
 		   				data:{"id":id},
 		   				type:'post',
 		   				dataType:'json',
