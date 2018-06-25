@@ -41,7 +41,7 @@
 									    </div>
 									    <div class="form-group">
 									    	 <label for="exercicio" class="control-label">Exercício</label>
-											 <select name="exercicio" th:field="*{exercicio}" class="form-control" id="exercicio">	
+											 <select name="exercicio" th:field="*{exercicio}" class="form-control" id="exercicio" required="required">	
 											 		<option th:value="''"></option>
 					                            	<th:block th:each="g : ${grupos}">
 					                           			<optgroup th:label="${g.nome}">										 	 
@@ -117,10 +117,34 @@
 			$("#salvar").on("click",function(){
 				var action = $("#action").val();
 				
-				if (action === "adicionar")
-					$("#form").submit();				
+				if (action === "adicionar"){
+					if ($("#exercicio option:selected").val() === ""){					
+						$.alert({
+						    title: 'Atenção:',
+						    content: "Você deve escolher um exercício para inclusão!",
+						    type:'blue',
+						    icon: 'glyphicon glyphicon-info-sign',
+						    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+						    closeIcon: true
+						});					
+						return false;
+					}
+					$("#form").submit();	
+				}
 				
-				if (action === "editar"){
+				if (action === "editar"){					
+					if ($("#exercicio option:selected").val() === ""){					
+						$.alert({
+						    title: 'Atenção:',
+						    content: "Você deve escolher um exercício para alteração!",
+						    type:'blue',
+						    icon: 'glyphicon glyphicon-info-sign',
+						    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+						    closeIcon: true
+						});					
+						return false;
+					}
+					
 					var id = $("#treinoExercicioId").val();
 					var treinoId = $("#treinoId").val();
 					var exercicioId = $("#exercicio option:selected").val();
@@ -222,7 +246,7 @@
 					    }
 					});
 			    	event.preventDefault();
-			      }
+			    }
 		    	
 		    	if ($(this).attr('class').indexOf('edita') != -1){		    		  	
 			    		var ids = $(this).attr("id");

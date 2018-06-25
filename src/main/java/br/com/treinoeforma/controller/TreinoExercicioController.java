@@ -52,8 +52,8 @@ public class TreinoExercicioController {
 	@Autowired 
 	private TreinoImpl treinoImpl;	
 	
-	@RequestMapping(method = RequestMethod.GET, path="/montar")
-	public ModelAndView mostrar(@RequestParam("treinoId") Long treinoId, @RequestParam("tituloId") Long tituloId){
+	@RequestMapping(method = RequestMethod.POST, path="/montar")
+	public ModelAndView mostrar(Long treinoId, Long tituloId){
 					
 		 
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,8 +71,9 @@ public class TreinoExercicioController {
 		 
 		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(treinoId);
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
-		 List<Exercicio> exerciciosList1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treinoId);
-		 List<Exercicio> exerciciosList = this.exercicioImpl.buscaExercicioNaoCadastrado(exerciciosList1);
+		 //List<Exercicio> exerciciosList1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treinoId);
+		 //List<Exercicio> exerciciosList = this.exercicioImpl.buscaExercicioNaoCadastrado(exerciciosList1);
+		 List<Exercicio> exerciciosList = this.exercicioImpl.listar();
 		 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		 
 		 Treino treino = this.treinoImpl.buscar(treinoId);
@@ -121,8 +122,9 @@ public class TreinoExercicioController {
 		te = this.treinoExercicioImpl.salvar(te);
 		
 		List<TreinoExercicio> listaTe = this.treinoExercicioImpl.buscaTreinoPorCodigo(treino.getId(), usuarioAutenticado.getId());
-		List<Exercicio> listaExercicios1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treino.getId());
-		List<Exercicio> exercicios = exercicioImpl.buscaExercicioNaoCadastrado(listaExercicios1);
+		//List<Exercicio> listaExercicios1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treino.getId());
+		//List<Exercicio> exercicios = exercicioImpl.buscaExercicioNaoCadastrado(listaExercicios1);
+		List<Exercicio> exercicios = exercicioImpl.listar();
 		List<Titulo> titulosDoTreino = this.tituloImpl.buscaTitulosPorTreino(treino.getId());
 		List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		
@@ -261,8 +263,6 @@ public class TreinoExercicioController {
 		
 		te = this.treinoExercicioImpl.buscar(id);
 		ex = this.exercicioImpl.buscar(exercicioId);
-		
-		System.out.println("id->"+id+" Exercicio-id->"+exercicioId+" Treino-id->" +treinoId +" Titulo-id->"+tituloId);
 		
 		ex.setId(exercicioId);
 		tr.setId(treinoId);
