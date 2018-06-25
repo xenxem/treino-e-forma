@@ -70,9 +70,7 @@ public class TreinoExercicioController {
 			 tituloId = listaUltimoTitulo.get(0).getUltimo();
 		 
 		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(treinoId);
-		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
-		 //List<Exercicio> exerciciosList1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treinoId);
-		 //List<Exercicio> exerciciosList = this.exercicioImpl.buscaExercicioNaoCadastrado(exerciciosList1);
+		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());		 
 		 List<Exercicio> exerciciosList = this.exercicioImpl.listar();
 		 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		 
@@ -122,8 +120,6 @@ public class TreinoExercicioController {
 		te = this.treinoExercicioImpl.salvar(te);
 		
 		List<TreinoExercicio> listaTe = this.treinoExercicioImpl.buscaTreinoPorCodigo(treino.getId(), usuarioAutenticado.getId());
-		//List<Exercicio> listaExercicios1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), treino.getId());
-		//List<Exercicio> exercicios = exercicioImpl.buscaExercicioNaoCadastrado(listaExercicios1);
 		List<Exercicio> exercicios = exercicioImpl.listar();
 		List<Titulo> titulosDoTreino = this.tituloImpl.buscaTitulosPorTreino(treino.getId());
 		List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
@@ -137,7 +133,6 @@ public class TreinoExercicioController {
 		mv.addObject("treinoExercicio",te);
 		mv.addObject("exercicios",exercicios);		
 		mv.addObject("titulosDoTreino",titulosDoTreino);
-		 //mv.addObject("listaExercicios",listaExercicios1);
 		return mv;
 		 
 		 

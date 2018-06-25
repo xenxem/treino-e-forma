@@ -62,7 +62,6 @@ public class TreinoController {
 			 Long tituloId = listaUltimoTitulo.get(0).getUltimo();					 
 			 
 			 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(ultimoTreinoId);
-			 //List<Exercicio> listaExercicios =this.exercicioImpl.buscaExerciciosPorTitulo(ultimoTreinoId, tituloId);
 			 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
 			 List<Exercicio> exerciciosList1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), ultimoTreinoId);
 			 List<Exercicio> exerciciosList = this.exercicioImpl.buscaExercicioNaoCadastrado(exerciciosList1);

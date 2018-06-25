@@ -41,7 +41,7 @@
 									    </div>
 									    <div class="form-group">
 									    	 <label for="exercicio" class="control-label">Exercício</label>
-											 <select name="exercicio" th:field="*{exercicio}" class="form-control" size="15" id="exercicio" required="required">	
+											 <select name="exercicio" th:field="*{exercicio}" class="form-control" id="exercicio" required="required">	
 											 		<option th:value="''"></option>
 					                            	<th:block th:each="g : ${grupos}">
 					                           			<optgroup th:label="${g.nome}">										 	 
