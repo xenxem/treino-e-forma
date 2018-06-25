@@ -18,13 +18,15 @@
 							   <div class="mensagem-aviso"></div>	
 							 </div>
 							 <div class="modal-body">
-							 	<form class="form-horizontal" role="form" th:action="@{/salvar}" method="POST" th:object="${exercicio}">
+							 	<form class="form-horizontal" role="form" th:object="${exercicio}">
 					              <!-- Basic inputs -->
 					              <div class="panel panel-default">
 					                <div class="panel-body">	
 					                	<div class="form-group col-sm-12">
 											<label>Título</label>
-					                        <input type="text" id="titulo" th:value="${titulo.descricao}" class="form-control">
+					                        <select   name="titulos" class="selectpicker form-control"  id="titulo">
+						       					<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>			       			
+						   	  				</select>
 									    </div>
 									    <div class="form-group col-sm-12">
 											<label >Exercício atual</label>
@@ -45,7 +47,7 @@
 									    </div>
 					                    <div class="form-actions text-left">
 					                     	<input type="hidden" id="id" name="id" th:field="*{id}" />
-					                     	<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					                     	<input id="_csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 					                	</div>
 										<br/>
 					                </div>
@@ -53,7 +55,7 @@
 					   		    </form>
 							  </div>					  						 	
 							 <div class="modal-footer">							 							 	
-							   	<!-- <button id="cmdFechar" type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>-->					   	
+							   	<button id="salvar" type="button" class="btn btn-info" data-dismiss="modal">Salvar</button>					   	
 							 </div>
 					   </div>			   				   				   
 					</div>	
@@ -78,7 +80,7 @@
 							      <label for="dataInicio">Data</label>
 							      <input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}">
 								</div>
-							    <input type="hidden" name="treinoId" id="treinoId">
+							    <input type="hidden" name="treinoId" id="treinoId" th:value="${treino.id}">
 								<input type="hidden" name="tituloId" id="tituloId">									
 								<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 								<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button">Novo treino <span class="glyphicon glyphicon-plus"></span></a>
@@ -111,8 +113,8 @@
 									 			<span th:text="${te.exercicio.grupoMuscular.nome}" class="descricao-grupo">grupo muscular</span>
 									 		</td>
 									 		<td class="text-center">							 										 			
-												<a th:href="@{/excluirExercicioTreino/{id}(id=${te.id})}" th:id="${te.id}" class="btn btn-info btn-xs exclui" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
-												<a th:href="@{/editarExercicioTreino/{id}(id=${te.id})}"  th:id="${te.id}" class="btn btn-info btn-xs edita" role="button" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>								
+												<a th:href="@{/excluirExercicioTreino/{id}(id=${te.id})}" th:id="|${te.id},${te.titulo.id}|" class="btn btn-info btn-xs exclui" role="button" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
+												<a th:href="@{/editarExercicioTreino/{id}(id=${te.id})}"  th:id="|${te.id},${te.titulo.id}|" class="btn btn-info btn-xs edita" role="button" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>								
 							 				</td>
 									 	</tr>
 									 </tbody> 
@@ -133,7 +135,7 @@
 <script th:inline="javascript">
 jQuery(function(){	
 	
-	
+	var _csrf = $("#_csrf").attr("value");	
 	
 	$("#treinos").on("change",function(){
 		$("#treinoId").val($(this).val());
@@ -146,18 +148,7 @@ jQuery(function(){
 		$("#treinoId").val($("#treinos").val());		
 		$("#form").submit();
 	});	
-	
-	$("#excluir").on("click",function(){
-		$.alert({
-		    title: 'Atenção:',
-		    content: "Funcionalidade ainda em construção...",
-		    type:'blue',
-		    icon: 'glyphicon glyphicon-info-sign',
-		    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
-		    closeIcon: true
-		});					
-		return false;		
-	});
+		
 	
 	$("#pdf").on("click",function(){
 		$.alert({
@@ -170,19 +161,48 @@ jQuery(function(){
 		});					
 		return false;		
 	});
-
 	
-	$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
-	$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
+	//$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
+	//$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
 	
+	var array = new Array();
+	var item;
+	
+	$("#salvar").on("click",function(){
+		var exercicioId = $("#exercicios option:selected").val();
+		var tituloId = $("#titulos option:selected").val();
+		var treinoId = $("#treinoId").val();
+		var id = array[0];
+		
+		if ($("#exercicios option:selected").val() === ""){					
+			$.alert({
+			    title: 'Atenção:',
+			    content: "Você deve escolher um exercício para inclusão!",
+			    type:'blue',
+			    icon: 'glyphicon glyphicon-info-sign',
+			    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+			    closeIcon: true
+			});					
+			return false;
+		}
+		
+		$.ajax({
+			url:'/treinoeforma/editarTE',
+			data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
+			type:'post',
+			dataType:'json',
+			success:function(data){
+    			item.find('.exercicio-descricao').text(data['exercicio'].descricao);
+    			item.find('.descricao-grupo').text(data['exercicio'].grupoMuscular.nome);
+			}
+		});
+	});
 	
 	$("#table tbody tr").on('click','a',function(event) {				
-		
-		//var array = new Array();				
-		var item = $(this).closest('tr');				
-		
+		item = $(this).closest('tr');
 		if ($(this).attr('class').indexOf('exclui') != -1){			
-			var id = $(this).attr("id");    		
+			array = $(this).attr('id').split(',');			
+			var id = array[0];			
     		$.confirm({
 			    title:'Atenção!',
 			    content:'Deseja realmente excluir este item?',
@@ -194,7 +214,7 @@ jQuery(function(){
 			    buttons: {
 			        Sim: function () {
 			        	$.ajax({
-							url:'/excluirTE',
+							url:'/treinoeforma/excluirTE',
 							data:{"id":id},
 							type:'get',
 							dataType:'html',
@@ -212,36 +232,15 @@ jQuery(function(){
 	    	event.preventDefault();
 	      }
     	
-    	if ($(this).attr('class').indexOf('edita') != -1){
-    		
-	    		var id = $(this).attr("id");
-	    		var href = $(this).attr("href");
-	    		var newArray = Array();
-	    		newArray = href.split('/');
-	   			$("#salvar").remove();
-	   			$("#salvarAlteracao").remove();
-				$("<input>").attr({'type':'button','class':'btn btn-info btn-md','id':'salvarAlteracao','value':'Salvar'}).appendTo(".modal-footer");
-				$(document).on("click","#salvarAlteracao",function(){
-						var exercicioId = $("#exercicios option:selected").val();
-						var tituloId = $("#titulos option:selected").val();
-						var treinoId = $("#treinoId").val();
-						//console.log(JSON.stringify(obj));
-						$("#myModal").modal("hide");
-						$.ajax({
-		   				url:'/editarTE',
-		   				data:{"id":id},
-		   				type:'post',
-		   				dataType:'json',
-		   				success:function(data){				   					
-		   					newArray[3]=data["id"];
-				    		href = newArray.join('/');
-				    		$(this).attr("href",href);
-	   						$("#id").val(data['id']);
-	   						item.find(".descricao-grupo").text(data['exercicio'].grupoMuscular.nome);
-		   					item.find(".exercicio-descricao").text(data['exercicio'].descricao);
-		   				}
-		   			});
-			 	});
+    	if ($(this).attr('class').indexOf('edita') != -1){    		
+    			array = $(this).attr('id').split(',');			
+				var id = array[0];
+				var tituloId = array[1];
+				$("#titulo option").each(function(){
+					if ($(this).val() === tituloId)
+						$(this).attr("selected",true);
+				});
+				var treinoId = $("#treinoId").val();			
 				$("#exercicio").val(item.find(".exercicio-descricao").text());
 				$("#exercicio").attr("disabled",true);
    				$("#titulo").attr("disabled",true);  	

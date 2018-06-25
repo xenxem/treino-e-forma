@@ -41,7 +41,7 @@
 									    </div>
 									    <div class="form-group">
 									    	 <label for="exercicio" class="control-label">Exercício</label>
-											 <select name="exercicio" th:field="*{exercicio}" class="form-control" id="exercicio" required="required">	
+											 <select name="exercicio" th:field="*{exercicio}" class="form-control" size="15" id="exercicio" required="required">	
 											 		<option th:value="''"></option>
 					                            	<th:block th:each="g : ${grupos}">
 					                           			<optgroup th:label="${g.nome}">										 	 
@@ -150,16 +150,13 @@
 					var exercicioId = $("#exercicio option:selected").val();
 					var tituloId = $("#titulo option:selected").val();					
 					$.ajax({
-	   				url:'/editarTE',
+	   				url:'/treinoeforma/editarTE',
 	   				data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
 	   				type:'post',
 	   				dataType:'json',
-	   				success:function(data){				   					
-		   					newArray[3]=data["id"];
-				    		href = newArray.join('/');				    		
-				    		item.find('.edita').attr("href",href);				    		
-				    		descricaoExercicio.text(data['exercicio'].descricao);				    		
-				    		descricaoGrupo.text(data['exercicio'].grupoMuscular.nome);
+	   				success:function(data){    		
+				    		item.find('.span-exercicio').text(data['exercicio'].descricao);
+			    			item.find('.span-grupo-muscular').text(data['exercicio'].grupoMuscular.nome);
 	   					}
 	   				});
 				}					
@@ -230,7 +227,7 @@
 					    buttons: {
 					        Sim: function () {
 					        	$.ajax({
-									url:'/excluirTE',
+									url:'/treinoeforma/excluirTE',
 									data:{"id":id},
 									type:'get',
 									dataType:'html',
@@ -256,11 +253,7 @@
 			    		$("#titulo option").each(function(){
 			    			if ($(this).val() === tituloId)
 			    				$(this).prop("selected",true);
-			    		});			    		
-			    		descricaoExercicio = $(this).closest("tr").find(".span-exercicio"); 
-			    		descricaoGrupo = $(this).closest("tr").find(".span-grupo-muscular");
-			    		var href = $(this).attr("href");
-			    		newArray = href.split('/');
+			    		});
 						$("#treinoExercicioId").val(id);
 						$("#action").val("editar");   	
 						$("#titulo").attr("disabled",true);  	
