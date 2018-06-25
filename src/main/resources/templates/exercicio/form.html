@@ -149,7 +149,7 @@
 			
 			  $(".edita").on("click",function(event){				
 				 $.ajax({
-					url:'/treinoeforma/editarXHR',
+					url:'/editarXHR',
 					data:{"id":$(this).attr("id")},
 					type:'get',
 					dataType:'json',
@@ -185,7 +185,7 @@
 			        delay: 300,			        
 			        source: function (request, response) {
 			            $.ajax({
-			            	url:'/treinoeforma/listaExercicioXHRAutoComplete',
+			            	url:'/listaExercicioXHRAutoComplete',
 			            	type:'post',
 			            	data:{"term":request.term,"_csrf":_csrf_param},
 			            	dataType:'json',
@@ -228,7 +228,7 @@
 						    buttons: {
 						        Sim: function () {	
 						        	$.ajax({
-										url:'/treinoeforma/excluirXHR',
+										url:'/excluirXHR',
 										data:{"id":id},
 										type:'get',
 										dataType:'html',

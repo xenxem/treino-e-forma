@@ -106,7 +106,7 @@
 			var _csrf = $("#_csrf_param").attr("value");			
 			
 			$("#voltar").on("click",function(){
-				window.location.href ="/treinoeforma/treinos";
+				window.location.href ="/treinos";
 			});						
 			
 			var item;
@@ -150,7 +150,7 @@
 					var exercicioId = $("#exercicio option:selected").val();
 					var tituloId = $("#titulo option:selected").val();					
 					$.ajax({
-	   				url:'/treinoeforma/editarTE',
+	   				url:'/editarTE',
 	   				data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
 	   				type:'post',
 	   				dataType:'json',
@@ -230,7 +230,7 @@
 					    buttons: {
 					        Sim: function () {
 					        	$.ajax({
-									url:'/treinoeforma/excluirTE',
+									url:'/excluirTE',
 									data:{"id":id},
 									type:'get',
 									dataType:'html',
