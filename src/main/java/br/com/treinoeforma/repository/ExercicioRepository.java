@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.treinoeforma.model.Exercicio;
+import br.com.treinoeforma.model.Usuario;
 
 
 @Repository
@@ -51,5 +52,11 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 			+ "WHERE e NOT IN (:exercicios) "
 			+ "ORDER BY e.descricao")
 	public List<Exercicio> buscaExercicioNaoCadastrado(@Param("exercicios") List<Exercicio> exercicios);
+	
+	@Query("SELECT e "
+			+ "FROM Exercicio e "
+			+ "WHERE e.usuario =:usuario "
+			+ "ORDER BY e.descricao")
+	public List<Exercicio> listarExercicioPorUsuario(@Param("usuario") Usuario usuario);
 			
 }

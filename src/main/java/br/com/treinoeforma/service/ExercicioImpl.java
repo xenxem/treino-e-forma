@@ -75,7 +75,7 @@ public class ExercicioImpl implements Crud<Exercicio> {
 	}
 	
 	public List<Exercicio> listarExercicioPorUsuario(Usuario usuario){
-		return this.listarExercicioPorUsuario(usuario);		
+		return this.exercicioRepository.listarExercicioPorUsuario(usuario);		
 	}
 	
 

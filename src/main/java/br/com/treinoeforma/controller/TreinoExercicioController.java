@@ -61,15 +61,19 @@ public class TreinoExercicioController {
 		 
 		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		 
+		 
+		 
 		 if (treinoId == null) 
 			 		treinoId = treinoImpl.buscaUltimo(usuarioAutenticado.getId());
+		 
+		 
 		 
 		 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(treinoId);
 		 
 		 if (tituloId == null)
 			 tituloId = listaUltimoTitulo.get(0).getUltimo();
 		 
-		 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(treinoId);
+		 List<Titulo> titulosDoTreino = tituloImpl.listar();
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());		 
 		 List<Exercicio> exerciciosList = this.exercicioImpl.listar();
 		 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
@@ -266,7 +270,7 @@ public class TreinoExercicioController {
 		
 		te.setExercicio(ex);
 		te.setTreino(tr);
-		te.setTitulo(ti);	
+		te.setTitulo(ti);
 		
 		//response.setStatus(200);
 		ObjectMapper mapper = new ObjectMapper();
@@ -292,6 +296,36 @@ public class TreinoExercicioController {
 		this.treinoExercicioImpl.excluir(id);		
 		response.setStatus(200);
 	}
-
+	
+	@RequestMapping(method = RequestMethod.POST, path="/salvarTE")
+	public @ResponseBody String salvarTE(Long exercicioId,Long treinoId,Long tituloId, HttpServletResponse response) throws JsonProcessingException {
+		Treino tr = new Treino();
+		Titulo ti = new Titulo();
+		Exercicio ex = new Exercicio();
+		TreinoExercicio te = new TreinoExercicio();
+		ex = this.exercicioImpl.buscar(exercicioId);		
+		ex.setId(exercicioId);
+		tr.setId(treinoId);
+		ti.setId(tituloId);		
+		te.setExercicio(ex);
+		te.setTreino(tr);
+		te.setTitulo(ti);
+		this.treinoExercicioImpl.salvar(te);
+		//response.setStatus(200);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(te);		
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/excluirExercicioTreino")
+	public String excluirExercicioTreino() {
+		
+		return "redirect:treinos";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/editarExercicioTreino")
+	public String editarExercicioTreino() {		
+		return "redirect:treinos";
+	}
+	
 
 }

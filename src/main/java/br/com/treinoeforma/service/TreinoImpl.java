@@ -61,5 +61,9 @@ public class TreinoImpl implements Crud<Treino> {
 		return null;
 	}
 	
+	public List<Treino> findById(Long usuarioId){
+		return this.treinoRepository.findById(usuarioId);
+	}
+	
 	
 }

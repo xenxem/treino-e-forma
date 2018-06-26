@@ -12,6 +12,7 @@ import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
+import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.repository.TreinoExercicioRepository;
 
 @Service

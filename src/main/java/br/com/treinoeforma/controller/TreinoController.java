@@ -2,6 +2,7 @@ package br.com.treinoeforma.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
+import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;
 import br.com.treinoeforma.service.GrupoMuscularImpl;
@@ -49,7 +51,11 @@ public class TreinoController {
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		 
 		
-		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();		 		 
+		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		 Usuario usuario = new Usuario();
+		 
+		 usuario.setId(usuarioAutenticado.getId());
+		 
 		 Long ultimoTreinoId = this.treinoImpl.buscaUltimo(usuarioAutenticado.getId());
 		 
 		 Exercicio exercicio = new Exercicio();
@@ -58,17 +64,24 @@ public class TreinoController {
 		 
 		 if (ultimoTreinoId != null) {
 			 
-			 List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(ultimoTreinoId);			 
-			 Long tituloId = listaUltimoTitulo.get(0).getUltimo();					 
-			 
-			 List<Titulo> titulosDoTreino = tituloImpl.buscaTitulosPorTreino(ultimoTreinoId);
 			 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());
-			 List<Exercicio> exerciciosList1 = this.exercicioImpl.buscaExerciciosPorTreino(usuarioAutenticado.getId(), ultimoTreinoId);
-			 List<Exercicio> exerciciosList = this.exercicioImpl.buscaExercicioNaoCadastrado(exerciciosList1);
+			 
+			 Long tituloId = 1l;
+			 
+			 if (!listaTe.isEmpty()) {
+				List<TreinoExercicioDTO> listaUltimoTitulo = this.treinoExercicioImpl.buscaUltimoTituloTreino(ultimoTreinoId);			 
+			 	tituloId = listaUltimoTitulo.get(0).getUltimo();
+			 }
+			 
+			 List<Titulo> titulosDoTreino = tituloImpl.listar();			 			 
+			 List<Exercicio> exerciciosList = this.exercicioImpl.listarExercicioPorUsuario(usuario);
 			 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 			 
-			 Treino treino = this.treinoImpl.buscar(ultimoTreinoId);				
-			 Titulo titulo = tituloImpl.buscar(tituloId);
+			 Treino treino = this.treinoImpl.buscar(ultimoTreinoId);
+			 
+			 Titulo titulo;
+			 titulo = tituloImpl.buscar(tituloId); 
+			 
 			 List<TreinoExercicio> listaTePorDia = this.treinoExercicioImpl.buscaPorTreinoTitulo(treino, titulo);
 			 		 
 			 mv.addObject("treino",treino);

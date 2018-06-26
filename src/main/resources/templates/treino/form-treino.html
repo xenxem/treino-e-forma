@@ -24,11 +24,11 @@
 					                <div class="panel-body">	
 					                	<div class="form-group col-sm-12">
 											<label>Título</label>
-					                        <select   name="titulos" class="selectpicker form-control"  id="titulo">
+					                        <select   name="titulo" class="selectpicker form-control"  id="titulo">
 						       					<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>			       			
 						   	  				</select>
 									    </div>
-									    <div class="form-group col-sm-12">
+									    <div class="form-group col-sm-12 collapse">
 											<label >Exercício atual</label>
 											<input type="text" id="exercicio" class="form-control">											
 											<small id="exercicioDescHelp" class="form-text text-muted">Exercício atualmente cadastrado</small>
@@ -105,7 +105,7 @@
 						        	</thead>		
 									 <tbody>							 	
 									 	<tr><td colspan="3" align="center" th:text="${titulo.descricao}">DIA1</td></tr>				 	
-									 	<tr th:each="te : ${listaTePorDia}">			 		
+									 	<tr th:if="${listaTePorDia.size() > 0}" th:each="te : ${listaTePorDia}">			 		
 									 		<td>	
 									 			<span th:text="${te.exercicio.descricao}" class="exercicio-descricao">Supino reto 4x10 + Cross over RM</span>
 									 		</td>
@@ -121,7 +121,7 @@
 								</table>
 								<div th:if="${listaTe.size() > 0}" class="center-block">
 									<div class=text-left>	
-						    			<a  href="#" class="btn btn-info btn-md adiciona" role="button" title="Adicionar">Adicionar</a>
+						    			<a  href="#" class="btn btn-info btn-md" id="adicionar" role="button" title="Escolha o dia e clique aqui para adicionar um novo exercício">Adicionar</a>
 				                    </div>
 						    	</div>
 						</div>
@@ -150,7 +150,8 @@ jQuery(function(){
 		$("#treinoId").val($("#treinos").val());		
 		$("#form").submit();
 	});	
-		
+	
+	
 	
 	$("#pdf").on("click",function(){
 		$.alert({
@@ -167,15 +168,27 @@ jQuery(function(){
 	//$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
 	//$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
 	
+	$("#adicionar").on("click",function(){	
+		$("#titulo").attr("disabled",false);
+		$('.collapse').collapse('hide');						
+		$("#myModal .modal-title").text("Incluir exercício");		   			    
+		$("#myModal").modal("show");		
+	});
+	
+	
+	
 	var array = new Array();
 	var item;
 	
+	
 	$("#salvar").on("click",function(){
 		var exercicioId = $("#exercicios option:selected").val();
-		var tituloId = $("#titulos option:selected").val();
+		var titulosId = $("#titulos option:selected").val();
+		var tituloId = $("#titulo option:selected").val();
 		var treinoId = $("#treinoId").val();
-		var id = array[0];
 		
+		var id = array[0];
+		console.log("editar");
 		if ($("#exercicios option:selected").val() === ""){					
 			$.alert({
 			    title: 'Atenção:',
@@ -188,16 +201,42 @@ jQuery(function(){
 			return false;
 		}
 		
-		$.ajax({
-			url:'/treinoeforma/editarTE',
-			data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
-			type:'post',
-			dataType:'json',
-			success:function(data){
-    			item.find('.exercicio-descricao').text(data['exercicio'].descricao);
-    			item.find('.descricao-grupo').text(data['exercicio'].grupoMuscular.nome);
-			}
-		});
+		if ($("#myModal .modal-title").text() === "Aletar exercício"){
+			$.ajax({
+				url:'/treinoeforma/editarTE',
+				data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':titulosId,'_csrf':_csrf},
+				type:'post',
+				dataType:'json',
+				success:function(data){
+	    			item.find('.exercicio-descricao').text(data['exercicio'].descricao);
+	    			item.find('.descricao-grupo').text(data['exercicio'].grupoMuscular.nome);
+				}
+			});
+		}
+		
+		if ($("#myModal .modal-title").text() === "Incluir exercício"){
+			$.ajax({
+				url:'/treinoeforma/salvarTE',
+				data:{'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
+				type:'post',
+				dataType:'json',
+				success:function(data){
+					/*
+					var linha =  "<tr><td><span class='exercicio-descricao'>"+data['exercicio'].descricao+"</span></td>";
+					    linha += "<td><span class='descricao-grupo'>"+data['exercicio'].grupoMuscular.nome+"</span></td>";
+						linha += "<td class='text-center'>";
+						linha += "<a href='/treinoeforma/excluirExercicioTreino/"+data['id']+"' id='"+data['id']+","+data['titulo'].id+"' class='btn btn-info btn-xs exclui' role='button' title='Excluir'><span class='glyphicon glyphicon-trash'></span></a> ";
+						linha += "<a href='/treinoeforma/editarExercicioTreino/"+data['id']+"'  id='"+data['id']+","+data['titulo'].id+"' class='btn btn-info btn-xs edita' role='button' title='Editar'><span class='glyphicon glyphicon-pencil'></span></a>";
+						linha += "</tr>";
+						$("#table tbody").append(linha);
+					*/
+					
+					$("#tituloId").val(data['titulo'].id);
+					$("#form").submit();
+					
+				}
+			});
+		}
 	});
 	
 	$("#table tbody tr").on('click','a',function(event) {				
@@ -234,7 +273,7 @@ jQuery(function(){
 	    	event.preventDefault();
 	      }
     	
-    	if ($(this).attr('class').indexOf('edita') != -1){    		
+    	if ($(this).attr('class').indexOf('edita') != -1){    			
     			array = $(this).attr('id').split(',');			
 				var id = array[0];
 				var tituloId = array[1];
@@ -242,10 +281,11 @@ jQuery(function(){
 					if ($(this).val() === tituloId)
 						$(this).attr("selected",true);
 				});
-				var treinoId = $("#treinoId").val();			
+				var treinoId = $("#treinoId").val();
+				$('.collapse').collapse('show');
 				$("#exercicio").val(item.find(".exercicio-descricao").text());
 				$("#exercicio").attr("disabled",true);
-   				$("#titulo").attr("disabled",true);  	
+   				$("#titulo").attr("disabled",true);
    			    $("#myModal .modal-title").text("Aletar exercício");		   			    
    				$("#myModal").modal("show");  
 	   			event.preventDefault();

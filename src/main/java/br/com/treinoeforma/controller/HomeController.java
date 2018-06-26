@@ -34,7 +34,7 @@ public class HomeController {
 	
 	@RequestMapping("/registro")
 	public String registro() {
-		return "redirect:/";
+		return "registro";
 	}
 
 }
