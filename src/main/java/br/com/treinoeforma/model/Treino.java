@@ -24,6 +24,8 @@ public class Treino implements Serializable{
 	
 	private String descricao;
 	private Integer curtidas;
+	private String objetivo;
+	
 	
 	@ManyToOne	
 	@JoinColumn(name="usuario_id")
@@ -71,6 +73,16 @@ public class Treino implements Serializable{
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	
+
+	public String getObjetivo() {
+		return objetivo;
+	}
+
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
 	}
 
 	@Override

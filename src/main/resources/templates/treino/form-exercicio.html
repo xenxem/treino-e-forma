@@ -15,7 +15,11 @@
 		<div class="panel-body">		
 				<div class="form-group">
 			      <label for="titulo">Nome do treino</label>
-			      <input type="text" class="form-control" name="descricao" id="descricao" required="required" title="Nome do treino" placeholder="Digite o nome do treino aqui..." th:field="*{treino.descricao}"> 	
+			      <input type="text" class="form-control" name="descricao" id="descricao" required="required" title="Nome do treino" placeholder="Digite o nome do treino aqui" th:field="*{treino.descricao}"> 	
+			    </div>
+			    <div class="form-group">
+			      <label for="objetivo">Objetivo do treino</label>
+			      <textarea class="form-control" cols="100" rows="3" name="objetivo" id="objetivo" title="Descreva o bjetivo do treino" placeholder="Descreva o objetivo do treino" th:field="*{treino.objetivo}"></textarea> 	
 			    </div>
 			    <div class="form-group">
 			      <label for="titulo">Data de vencimento</label>

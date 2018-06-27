@@ -71,14 +71,22 @@
   						<div class="collapse.in" id="collapseExample">						
   							<div class="panel-body">
   								<div class="form-group">  									 									
-							    	<label for="treinos">Treinos cadastrados <span th:text="${listaTe.size()}" class="badge"></span></label>								    	
+							    	<label for="treinos">Treinos <span th:text="${listaTe.size()}" class="badge"></span></label>								    	
 						      		<select  id="treinos" class="selectpicker form-control">							      		    
 						       			<option  th:each="treinoExercicio,obj : ${listaTe}" th:selected="${treinoExercicio.treino.id==treino.id}" th:value="${treinoExercicio.treino.id}" th:text="${listaTe[obj.index].treino.descricao}">Treino A</option>
 						   	  		</select>
 						    	</div>
+						    	
+						    	<div class="form-group">
+							      <label for="objetivo">Objetivo</label>
+							      	<div class="panel panel-default">
+								  		<div id="objetivo" class="panel-body" th:text="${treino.objetivo}"></div>
+									</div>
+								</div>
 								<div class="form-group">
-							      <label for="dataInicio">Data</label>
-							      <input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}">
+							      <div class="form-group">
+							      	<label for="objetivo">Data para troca</label>
+							      	<input  type="date" class="form-control" id="dataInicio" placeholder="Data" title="Data de início do treino dd/mm/aaaa"  th:value="${data}">
 								</div>
 							    <input type="hidden" name="treinoId" id="treinoId" th:value="${treino.id}">
 								<input type="hidden" name="tituloId" id="tituloId">									
@@ -90,7 +98,7 @@
 						
 						<div class="panel-body">
 								<div class="form-group">
-							    	<label for="treinos">Exibir exerícios por título</label>
+							    	<label for="treinos">Exibir exerícios pelo título</label>
 						      		<select   name="titulos" class="selectpicker form-control"  id="titulos">
 						       			<option th:each="t : ${titulosDoTreino}" th:selected="${t.id == titulo.id}" th:value="${t.id}" th:text="${t.descricao}" ></option>			       			
 						   	  		</select>
@@ -165,17 +173,13 @@ jQuery(function(){
 		return false;		
 	});
 	
-	//$('#collapseExample').on('hidden.bs.collapse', function () { $("#esconderPainel").text("Mostrar painel");});	
-	//$('#collapseExample').on('shown.bs.collapse', function () {	$("#esconderPainel").text("Esconder painel");});
-	
 	$("#adicionar").on("click",function(){	
 		$("#titulo").attr("disabled",false);
 		$('.collapse').collapse('hide');						
 		$("#myModal .modal-title").text("Incluir exercício");		   			    
 		$("#myModal").modal("show");		
 	});
-	
-	
+		
 	
 	var array = new Array();
 	var item;
@@ -229,11 +233,9 @@ jQuery(function(){
 						linha += "<a href='/treinoeforma/editarExercicioTreino/"+data['id']+"'  id='"+data['id']+","+data['titulo'].id+"' class='btn btn-info btn-xs edita' role='button' title='Editar'><span class='glyphicon glyphicon-pencil'></span></a>";
 						linha += "</tr>";
 						$("#table tbody").append(linha);
-					*/
-					
+					*/					
 					$("#tituloId").val(data['titulo'].id);
-					$("#form").submit();
-					
+					$("#form").submit();					
 				}
 			});
 		}
@@ -260,8 +262,7 @@ jQuery(function(){
 							type:'get',
 							dataType:'html',
 							success:function(data){
-								item.remove();										
-								//$.alert('Dados excluídos com sucesso!');
+								item.remove();
 							}
 						});
 			        },
