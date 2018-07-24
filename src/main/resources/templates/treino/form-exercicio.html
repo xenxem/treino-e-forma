@@ -100,7 +100,7 @@
 	   </div>	
 	</div>
 </form>						
-</div><!-- ./content -->	
+</div><!-- content -->	
 
 <!-- JQuery -->	
 <div layout:fragment="scripts">
@@ -110,7 +110,7 @@
 			var _csrf = $("#_csrf_param").attr("value");			
 			
 			$("#voltar").on("click",function(){
-				window.location.href ="/treinos";
+				window.location.href =/*[[@{/treinos}]]*/;
 			});						
 			
 			var item;
@@ -128,7 +128,7 @@
 						    content: "Você deve escolher um exercício para inclusão!",
 						    type:'blue',
 						    icon: 'glyphicon glyphicon-info-sign',
-						    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+						    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 						    closeIcon: true
 						});					
 						return false;
@@ -143,7 +143,7 @@
 						    content: "Você deve escolher um exercício para alteração!",
 						    type:'blue',
 						    icon: 'glyphicon glyphicon-info-sign',
-						    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+						    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 						    closeIcon: true
 						});					
 						return false;
@@ -154,7 +154,7 @@
 					var exercicioId = $("#exercicio option:selected").val();
 					var tituloId = $("#titulo option:selected").val();					
 					$.ajax({
-	   				url:'/treinoeforma/editarTE',
+	   				url:/*[[@{/editarTE}]]*/,
 	   				data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
 	   				type:'post',
 	   				dataType:'json',
@@ -175,7 +175,7 @@
 					    content: "Preencha o campo: \"Nome do Treino\"",
 					    type:'blue',
 					    icon: 'glyphicon glyphicon-info-sign',
-					    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+					    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 					    closeIcon: true
 					});					
 					return false;
@@ -187,26 +187,12 @@
 					    content: "Preencha o campo: \"Data de vencimento\"",
 					    type:'blue',
 					    icon: 'glyphicon glyphicon-info-sign',
-					    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+					    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 					    closeIcon: true
 					});					
 					return false;
 				}
-				
-				/*
-				 $('select[multiple].active.3col').multiselect({
-			            columns: 1,
-			            placeholder: 'Selecionar...',
-			            search: true,			            
-			            searchOptions: {
-			                'default': 'Click aqui para pesquisar...'
-			            },			            
-			            selectAll: false,
-			            onOptionClick : function( element, option ){			            	
-			            	console.log(option.checked);
-			            }
-			     });
-				*/
+			
 				$("#titulo").attr("disabled",false);
 				$("#action").val("adicionar");
 				$("#myModal .modal-title").text("Incluir exercício");	   			 
@@ -225,24 +211,24 @@
 					    content:'Deseja realmente excluir este item?',
 					    type:'blue',
 					    icon:'glyphicon glyphicon-info-sign',
-					    theme:'bootstrap', // 'material', 'bootstrap','supervan'
+					    theme:'bootstrap', /* 'material', 'bootstrap','supervan'*/
 					    closeIcon: true,
 					    autoClose:'Não|10000',		
 					    buttons: {
 					        Sim: function () {
 					        	$.ajax({
-									url:'/treinoeforma/excluirTE',
+									url:/*[[@{/excluirTE}]]*/,
 									data:{"id":id},
 									type:'get',
 									dataType:'html',
 									success:function(data){
 										item.remove();										
-										//$.alert('Dados excluídos com sucesso!');
+										/*$.alert('Dados excluídos com sucesso!');*/
 									}
 								});
 					        },
 					        Não: function () {
-					            //$.alert('Operação cancelada!');
+					            /*$.alert('Operação cancelada!');*/
 					        }
 					    }
 					});
@@ -268,139 +254,7 @@
 			 	});
 
 			
-			/*
-			var array1 = new Array();
-			var arr = new Array();
-			var array2 = new Array();
-			var arr2 = new Array();
 			
-			Array.prototype.verifica = function(val){				
-				var array = new Array();
-				array['result'] = false;
-				array['pos']= null;						
-				for (i=0; i < this.length; i++){
-					if (this[i] == val){						
-						array['result'] = true;
-						array['pos']=i;						
-						break;						
-					}
-				}
-				return array;
-			}
-			*/
-				
-			/*
-			var	 table = $('#exercicioTable').DataTable({							
-			 	responsive:true,
-			 	destroy:true,
-			 	pageLength:5,						 	
-			 	language:{
-			 		info:"De _START_ Ao _END_ Total registros: _TOTAL_",
-			 		lengthMenu:     "Mostrar _MENU_ linhas abaixo",
-			 		search:"Pesquisar",				 		
-			 		paginate:{
-			 			previous:"Anterior",
-			 			next:"Próximo"
-			 		}
-			 	},			 	
-		        ajax:{
-		        	url:"/treinoeforma/listaExercicioXHR",
-		        	data:{
-		        		'pCodigoTreino':$("#codigoTreino").val(),
-		        		'pTitulo':$("#titulo option:selected").text()
-		        		},
-		        	dataSrc:""	        		
-		        },
-		        columns:[
-		        		{data:"id"},
-		            	{data:"descricao"},
-		            	{data:"grupoMuscular.nome"}
-		        ],
-		        columnDefs: [{
-		           targets: 0,
-		           searchable: false,
-		           orderable: false,
-		           width: '1%',
-		           className: 'dt-body-center',
-		           render: function (data, type, full, meta){				        	   
-		        	   if (type == 'display')
-		        	   		var resp =$("#codigosSelecionados").val().indexOf(data) != -1 ? 'checked':'';
-		        	   return "<a href='#' id='"+data+"'><input type='checkbox'  " + resp + "  value='"+data+"'>";
-		           }
-		        }]
-		});
-			*/
-					 
-			
-			/*
-			$('#exercicioTable tbody').on('click','a',function () {					 
-				
-				var item = $(this).attr("id");
-				var table = $('#exercicioTable').DataTable();
-				var id = table.row($(this).parents('tr')).data().id;
-				 		
-				if ($.trim($("#codigosSelecionados").val()) === ""){
-					$("#codigosSelecionados").val(id);
-					console.log($("#codigosSelecionados").val());
-				}
-				else
-				{
-					var codigos = $("#codigosSelecionados").val();
-					array1 = codigos.split(',');								
-					arr = array1.verifica(id);
-					
-					if (arr['result']){					
-						array1.splice(arr['pos'],1);
-						array1.sort();
-						var lista = array1.join();
-						$("#codigosSelecionados").val(lista);
-						console.log($("#codigosSelecionados").val());
-					}
-					else
-					{					
-						array1.push(id);
-						array1.sort();
-						var lista = array1.join();
-						$("#codigosSelecionados").val(lista);
-						console.log($("#codigosSelecionados").val());
-						
-					}			
-				}
-				*/
-				
-				/*
-				if ($(this).find("input:checkbox").is(":checked")){
-					
-					if ($.trim($("#codigosParaExclusao").val()) === ""){
-						$("#codigosParaExclusao").val(id);
-						console.log($("#codigosParaExclusao").val());
-					}
-					else
-					{
-						var codigos2 = $("#codigosParaExclusao").val();
-						array2 = codigos2.split(',');
-						arr2 = array2.verifica(id);
-											
-						if (arr2['result']){					
-							array2.splice(arr2['pos'],1);
-							array2.sort();
-							var lista2 = array2.join();
-							$("#codigosParaExclusao").val(lista2);
-							console.log($("#codigosParaExclusao").val());
-						}
-					}
-							
-				}else{					
-					array2.push(id);
-					array2.sort();
-					var lista2 = array2.join();
-					$("#codigosParaExclusao").val(lista2);
-					console.log($("#codigosParaExclusao").val());
-					
-				}
-					    
-			});		
-			*/
 		});			
 	</script>
 </div><!-- fim div script -->

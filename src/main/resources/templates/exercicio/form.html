@@ -138,23 +138,23 @@
 			
 			var _csrf_param = $("#_csrf_param").attr("value");
 			
-			//var header = $("meta[name='_csrf_header']").attr("content");
+			/*var header = $("meta[name='_csrf_header']").attr("content");*/
 			
 			$("#salvar").on("click",function(){
 				$("#form").submit();
 			});
 			
 				
-			/**  alterando um item */
+			/*alterando um item */
 			
 			  $(".edita").on("click",function(event){				
 				 $.ajax({
-					url:'/treinoeforma/editarXHR',
+					url:/*[[@{/editarXHR}]]*/,
 					data:{"id":$(this).attr("id")},
 					type:'get',
 					dataType:'json',
 					success:function(data){						
-						//$.each(data,function(chave,valor){							
+						/*$.each(data,function(chave,valor){*/							
 							$("#id").val(data['id']);
 							$("#descricao").val(data['descricao']);
 							$("#grupoMuscular").find("option").each(function(i,obj){
@@ -163,13 +163,13 @@
 							});							
 							mudaTituloModal('Alterar exercício');
 							$("#myModal").modal("show");
-						//});
+						/*});*/
 					}
 				});
 					event.preventDefault();
 				});
 				
-				/** novo item */
+				/* novo item */
 				
 				$("#novo").on("click",function(){
 					$("#id").val("");
@@ -178,14 +178,14 @@
 					$("#myModal").modal("show");				
 				});
 				
-				/** Campo de busca */
+				/* Campo de busca */
 				
 			    $("#search").autocomplete({
 			        minLength: 3,
 			        delay: 300,			        
 			        source: function (request, response) {
 			            $.ajax({
-			            	url:'/treinoeforma/listaExercicioXHRAutoComplete',
+			            	url:/*[[@{/listaExercicioXHRAutoComplete}]]*/,
 			            	type:'post',
 			            	data:{"term":request.term,"_csrf":_csrf_param},
 			            	dataType:'json',
@@ -204,13 +204,13 @@
 			        	$("#grupoMuscular option").each(function(index,element){			        		
 							if ($(this).val()==ui.item.chave){	
 								$(this).prop("selected",true);
-								return false; //achouu...
+								return false; 
 			        		}
 						});
 			        }
 			    });
 			    
-			    /** Excluindo uma linha */			    	
+			    /* Excluindo uma linha */			    	
 			    	
 			    $("#table tbody tr").on('click','a',function(event) {
 				      if ($(this).attr('class').indexOf('exclui') != -1){	
@@ -222,25 +222,25 @@
 						    content: 'Deseja realmente excluir este item?',
 						    type:'blue',
 						    icon: 'glyphicon glyphicon-info-sign',
-						    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+						    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 						    closeIcon: true,
 						    autoClose:'Não|10000',		
 						    buttons: {
 						        Sim: function () {	
 						        	$.ajax({
-										url:'/treinoeforma/excluirXHR',
+										url:/*[[@{/excluirXHR}]]*/,
 										data:{"id":id},
 										type:'get',
 										dataType:'html',
 										success:function(data){
 											item.remove();
-											//$.alert('Dados excluídos com sucesso!');
+											/*$.alert('Dados excluídos com sucesso!');*/
 										}
 									});
 						        	
 						        },
 						        Não: function () {
-						            //$.alert('Operação cancelada!');
+						            /*$.alert('Operação cancelada!');*/
 						        }
 						    }
 						});

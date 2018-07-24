@@ -167,7 +167,7 @@ jQuery(function(){
 		    content: "Funcionalidade ainda em construção...",
 		    type:'blue',
 		    icon: 'glyphicon glyphicon-info-sign',
-		    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+		    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 		    closeIcon: true
 		});					
 		return false;		
@@ -200,7 +200,7 @@ jQuery(function(){
 			    content: "Você deve escolher um exercício para inclusão!",
 			    type:'blue',
 			    icon: 'glyphicon glyphicon-info-sign',
-			    theme: 'bootstrap', // 'material', 'bootstrap','supervan'
+			    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
 			    closeIcon: true
 			});					
 			return false;
@@ -208,7 +208,7 @@ jQuery(function(){
 		
 		if ($("#myModal .modal-title").text() === "Aletar exercício"){
 			$.ajax({
-				url:'/treinoeforma/editarTE',
+				url:/*[[@{/editarTE}]]*/,
 				data:{'id':id,'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':titulosId,'_csrf':_csrf},
 				type:'post',
 				dataType:'json',
@@ -221,7 +221,7 @@ jQuery(function(){
 		
 		if ($("#myModal .modal-title").text() === "Incluir exercício"){
 			$.ajax({
-				url:'/treinoeforma/salvarTE',
+				url:/*[[@{salvarTE}]]*/,
 				data:{'exercicioId':exercicioId,'treinoId':treinoId,'tituloId':tituloId,'_csrf':_csrf},
 				type:'post',
 				dataType:'json',
@@ -252,13 +252,13 @@ jQuery(function(){
 			    content:'Deseja realmente excluir este item?',
 			    type:'blue',
 			    icon:'glyphicon glyphicon-info-sign',
-			    theme:'bootstrap', // 'material', 'bootstrap','supervan'
+			    theme:'bootstrap', /* 'material', 'bootstrap','supervan'*/
 			    closeIcon: true,
 			    autoClose:'Não|10000',		
 			    buttons: {
 			        Sim: function () {
 			        	$.ajax({
-							url:'/treinoeforma/excluirTE',
+							url:/*[[@{/excluirTE}]]*/,
 							data:{"id":id},
 							type:'get',
 							dataType:'html',
@@ -268,7 +268,7 @@ jQuery(function(){
 						});
 			        },
 			        Não: function () {
-			            //$.alert('Operação cancelada!');
+			            /*$.alert('Operação cancelada!');*/
 			        }
 			    }
 			});
