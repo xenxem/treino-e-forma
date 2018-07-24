@@ -86,7 +86,9 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		return this.treinoExercicioRepository.buscaPorTreinoTitulo(treino, titulo);
 	}
 	
-	
+	public Long buscaUltimo(Usuario usuario) {
+		return this.treinoExercicioRepository.buscaUltimo(usuario);
+	}
 	
 			
 }

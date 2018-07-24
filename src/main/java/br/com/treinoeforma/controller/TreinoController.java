@@ -55,8 +55,8 @@ public class TreinoController {
 		 Usuario usuario = new Usuario();
 		 
 		 usuario.setId(usuarioAutenticado.getId());
-		 
-		 Long ultimoTreinoId = this.treinoImpl.buscaUltimo(usuarioAutenticado.getId());
+
+		 Long ultimoTreinoId = this.treinoExercicioImpl.buscaUltimo(usuario);
 		 
 		 Exercicio exercicio = new Exercicio();
 		 

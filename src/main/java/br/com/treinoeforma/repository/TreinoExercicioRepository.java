@@ -11,6 +11,7 @@ import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
 import br.com.treinoeforma.model.TreinoExercicioDTO;
+import br.com.treinoeforma.model.Usuario;
 
 @Repository
 public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio,Long> {
@@ -50,6 +51,10 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 			+ "AND te.titulo = :titulo")
 	public List<TreinoExercicio> buscaPorTreinoTitulo(@Param("treino") Treino treino, @Param("titulo") Titulo titulo);
 	
+	@Query("SELECT MAX(t.id) FROM TreinoExercicio te "
+			+ "INNER JOIN te.treino t "
+			+ "WHERE t.usuario = :usuario")
+	public Long buscaUltimo(@Param("usuario") Usuario usuario);
 	
 	
 

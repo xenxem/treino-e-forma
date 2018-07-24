@@ -176,7 +176,8 @@ jQuery(function(){
 	$("#adicionar").on("click",function(){	
 		$("#titulo").attr("disabled",false);
 		$('.collapse').collapse('hide');						
-		$("#myModal .modal-title").text("Incluir exercício");		   			    
+		$("#myModal .modal-title").text("Incluir exercício");
+		$("#exercicioHelp").text("Escolha um exercício para inclusão");
 		$("#myModal").modal("show");		
 	});
 		
@@ -287,7 +288,8 @@ jQuery(function(){
 				$("#exercicio").val(item.find(".exercicio-descricao").text());
 				$("#exercicio").attr("disabled",true);
    				$("#titulo").attr("disabled",true);
-   			    $("#myModal .modal-title").text("Aletar exercício");		   			    
+   			    $("#myModal .modal-title").text("Aletar exercício");
+   			 	$("#exercicioHelp").text("Escolha um exercício para troca");
    				$("#myModal").modal("show");  
 	   			event.preventDefault();
     	}

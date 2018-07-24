@@ -7,12 +7,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Free Gym Website Template | Register :: w3layouts</title>
-<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-<link href="css/style.css" rel='stylesheet' type='text/css' />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+	<title>Free Gym Website Template | Register :: w3layouts</title>
+	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="js/jquery.min.js"></script>
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+				});
+			});
+	</script>
 </head>
 <body>
     <!-- start header_bottom -->
@@ -46,7 +55,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 <div class="h_menu4"><!-- start h_menu4 -->
 		   <a class="toggleMenu" href="#">Menu</a>
 			 <ul class="nav">
-			   <li class="active"><a href="index.html">Home</a></li>			   
+			   <li class="active"><a th:href="@{/}">Home</a></li>			   
 			 </ul>
 			  <script type="text/javascript" src="js/nav.js"></script>
 		  </div><!-- end h_menu4 -->
@@ -54,44 +63,50 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	  </div>
 	</div>
 	<!-- end menu -->
-        <div class="main">
-          <div class="register-grids">
-          	<div class="container">
-						<form> 
-								<div class="register-top-grid">
-										<h3>INFORMAÇÕES PESSOAIS</h3>
-										<div>
-											<span>Nome<label>*</label></span>
-											<input type="text"> 
-										</div>										
-										<div>
-											<span>Email<label>*</label></span>
-											<input type="text"> 
-										</div>
-								</div>
-								<div class="clear"> </div>
-								<div class="register-bottom-grid">
-										<h3>INFORMAÇÕES DE LOGIN</h3>
-										<div>
-											<span>Login<label>*</label></span>
-											<input type="text"> 
-										</div>
-										<div>
-											<span>Senha<label>*</label></span>
-											<input type="text">
-										</div>
-										<div>
-											<span>Confirmar senha<label>*</label></span>
-											<input type="text">
-										</div>
-										<div class="clear"> </div>
-								</div>
-								<div class="clear"> </div>
-								<input type="submit" value="enviar">
-						</form>
-					</div>
-				</div>
-         </div>
-         
+<br>
+<div class="container-fluid">
+ 	<div class="content">  	
+		<form name="form" id="form" method="post">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+			    	<h3 class="panel-title">INFORMAÇÕES PESSOAIS</h3>
+			  	</div>	  
+				<div class="panel-body">		
+						<div class="form-group">
+					      <label for="nome">Nome</label>
+					      <input type="text" class="form-control" name="nome" id="nome" required="required" title="nome"> 	
+					    </div>
+					    <div class="form-group">
+					      <label for="email">e-mail</label>
+					      <input type="text" class="form-control" name="email" id="email" title="exemplo@email.com"> 	
+					    </div>
+			    </div>
+			    <div class="panel-heading">
+			    	<h3 class="panel-title">INFORMAÇÕES DE LOGIN</h3>
+			  	</div>	
+			  		<div class="panel-body">		
+						<div class="form-group">
+					      <label for="login">Login para acesso</label>
+					      <input type="text" class="form-control" name="login" id="login" required="required" title="login de acesso"> 	
+					    </div>
+					    <div class="form-group">
+					      <label for="senha">Senha</label>
+					      <input type="password" class="form-control" name="senha" id="senha" title="senha de acesso"> 	
+					    </div>
+					    <div class="form-group">
+					      <label for="confirmasenha">Confirme a senha</label>
+					      <input type="password" class="form-control" name="confirmasenha" id="confirmasenha" title="digite a mesma senha"> 	
+					    </div>  
+					    
+					    <div class=text-left>	
+							<a  href="#" class="btn btn-info btn-md" id="enviar" role="button" title="Envair dados">Enviar dados</a>
+						</div>
+			    </div>
+			</div>
+			
+			
+		</form>						
+      </div>
+  </div>   
 </body>
 </html>
