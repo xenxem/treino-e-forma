@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.treinoeforma.dto.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
-import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Usuario;
 
 @Repository
@@ -32,7 +32,7 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 			+ "ORDER BY te,te.titulo,te.exercicio")
 	public List<TreinoExercicio> buscaTreinoPorCodigo(@Param("treinoId") Long treinoId,@Param("usuarioId") Long usuarioId);
 	
-	@Query("SELECT NEW br.com.treinoeforma.model.TreinoExercicioDTO(te.treino, te.exercicio, te.titulo, MAX(te.titulo.id)) "
+	@Query("SELECT NEW br.com.treinoeforma.dto.TreinoExercicioDTO(te.treino, te.exercicio, te.titulo, MAX(te.titulo.id)) "
 			+ "FROM TreinoExercicio te " + 
 			"WHERE te.treino.id = :treinoId "
 			+ "GROUP BY te.treino")

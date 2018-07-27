@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import br.com.treinoeforma.dto.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
-import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.repository.TreinoExercicioRepository;
 

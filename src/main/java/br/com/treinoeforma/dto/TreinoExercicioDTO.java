@@ -1,4 +1,8 @@
-package br.com.treinoeforma.model;
+package br.com.treinoeforma.dto;
+
+import br.com.treinoeforma.model.Exercicio;
+import br.com.treinoeforma.model.Titulo;
+import br.com.treinoeforma.model.Treino;
 
 public class TreinoExercicioDTO {
 	

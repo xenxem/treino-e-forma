@@ -14,7 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		/* API fluente */
 		http  
 			.authorizeRequests()		/* Configurando a segurança das requisições	*/				
-				.antMatchers("/home","/registro").permitAll()
+				.antMatchers("/home","/registro","/cadastro").permitAll()
 				.antMatchers("/treinoeforma/treinos").hasAnyRole("ROLE_PG_MONTAR_TREINO")
 				.antMatchers("/treinoeforma/listarTreino").hasAnyRole("ROLE_PG_LISTAR_TREINO")
 				.antMatchers("/treinoeforma/listarExercicio").hasAnyRole("ROLE_PG_LISTAR_EXERCICIO")				

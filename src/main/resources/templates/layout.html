@@ -1,24 +1,19 @@
 <!DOCTYPE html> 
-
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
 <head> 
 	<meta charset="UTF-8"/> <meta name="viewport" content="width=device-width" />		
 	<title>Treino e Forma</title>	
-	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />	 
-	<link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
-	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/dataTables.checkboxes.css" rel="stylesheet">
-	<link href="css/jquery-ui.css" rel="stylesheet"/>
-	<link href="css/jquery-confirm.min.css" rel="stylesheet">
-	<link href="css/jquery.multiselect.css" rel="stylesheet" />
-	<link href="css/style.css" rel='stylesheet' type='text/css' />
-	
-</head> 
-
+	<link th:href="@{/css/bootstrap.css}" rel='stylesheet' type='text/css' />	 
+	<link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+	<link th:href="@{css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{css/dataTables.checkboxes.css}" rel="stylesheet">
+	<link th:href="@{css/jquery-ui.css}" rel="stylesheet"/>
+	<link th:href="@{css/jquery-confirm.min.css}" rel="stylesheet">
+	<link th:href="@{css/jquery.multiselect.css}" rel="stylesheet" />
+	<link th:href="@{css/style.css}" rel='stylesheet' type='text/css' />	
+</head>
 <body>
-
 <div class="container-fluid">
    	<div class="content">   	
 	   	<!-- start menu -->
@@ -48,22 +43,21 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 		</div>
 		<!-- end menu -->
 		
-		<div layout:fragment="content">content falso</div>
-	   			
+		<!-- conteúdo -->
+		<div layout:fragment="content">content falso</div>	   			
 	   		
 	</div>   			
 </div>	
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+<script th:src="@{/js/dataTables.checkboxes.min.js}"></script>
+<script th:src="@{/js/jquery-ui.js}"></script>
+<script th:src="@{/js/jquery.multiselect.js}"></script>
+<script th:src="@{/js/jquery-confirm.min.js}"></script>	 
 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.bootstrap.min.js"></script>
-<script src="js/dataTables.checkboxes.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/jquery.multiselect.js"></script>
-<script src="js/jquery-confirm.min.js"></script>	 
-
+<!-- scripts -->
 <div layout:fragment="scripts"></div>
-
 </body> 
 </html> 

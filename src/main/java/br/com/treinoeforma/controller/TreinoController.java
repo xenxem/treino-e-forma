@@ -2,7 +2,6 @@ package br.com.treinoeforma.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.treinoeforma.dto.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
-import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;

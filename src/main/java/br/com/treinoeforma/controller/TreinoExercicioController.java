@@ -15,19 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.treinoeforma.dto.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.model.Titulo;
 import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.model.TreinoExercicio;
-import br.com.treinoeforma.model.TreinoExercicioDTO;
 import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.security.GpUserDetails;
 import br.com.treinoeforma.service.ExercicioImpl;
