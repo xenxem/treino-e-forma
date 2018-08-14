@@ -28,8 +28,16 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 		
 	@Modifying(clearAutomatically = true)
     @Query("SELECT e FROM Exercicio e"
-    		+ " WHERE e.descricao LIKE CONCAT('%',:descricao,'%')")    		
-    List<Exercicio> listarPorNome(@Param("descricao") String descricao);	
+    		+ " WHERE e.descricao LIKE CONCAT('%',:descricao,'%')"
+    		+ " GROUP BY e.descricao "
+    		+ " ORDER BY e.descricao")    		
+    List<Exercicio> listarPorNome(@Param("descricao") String descricao);
+	
+	@Modifying(clearAutomatically = true)
+    @Query("SELECT e FROM Exercicio e"    		
+    		+ " GROUP BY e.descricao "
+    		+ " ORDER BY e.descricao")    		
+    public List<Exercicio> listar();
 	
 	@Query("SELECT te.exercicio FROM TreinoExercicio te "
 			+ "WHERE te.treino.id =:treinoId "
@@ -56,6 +64,7 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 	@Query("SELECT e "
 			+ "FROM Exercicio e "
 			+ "WHERE e.usuario =:usuario "
+			+ "GROUP BY e.descricao "
 			+ "ORDER BY e.descricao")
 	public List<Exercicio> listarExercicioPorUsuario(@Param("usuario") Usuario usuario);
 			

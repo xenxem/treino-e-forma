@@ -49,7 +49,7 @@ public class ExercicioImpl implements Crud<Exercicio> {
 
 	@Override
 	public List<Exercicio> listar() {
-		return this.exercicioRepository.findAll();
+		return this.exercicioRepository.listar();
 	}
 
 	@Override

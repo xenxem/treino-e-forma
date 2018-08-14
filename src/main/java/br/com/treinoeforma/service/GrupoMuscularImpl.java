@@ -54,6 +54,10 @@ public class GrupoMuscularImpl implements Crud<GrupoMuscular> {
 		return null;
 	}
 	
+	public List<GrupoMuscular> listaPorNome(){		
+		return this.grupoMuscularRepository.listaPorNome();
+	}
+	
 	
 
 }
