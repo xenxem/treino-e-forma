@@ -72,11 +72,24 @@ public class TreinoController {
 			 	tituloId = listaUltimoTitulo.get(0).getUltimo();
 			 }
 			 
-			 List<Titulo> titulosDoTreino = tituloImpl.listar();			 			 
+			  
+			 //List<Titulo> titulosDoTreino = tituloImpl.listar();			 			 
 			 List<Exercicio> exerciciosList = this.exercicioImpl.listarExercicioPorUsuario(usuario);
 			 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 			 
+			 
+			 
 			 Treino treino = this.treinoImpl.buscar(ultimoTreinoId);
+			 
+			 List<Object[]> titulosDoTreino = this.tituloImpl.obterTitulosComQtdDeExercicio(treino.getId());
+			 
+			 /*
+			 for (Iterator<Object[]> iterator = titulos.iterator(); iterator.hasNext();) {
+				Object[] objects = (Object[]) iterator.next();
+				System.out.println("Codigo: "+ objects[0] +" Titulo: "+objects[1] + " Quantidade: "+objects[3]);
+			 }
+			 */
+			 
 			 
 			 Titulo titulo;
 			 titulo = tituloImpl.buscar(tituloId); 
@@ -89,7 +102,7 @@ public class TreinoController {
 			 mv.addObject("listaTe",listaTe);
 			 mv.addObject("listaTePorDia",listaTePorDia);
 			 mv.addObject("exercicio",exercicio);
-			 mv.addObject("titulosDoTreino",titulosDoTreino);
+			 mv.addObject("titulosDoTreino",titulosDoTreino);			 
 			 mv.addObject("exerciciosList",exerciciosList);
 			 mv.addObject("data",df.format(treino.getData().getTime()));
 			 return mv;

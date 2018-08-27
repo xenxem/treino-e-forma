@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.treinoeforma.dto.TituloDTO;
 import br.com.treinoeforma.model.Exercicio;
 import br.com.treinoeforma.model.Titulo;
+import br.com.treinoeforma.model.Treino;
 import br.com.treinoeforma.repository.TituloRepository;
 
 @Service
@@ -70,6 +72,15 @@ public class TituloImpl implements Crud<Titulo> {
 	public Titulo alterar(Titulo t) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<TituloDTO> listaTituloComQuantidadeExercicio(Treino treino){
+		return this.tituloRepository.listaTituloComQuantidadeExercicio(treino);
+	}
+	
+	
+	public List<Object[]> obterTitulosComQtdDeExercicio(Long treino_id){
+		return this.tituloRepository.obterTitulosComQtdDeExercicio(treino_id);
 	}
 	
 	
