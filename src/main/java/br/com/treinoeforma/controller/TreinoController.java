@@ -74,7 +74,7 @@ public class TreinoController {
 			 
 			  
 			 //List<Titulo> titulosDoTreino = tituloImpl.listar();			 			 
-			 List<Exercicio> exerciciosList = this.exercicioImpl.listarExercicioPorUsuario(usuario);
+			 List<Exercicio> exerciciosList = this.exercicioImpl.listar();
 			 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 			 
 			 

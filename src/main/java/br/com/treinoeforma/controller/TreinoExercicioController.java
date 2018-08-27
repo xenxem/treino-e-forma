@@ -75,7 +75,7 @@ public class TreinoExercicioController {
 		 //List<Titulo> titulosDoTreino = tituloImpl.listar();
 		 List<TreinoExercicio> listaTe = this.treinoExercicioImpl.listarTreinoExercicioAgrupado(usuarioAutenticado.getId());		 
 		 List<Exercicio> exerciciosList = this.exercicioImpl.listar();
-		 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listaPorNome();
+		 List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		 
 		 Treino treino = this.treinoImpl.buscar(treinoId);
 		 Titulo titulo = new Titulo();
@@ -243,7 +243,7 @@ public class TreinoExercicioController {
 				
 		List<Titulo> titulos = this.tituloImpl.listar();
 		List<Exercicio> exercicios = this.exercicioImpl.listar();
-		List<GrupoMuscular> grupos = this.grupoMuscularImpl.listaPorNome();
+		List<GrupoMuscular> grupos = this.grupoMuscularImpl.listar();
 		
 		ModelAndView mv = new ModelAndView("treino/form-exercicio");
 		mv.addObject("grupos",grupos);
