@@ -34,7 +34,7 @@
 									    <div class="form-group col-sm-12">
 							    			<label for="treinos">Título</label>
 						      				<select   name="titulos" class="selectpicker form-control"  id="titulo">
-						       					<option th:each="t : ${titulosDoTreino}"  th:selected="${t[0] == titulo.id}" th:value="${t[0]}" th:text="${t[2] == null} ? ${t[1]} : |${t[1]}  (${t[3]} Total exercício)|" ></option>			       			
+						       					<option th:each="t : ${titulosDoTreino}"  th:selected="${t[0] == titulo.id}" th:value="${t[0]}" th:text="${t[2] == null} ? ${t[1]} : |${t[1]}  (${t[3]} Total exercícios)|" ></option>			       			
 						   	  				</select>
 				    					</div>
 									    

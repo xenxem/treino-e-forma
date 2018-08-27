@@ -52,7 +52,8 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 	
 	@Query("SELECT e "
 			+ "FROM Exercicio e "
-			+ "WHERE e.usuario.id = :usuarioId")
+			+ "WHERE e.usuario.id = :usuarioId "
+			+ "ORDER BY e.grupoMuscular.nome,e.descricao")
 	public Page<Exercicio> findById(@Param("usuarioId") Long usuarioId, Pageable pageabel);
 	
 	@Query("SELECT e "
