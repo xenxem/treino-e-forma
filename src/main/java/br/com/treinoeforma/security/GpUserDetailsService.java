@@ -40,10 +40,8 @@ public class GpUserDetailsService implements UserDetailsService {
 
 			GpUserDetails userDetails = buscarUsuario(connection, login);
 
-			Collection<GrantedAuthority> permissoesPorUsuario = buscarPermissoes(connection,
-					login,PERMISSOES_POR_USUARIO);
-			Collection<GrantedAuthority> permissoesPorGrupo = buscarPermissoes(connection,
-					login,PERMISSOES_POR_GRUPO);
+			Collection<GrantedAuthority> permissoesPorUsuario = buscarPermissoes(connection,login,PERMISSOES_POR_USUARIO);			
+			Collection<GrantedAuthority> permissoesPorGrupo = buscarPermissoes(connection,login,PERMISSOES_POR_GRUPO);
 
 			userDetails.getAuthorities().addAll(permissoesPorUsuario);
 			userDetails.getAuthorities().addAll(permissoesPorGrupo);

@@ -114,6 +114,17 @@ public class TreinoExercicioController {
 		Calendar c = Calendar.getInstance();
 		c.setTime(df.parse(request.getParameter("data")));		
 		
+		//cadastrando exercício selecionado de outro usuário
+		if (usuarioAutenticado.getId() != te.getExercicio().getUsuario().getId()) {
+			Exercicio e = new Exercicio();
+			e.setDescricao(te.getExercicio().getDescricao());
+			e.setGrupoMuscular(te.getExercicio().getGrupoMuscular());
+			Usuario u = new Usuario();
+			u.setId(usuarioAutenticado.getId());			
+			e.setUsuario(u);			
+			te.setExercicio(this.exercicioImpl.salvar(e));
+		}
+		
 		Treino treino = te.getTreino();
 		treino.setData(c);
 		
@@ -300,12 +311,35 @@ public class TreinoExercicioController {
 	
 	@RequestMapping(method = RequestMethod.POST, path="/salvarTE")
 	public @ResponseBody String salvarTE(Long exercicioId,Long treinoId,Long tituloId, HttpServletResponse response) throws JsonProcessingException {
+		
+		
 		Treino tr = new Treino();
 		Titulo ti = new Titulo();
 		Exercicio ex = new Exercicio();
 		TreinoExercicio te = new TreinoExercicio();
-		ex = this.exercicioImpl.buscar(exercicioId);		
-		ex.setId(exercicioId);
+		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		
+		ex = this.exercicioImpl.buscar(exercicioId);
+		
+		
+		
+		
+		//cadastrando exercício selecionado de outro usuário
+		
+		
+		if (usuarioAutenticado.getId() != ex.getUsuario().getId()) {
+			Exercicio e = new Exercicio();
+			e.setDescricao(ex.getDescricao());
+			e.setGrupoMuscular(ex.getGrupoMuscular());
+			
+			Usuario u = new Usuario();
+			u.setId(usuarioAutenticado.getId());			
+			e.setUsuario(u);			
+			
+			e = this.exercicioImpl.salvar(e);
+			ex = e;
+		}
+		
 		tr.setId(treinoId);
 		ti.setId(tituloId);		
 		te.setExercicio(ex);
