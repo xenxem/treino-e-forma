@@ -1,6 +1,8 @@
 package br.com.treinoeforma.security;
 
-import static br.com.treinoeforma.utils.JdbcUtils.*;
+import static br.com.treinoeforma.utils.JdbcUtils.PERMISSOES_POR_GRUPO;
+import static br.com.treinoeforma.utils.JdbcUtils.PERMISSOES_POR_USUARIO;
+import static br.com.treinoeforma.utils.JdbcUtils.USUARIO_POR_LOGIN;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +24,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+/*
+ * Forma customizada para buscar usuário
+ * Nessa forma customizada o usuário será buscado de um banco de dados e aquery será executada por nós, não pelo Spring como no acesso via JDBC do outro exemplo. 
+ * Poderia ser outra forma de acesso ou fonte de dados.
+ * 
+ */
+
 @Component
 public class GpUserDetailsService implements UserDetailsService {
 
@@ -29,12 +38,16 @@ public class GpUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private DataSource dataSource;
-
+	
+	
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		
 		Connection connection = null;
-
+		
+		
+		
+			
 		try {
 			connection = dataSource.getConnection();
 

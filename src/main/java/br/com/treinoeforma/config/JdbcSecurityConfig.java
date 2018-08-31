@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/*
+ * As querys serão executadas pelo Spring Security
+ */
+
 //@Configuration
 public class JdbcSecurityConfig {
 	

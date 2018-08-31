@@ -2,6 +2,9 @@ package br.com.treinoeforma.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import br.com.treinoeforma.model.Usuario;
 
 @Controller
 public class HomeController {
@@ -33,8 +36,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/registro")
-	public String registro() {
-		return "registro";
+	public ModelAndView registro() {		
+		ModelAndView mv = new ModelAndView("registro");
+		mv.addObject("usuario", new Usuario());
+		return mv;		
 	}
 
 }

@@ -13,21 +13,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		/* API fluente */
 		http  
-			.authorizeRequests()		/* Configurando a segurança das requisições	*/				
+			.authorizeRequests()																		/* Configurando a segurança das requisições	*/				
 				.antMatchers("/home","/registro","/cadastro").permitAll()
 				.antMatchers("/treinoeforma/treinos").hasAnyRole("ROLE_PG_MONTAR_TREINO")
 				.antMatchers("/treinoeforma/listarTreino").hasAnyRole("ROLE_PG_LISTAR_TREINO")
 				.antMatchers("/treinoeforma/listarExercicio").hasAnyRole("ROLE_PG_LISTAR_EXERCICIO")				
-				.anyRequest()			/* Qualquer requisição */
-				.authenticated() 		/* Para qualquer requisição o usuário precisa estar autenticado */
+				.anyRequest()																			/* Qualquer requisição */
+				.authenticated() 																		/* Para qualquer requisição o usuário precisa estar autenticado */
 			.and() 
-			  		.formLogin()			/* Formulário HTML definido pelo Spring */
-			  		.loginPage("/login")
-			  		.permitAll()
+			  	.formLogin()																			/* Formulário HTML definido pelo Spring */
+			  	.loginPage("/login").permitAll()
 			.and()
 			 	.logout()
-			 	.logoutSuccessUrl("/login?logout")
-			 	.permitAll();
+			 	.logoutSuccessUrl("/login?logout").permitAll();
 	}
 	
 		

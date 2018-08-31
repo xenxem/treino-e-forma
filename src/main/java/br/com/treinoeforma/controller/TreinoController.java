@@ -42,13 +42,12 @@ public class TreinoController {
 	@Autowired 
 	private GrupoMuscularImpl grupoMuscularImpl;
 	
-	
-	
 	@RequestMapping(method = RequestMethod.GET, path = "/treinos")
 	public ModelAndView treinos() {		
-		 
-		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		 
+		
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	 
 		
 		 GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		 Usuario usuario = new Usuario();

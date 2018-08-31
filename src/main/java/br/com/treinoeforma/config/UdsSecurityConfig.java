@@ -14,6 +14,7 @@ public class UdsSecurityConfig {
 	public void configureGlobal(AuthenticationManagerBuilder builder, 
 			PasswordEncoder passwordEncoder, 
 			GpUserDetailsService userDetailsService) throws Exception {
+	
 		builder
 			.userDetailsService(userDetailsService)
 			.passwordEncoder(passwordEncoder);

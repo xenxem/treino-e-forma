@@ -6,6 +6,12 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/*
+ * Implementação concreta de UserDetail
+ * Essa classe será instanciada e devolvida no método loadUserByUsername de GpUserDetailService
+ * Isso é uma forma customizada de buscar usuário
+ *   
+ * */
 public class GpUserDetails implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
