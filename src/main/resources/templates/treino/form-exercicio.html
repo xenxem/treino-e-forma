@@ -68,8 +68,10 @@
 				<input type="hidden" name="treinoExercicioId" id="treinoExercicioId">	
 				<input type="hidden" name="treinoId" id="treinoId" th:field="*{treino.id}">
 				<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar <span class="glyphicon glyphicon-arrow-left"></span></button>
-				<button type="button" class="btn btn-info btn-sm" id="adicionar" title="Seleciona um exercício existente">Selecionar exercício</button>				
+				<button type="button" class="btn btn-info btn-sm" id="adicionar" title="Seleciona um exercício existente">Selecionar exercício</button>	
+				<!-- 			
 				<button type="button" class="btn btn-info btn-sm" id="novoExercicio" title="Permite a inclusão de um novo exercício">Novo exercício</button>
+				 -->
 				<input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				
 				<table class="table table-striped" id="table"> 

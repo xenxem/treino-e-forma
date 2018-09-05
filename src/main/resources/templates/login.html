@@ -71,8 +71,8 @@
 		 <div class="h_menu4"><!-- start h_menu4 -->
 		   <a class="toggleMenu" href="#">Menu</a>
 			 <ul class="nav">
-			   <li class="active"><a th:href="@{/}">Home</a></li>
-			   <li class="active"><a th:href="@{/contato}">Contato</a></li>			   
+			   <li><a th:href="@{/}">Home</a></li>
+			   <li><a th:href="@{/contato}">Contato</a></li>			   
 			 </ul>
 			  <script type="text/javascript" src="js/nav.js"></script>
 		  </div><!-- end h_menu4 -->
@@ -84,7 +84,7 @@
           <div class="login_top">
           	<div class="container">
 			  <div class="col-md-6">
-				 <div class="login-page">
+				 <div class="login-page" th:if="${mensagem == null}">
 					<h4 class="title">Cadastro</h4>
 					<p>Para ter acesso à área restrita do site e criar o seu treino,  faça seu registro. É simples e rápido!</p>
 					<div class="button1">
@@ -98,6 +98,9 @@
 				  <div class="login-title">
 				  	<div th:if="${param.logout}">
 	           				<div class="alert alert-info">Volte sempre!</div>
+	           		</div>
+	           		<div th:if="${mensagem}">
+	           				<div class="alert alert-success" th:text="${mensagem}"></div>
 	           		</div>
 	           		<h4 class="title">	           			
 	           			Entrar	           			 
@@ -147,7 +150,7 @@
 		 <div class="copyright">
 		  <div class="container">
 		  	<div class="copy">
-		        <p>Desenvolvedor by Carlos    © 2014 Template design by <a href="http://w3layouts.com" target="_blank"> w3layouts</a></p>
+		        <p>Desenvolvedor by Carlos Alexandre</p>
 		    </div>		    
 		   <div class="clear"></div>
 		  </div>

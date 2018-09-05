@@ -1,8 +1,6 @@
 
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layout">
+<html>
 <head>
 	<title>Free Gym Website Template | Register :: w3layouts</title>
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -21,27 +19,48 @@
 	</script>
 </head>
 <body>
-<div layout:fragment="content">	
+	
 
 <br>
 <div class="container-fluid">
  	<div class="content">  	
-		<form id="form" th:action="@{/cadastro}" method="post">
+ 	
+	 	<div class="menu" id="menu">
+		  <div class="container">
+			 <div class="logo">
+				<a href="index.html"></a>
+			 </div>
+			 <div class="h_menu4"><!-- start h_menu4 -->
+			   <a class="toggleMenu" href="#">Menu</a>
+				 <ul class="nav">
+				   <li class="active"><a th:href="@{/}">Home</a></li>
+				   <li><a th:href="@{/contato}">Contato</a></li>
+				 </ul>
+				  <script type="text/javascript" src="js/nav.js"></script>
+			  </div><!-- end h_menu4 -->
+			 <div class="clear"></div>
+		  </div>
+		</div>
+		<!-- end menu -->
+		
+		<form id="form" th:action="@{/cadastro}" method="post" th:object="${usuario}">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 			    	<h3 class="panel-title">Informações Pessoais</h3>
 			  	</div>	
+			  	 
+			  	 <div class="alert alert-danger" role="alert" th:if="${mensagem}" th:text="${mensagem}"></div>
 			  	   
 				<div class="panel-body">
-						<!--		
+								
 						<div class="form-group">
 					      <label for="nome">Nome</label>
-					      <input type="text" class="form-control" name="nome" id="nome" required="required" title="nome"> 	
+					      <input type="text" class="form-control" name="nome" id="nome" required="required" title="nome" th:field="*{nome}"> 	
 					    </div>
-					    -->
+					    
 					    <div class="form-group">
 					      <label for="email">e-mail</label>
-					      <input type="text" class="form-control" name="email" id="email" required="required" title="exemplo@email.com"> 	
+					      <input type="text" class="form-control" name="email" id="email" required="required" title="exemplo@email.com" th:field="*{email}"> 	
 					    </div>
 			    </div>
 			     
@@ -51,15 +70,15 @@
 			  		<div class="panel-body">		
 						<div class="form-group">
 					      <label for="login">Login para acesso</label>
-					      <input type="text" class="form-control" name="login" id="login" required="required" title="login de acesso"> 	
+					      <input type="text" class="form-control" name="login" id="login" required="required" title="login de acesso" th:field="*{login}"> 	
 					    </div>
 					    <div class="form-group">
 					      <label for="senha">Senha</label>
-					      <input type="password" class="form-control" name="senha" id="senha" title="senha de acesso" required="required"> 	
+					      <input type="password" class="form-control" name="senha" id="senha" title="senha de acesso" required="required" th:value="${usuario.senha}"> 	
 					    </div>
 					    <div class="form-group">
 					      <label for="confirmasenha">Confirme a senha</label>
-					      <input type="password" class="form-control" name="confirmasenha" id="confirmasenha" title="digite a mesma senha" required="required"> 	
+					      <input type="password" class="form-control" name="confirmasenha" id="confirmasenha" title="digite a mesma senha" required="required" th:value="${usuario.senha}"> 	
 					    </div>  
 					    
 					    <div class=text-right>	
@@ -70,6 +89,6 @@
 		</form>						
       </div>
   </div>   
- </div><!-- fim content -->
+ 
 </body>
 </html>

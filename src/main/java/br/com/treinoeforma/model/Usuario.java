@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Usuario implements Serializable {
@@ -25,6 +26,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private Boolean ativo;
 	
+	@Transient
 	@OneToMany(mappedBy="usuario")	
 	private List<Treino> treinos;
 	

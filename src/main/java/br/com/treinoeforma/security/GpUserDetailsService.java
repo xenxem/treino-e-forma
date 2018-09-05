@@ -80,7 +80,7 @@ public class GpUserDetailsService implements UserDetailsService {
 
 	public GpUserDetails buscarUsuario(Connection connection, String login) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(USUARIO_POR_LOGIN);
-		ps.setString(1, login);
+		ps.setString(1, login.toLowerCase());
 
 		ResultSet rs = ps.executeQuery();
 

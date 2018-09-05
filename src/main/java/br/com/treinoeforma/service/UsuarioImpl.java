@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.repository.UsuarioRepository;
 
+@Service
 public class UsuarioImpl implements Crud<Usuario>  {
 	
 	@Autowired
@@ -17,7 +19,7 @@ public class UsuarioImpl implements Crud<Usuario>  {
 
 	@Override
 	public Usuario salvar(Usuario u) {
-		return this.usuarioRepository.saveAndFlush(u);
+		return this.usuarioRepository.save(u);
 	}
 
 	@Override
@@ -54,7 +56,9 @@ public class UsuarioImpl implements Crud<Usuario>  {
 		return null;
 	}
 
-	
+	public Usuario buscarPorLogin(String login) {
+		return this.usuarioRepository.findByLogin(login);
+	}
 		
 	
 
