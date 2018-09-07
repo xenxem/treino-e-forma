@@ -48,9 +48,9 @@ public interface TituloRepository extends JpaRepository<Titulo, Long> {
 	@Query(value="SELECT * "
 			+ "FROM titulo "
 			+ "LEFT JOIN (SELECT titulo_id, count(*) "
-			+ "FROM dbacademia.treino_exercicio "
+			+ "FROM treino_exercicio "
 			+ "WHERE treino_id = :treino_id "
-			+ "GROUP BY titulo_id) tab1 ON tab1.titulo_id = titulo.id;",nativeQuery=true)
+			+ "GROUP BY titulo_id) tab1 ON tab1.titulo_id = titulo.id",nativeQuery=true)
 	public List<Object[]> obterTitulosComQtdDeExercicio(@Param("treino_id") Long treino_id);
 	
 	
