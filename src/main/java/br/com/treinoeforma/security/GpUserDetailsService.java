@@ -38,8 +38,7 @@ public class GpUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private DataSource dataSource;
-	
-	
+		
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		
@@ -79,9 +78,9 @@ public class GpUserDetailsService implements UserDetailsService {
 	}
 
 	public GpUserDetails buscarUsuario(Connection connection, String login) throws SQLException {
+		
 		PreparedStatement ps = connection.prepareStatement(USUARIO_POR_LOGIN);
-		ps.setString(1, login.toLowerCase());
-
+		ps.setString(1, login.toLowerCase());		
 		ResultSet rs = ps.executeQuery();
 
 		if (!rs.next()) {

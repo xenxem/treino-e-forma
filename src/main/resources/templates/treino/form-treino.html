@@ -14,7 +14,7 @@
 					   <div class="modal-content">
 							<div class="modal-header">
 							   <button type="button" class="close" data-dismiss="modal">&times;</button>
-							   <h4 class="modal-title"> Alterar exercício</h4>
+							   <h4 class="modal-title"><span>Alterar exercício</span></h4>
 							   <div class="mensagem-aviso"></div>	
 							 </div>
 							 <div class="modal-body">
@@ -196,7 +196,7 @@ jQuery(function(){
 	$("#adicionar").on("click",function(){	
 		$("#titulo").attr("disabled",false);
 		$('.collapse').collapse('hide');						
-		$("#myModal .modal-title").text("Incluir exercício");
+		$("#myModal .modal-title").text("Incluir novo exercício");
 		$("#exercicioHelp").text("Escolha um exercício para inclusão");
 		$("#myModal").modal("show");		
 	});
