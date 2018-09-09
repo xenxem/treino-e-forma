@@ -180,7 +180,7 @@ jQuery(function(){
 	});	
 	
 	
-	
+	// clicou no botão pdf...
 	$("#pdf").on("click",function(){
 		$.alert({
 		    title: 'Atenção:',
@@ -193,27 +193,26 @@ jQuery(function(){
 		return false;		
 	});
 	
+	
+	// clicou no botão adicionar...
 	$("#adicionar").on("click",function(){	
 		$("#titulo").attr("disabled",false);
 		$('.collapse').collapse('hide');						
-		$("#myModal .modal-title").text("Incluir novo exercício");
+		$("#myModal .modal-title").text("Incluir exercício");
 		$("#exercicioHelp").text("Escolha um exercício para inclusão");
 		$("#myModal").modal("show");		
 	});
-		
 	
 	var array = new Array();
-	var item;
+	var item;	
 	
-	
+	// Executando ação de salvar...
 	$("#salvar").on("click",function(){
 		var exercicioId = $("#exercicios option:selected").val();
 		var titulosId = $("#titulos option:selected").val();
 		var tituloId = $("#titulo option:selected").val();
-		var treinoId = $("#treinoId").val();
-		
-		var id = array[0];
-		console.log("editar");
+		var treinoId = $("#treinoId").val();		
+		var id = array[0];		
 		if ($("#exercicios option:selected").val() === ""){					
 			$.alert({
 			    title: 'Atenção:',
@@ -226,6 +225,8 @@ jQuery(function(){
 			return false;
 		}
 		
+		
+		// Alteração... 
 		if ($("#myModal .modal-title").text() === "Aletar exercício"){
 			$.ajax({
 				url:/*[[@{/editarTE}]]*/,
@@ -239,6 +240,7 @@ jQuery(function(){
 			});
 		}
 		
+		// Incluisão...
 		if ($("#myModal .modal-title").text() === "Incluir exercício"){
 			$.ajax({
 				url:/*[[@{salvarTE}]]*/,
@@ -262,8 +264,12 @@ jQuery(function(){
 		}
 	});
 	
-	$("#table tbody tr").on('click','a',function(event) {				
+	// Botao clicado edicao ou exclusao?
+	$("#table tbody tr").on('click','a',function(event) {
+		
 		item = $(this).closest('tr');
+		
+		// Exclusão...
 		if ($(this).attr('class').indexOf('exclui') != -1){			
 			array = $(this).attr('id').split(',');			
 			var id = array[0];			
@@ -295,6 +301,7 @@ jQuery(function(){
 	    	event.preventDefault();
 	      }
     	
+		// Edição...
     	if ($(this).attr('class').indexOf('edita') != -1){    			
     			array = $(this).attr('id').split(',');			
 				var id = array[0];
