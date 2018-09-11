@@ -6,12 +6,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<title>Treino e Forma</title>	
 	<link th:href="@{/css/bootstrap.css}" rel='stylesheet' type='text/css' />	 
 	<link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet"/>
-	<link th:href="@{css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
-	<link th:href="@{css/dataTables.checkboxes.css}" rel="stylesheet">
-	<link th:href="@{css/jquery-ui.css}" rel="stylesheet"/>
-	<link th:href="@{css/jquery-confirm.min.css}" rel="stylesheet">
-	<link th:href="@{css/jquery.multiselect.css}" rel="stylesheet" />
-	<link th:href="@{css/style.css}" rel='stylesheet' type='text/css' />	
+	<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/css/dataTables.checkboxes.css}" rel="stylesheet">
+	<link th:href="@{/css/jquery-ui.css}" rel="stylesheet"/>
+	<link th:href="@{/css/jquery-confirm.min.css}" rel="stylesheet">
+	<link th:href="@{/css/jquery.multiselect.css}" rel="stylesheet" />
+	<link th:href="@{/css/style.css}" rel='stylesheet' type='text/css' />	
 </head>
 <body>
 <div class="container-fluid">
@@ -25,7 +25,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			 <div class="h_menu4"><!-- start h_menu4 -->
 			   <a class="toggleMenu" href="#">Menu</a>
 				 <ul class="nav">
-				   <li class="active"><a th:href="@{/}">Home</a></li>
+				   <li><a th:href="@{/}">Home</a></li>
 				    <li sec:authorize="hasRole('PG_MONTAR_TREINO')"><a th:href="@{/treinos}">Treinos</a></li>
 				    <!-- <li sec:authorize="hasRole('PG_LISTAR_TREINO')"><a th:href="@{/listarTreino}">Listar treinos</a></li> -->
 				    <li sec:authorize="hasRole('PG_LISTAR_EXERCICIO')"><a th:href="@{/listarExercicio}">Exercícios</a></li>				   

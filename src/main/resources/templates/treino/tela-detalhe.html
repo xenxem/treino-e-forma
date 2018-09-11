@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Detalhes do Treino</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+  	
+  	<br>
+  	<table class="table table-striped table-bordered" id="table"> 
+	<thead>
+          <tr>					                
+			<th><h3><small>Descrição</small></h3></th>
+			<th><h3><small>Grupo muscular</small></h3></th>
+			<!-- 
+			<th><h3><small></small></h3></th>
+			 -->												                
+          </tr>
+    </thead>		
+	<tbody>					 	
+	 	<th:block th:each="ti : ${ti}">
+		 	<tr><td colspan="2" align="center" th:text="${ti.descricao}"></td></tr>					 	
+		 	<tr th:each="te : ${te}" th:if="${te.titulo.id == ti.id}">
+		 		<td>	
+		 			<span th:text="${te.exercicio.descricao}" th:id="${te.exercicio.id}" class="span-exercicio">Supino reto 4x10 + Cross over RM</span>
+		 		</td>
+		 		<td>
+		 			<span th:text="${te.exercicio.grupoMuscular.nome}"  th:id="${te.exercicio.id}" class="span-grupo-muscular">grupo muscular</span>
+		 		</td>	
+		 		<!-- 				 		
+		 		<td class="text-center">
+					<a th:href="@{/treinoExercicio/{id}(id=${te.id})}"  th:id="|${te.id},${te.titulo.id}|" class="btn btn-info btn-xs edita" role="button" title="Alterar exerício atual"><span class="glyphicon glyphicon-pencil" ></span></a>								
+ 				</td>
+ 				 -->
+		 	</tr>
+	 	</th:block>
+	 </tbody> 
+	</table>
+	<div class=text-center>
+		<a class="btn btn-info btn-md" th:href="@{/pdf}" role="button" id="Copiar treino">Copiar treino</a>
+	</div>
+</div>
+<div layout:fragment="scripts">
+	<script th:inline="javascript">
+	
+	</script>
+</div>
+</body>
+</html>
