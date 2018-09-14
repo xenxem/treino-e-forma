@@ -182,15 +182,14 @@ jQuery(function(){
 	
 	// clicou no botão pdf...
 	$("#pdf").on("click",function(){
-		$.alert({
-		    title: 'Atenção:',
-		    content: "Funcionalidade ainda em construção...",
-		    type:'blue',
-		    icon: 'glyphicon glyphicon-info-sign',
-		    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
-		    closeIcon: true
-		});					
-		return false;		
+		$.ajax({
+			url:/*[[@{/pdf}]]*/,
+			data:{'_csrf':_csrf},
+			type:'get',
+			dataType:'json',
+			success:function(data){    			
+			}
+		});
 	});
 	
 	

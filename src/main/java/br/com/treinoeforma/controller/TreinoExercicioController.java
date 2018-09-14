@@ -1,12 +1,16 @@
 package br.com.treinoeforma.controller;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +41,16 @@ import br.com.treinoeforma.service.TituloImpl;
 import br.com.treinoeforma.service.TreinoExercicioImpl;
 import br.com.treinoeforma.service.TreinoImpl;
 import br.com.treinoeforma.utils.UsuarioAutenticado;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @Controller
 @Transactional
@@ -293,15 +307,32 @@ public class TreinoExercicioController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET, path="/pdf")
-	public ModelAndView pdf() {
+	public @ResponseBody void pdf(HttpServletResponse response) {
+		try {
+			
+			InputStream jasperStream = this.getClass().getResourceAsStream("/reports/treinorpt.jrxml");
+			JasperDesign design = JRXmlLoader.load(jasperStream);
+			JasperReport report = JasperCompileManager.compileReport(design);
+			
+			List<Treino> treinos = this.treinoImpl.listar();
+			JRDataSource jRDataSource = new JRBeanCollectionDataSource(treinos);
+			
+			Map<String,Object> parameterMap = new HashMap();
+			parameterMap.put("datasource", jRDataSource);
+			
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameterMap,jRDataSource);
+			
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-Disposition","inline; filename=treino.pdf" );
+			
+			final OutputStream outputStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);
 		
-		List<Exercicio> exercicios = this.exercicioImpl.listar();
-		List<GrupoMuscular> grupoMuscular = this.grupoMuscularImpl.listar();
-		ModelAndView mv = new ModelAndView("treino/form-exercicio");
-		mv.addObject("exercicios",exercicios);
-		mv.addObject("grupoMuscular",grupoMuscular);		
-		mv.addObject(new Exercicio());
-		return mv;
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

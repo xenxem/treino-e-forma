@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="treinorpt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a8eb0fe-6eb5-41f1-bc6c-8dc36fd794fb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="curtidas" class="java.lang.Integer"/>
+	<field name="objetivo" class="java.lang.String"/>
+	<field name="usuario" class="br.com.treinoeforma.model.Usuario"/>
+	<field name="data" class="java.util.Calendar"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="55" y="1" width="56" height="20" uuid="f84ced77-dd29-4da7-b49c-abe150c594ca"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="4" width="228" height="20" uuid="bd2d3076-27c7-46de-8f31-f2fa5b076718"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="4" width="100" height="20" uuid="7edca5e2-a469-4add-ae4b-c1cf62a9130c"/>
+				<textFieldExpression><![CDATA[$F{curtidas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="416" y="4" width="39" height="20" uuid="40551f9a-7e99-4a61-8e8f-e750032e570d"/>
+				<text><![CDATA[curtidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="50" height="20" uuid="11eebc5c-95c3-4491-aa3a-c5fa8ed97c49"/>
+				<text><![CDATA[descricao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="55" height="20" uuid="d46a9bbf-c7b2-41e6-acd9-a57794a741b7"/>
+				<text><![CDATA[id]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="28" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="30" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="27" splitType="Stretch"/>
+	</summary>
+</jasperReport>
