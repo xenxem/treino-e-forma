@@ -28,4 +28,11 @@ public interface TreinoRepository extends JpaRepository<Treino,Long> {
 	
 	public List<Treino> findById(Long usuarioId);
 	
+	
+	@Query("SELECT t "
+			+ "FROM Treino t "
+			+ "WHERE t =:treino ")
+	public List<Treino> buscaPorCodigo(@Param("treino") Treino treino);
+	
+	
 }

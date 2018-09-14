@@ -308,22 +308,24 @@ public class TreinoExercicioController {
 	
 	@RequestMapping(method = RequestMethod.GET, path="/pdf")
 	public @ResponseBody void pdf(HttpServletResponse response) {
-		try {
-			
+		try {			
 			InputStream jasperStream = this.getClass().getResourceAsStream("/reports/treinorpt.jrxml");
 			JasperDesign design = JRXmlLoader.load(jasperStream);
 			JasperReport report = JasperCompileManager.compileReport(design);
 			
-			List<Treino> treinos = this.treinoImpl.listar();
-			JRDataSource jRDataSource = new JRBeanCollectionDataSource(treinos);
+			Treino treino = new Treino();
+			treino.setId(10l);
 			
-			Map<String,Object> parameterMap = new HashMap();
-			parameterMap.put("datasource", jRDataSource);
+			List<Treino> treinos = this.treinoImpl.buscaPorCodigo(treino);
+			JRDataSource dataSource = new JRBeanCollectionDataSource(treinos);
 			
-			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameterMap,jRDataSource);
+			Map<String,Object> parameterMap = new HashMap<String,Object>();
+			parameterMap.put("datasource", dataSource);
+			
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameterMap,dataSource);
 			
 			response.setContentType("application/x-pdf");
-			response.setHeader("Content-Disposition","inline; filename=treino.pdf" );
+			response.setHeader("Content-Disposition","inline; filename="+treinos.get(0).getDescricao()+".pdf" );
 			
 			final OutputStream outputStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);

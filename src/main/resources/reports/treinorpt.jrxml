@@ -19,7 +19,15 @@
 		<band height="27" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="25" splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="196" y="0" width="188" height="20" uuid="fe48897f-d969-424f-ae71-5d5f07ce9fd0"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TREINO E FORMA]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="19" splitType="Stretch"/>
