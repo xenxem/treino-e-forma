@@ -305,9 +305,12 @@ public class TreinoExercicioController {
 		return mapper.writeValueAsString(te);		
 	}
 	
-	
-	@RequestMapping(method = RequestMethod.GET, path="/pdf")
-	public @ResponseBody void pdf(HttpServletResponse response) {
+
+	@RequestMapping("/pdf/{id}")
+	public void pdf(@PathVariable Long id, HttpServletResponse response) {
+			
+		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		
 		try {			
 			InputStream isTreino = this.getClass().getResourceAsStream("/reports/treino.jrxml");
 			JasperDesign jdTreino = JRXmlLoader.load(isTreino);
@@ -319,12 +322,12 @@ public class TreinoExercicioController {
 			
 			
 			Treino treino = new Treino();
-			treino.setId(10l);
+			treino.setId(id);
 			
 			List<Treino> listaTreino = this.treinoImpl.buscaPorCodigo(treino);
 			JRDataSource dtsTreinos = new JRBeanCollectionDataSource(listaTreino);
 			
-			List<TreinoExercicio> listaTreinoExercicio = this.treinoExercicioImpl.buscaTreinoPorCodigo(10l, 1l);
+			List<TreinoExercicio> listaTreinoExercicio = this.treinoExercicioImpl.buscaTreinoPorCodigo(id, usuarioAutenticado.getId());
 			JRDataSource dtsTreinoExercicios = new JRBeanCollectionDataSource(listaTreinoExercicio);
 			
 			Map<String,Object> parameterMap = new HashMap<String,Object>();
@@ -340,6 +343,9 @@ public class TreinoExercicioController {
 			
 			final OutputStream outputStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);
+			
+			outputStream.flush();
+			outputStream.close();
 		
 		} catch (JRException e) {
 			e.printStackTrace();

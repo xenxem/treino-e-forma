@@ -102,8 +102,8 @@
 								    <input type="hidden" name="treinoId" id="treinoId" th:value="${treino.id}">
 									<input type="hidden" name="tituloId" id="tituloId">									
 									<!-- <input id="_csrf_param" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
-									<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button">Novo treino </a>
-									<a class="btn btn-info btn-sm" th:href="@{/pdf}" role="button" id="pdf">Gerar treino em PDF</a>
+									<a class="btn btn-info btn-sm" th:href="@{/novo}" role="button" >Novo treino </a>
+									<a class="btn btn-info btn-sm" th:href="@{/pdf/{id}(id=${treino.id})}" role="button" id="pdf">Gerar treino em PDF</a>
 						  		</div> 
 							</div>
 						</div>	
@@ -184,12 +184,14 @@ jQuery(function(){
 	$("#pdf").on("click",function(){
 		$.ajax({
 			url:/*[[@{/pdf}]]*/,
-			data:{'_csrf':_csrf,'id':$("#treinoId").val()},
+			data:{'treinoId':"10"},
 			type:'get',
-			dataType:'json',
-			success:function(data){    			
+			dataType:'json',			
+			success:function(data){
+    		
 			}
 		});
+		
 	});
 	
 	
