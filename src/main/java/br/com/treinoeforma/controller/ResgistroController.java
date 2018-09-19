@@ -14,7 +14,6 @@ import br.com.treinoeforma.model.UsuarioGrupo;
 import br.com.treinoeforma.model.UsuarioGrupoId;
 import br.com.treinoeforma.service.UsuarioGrupoImpl;
 import br.com.treinoeforma.service.UsuarioImpl;
-import br.com.treinoeforma.utils.UsuarioAutenticado;
 
 @Controller
 @Transactional

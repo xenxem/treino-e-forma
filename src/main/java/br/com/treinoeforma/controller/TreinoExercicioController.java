@@ -309,23 +309,34 @@ public class TreinoExercicioController {
 	@RequestMapping(method = RequestMethod.GET, path="/pdf")
 	public @ResponseBody void pdf(HttpServletResponse response) {
 		try {			
-			InputStream jasperStream = this.getClass().getResourceAsStream("/reports/treinorpt.jrxml");
-			JasperDesign design = JRXmlLoader.load(jasperStream);
-			JasperReport report = JasperCompileManager.compileReport(design);
+			InputStream isTreino = this.getClass().getResourceAsStream("/reports/treino.jrxml");
+			JasperDesign jdTreino = JRXmlLoader.load(isTreino);
+			JasperReport jrTreino = JasperCompileManager.compileReport(jdTreino);
+			
+			InputStream isExercicio = this.getClass().getResourceAsStream("/reports/exercicios.jrxml");
+			JasperDesign jdExercicio = JRXmlLoader.load(isExercicio);
+			JasperReport jrExercicio = JasperCompileManager.compileReport(jdExercicio);
+			
 			
 			Treino treino = new Treino();
 			treino.setId(10l);
 			
-			List<Treino> treinos = this.treinoImpl.buscaPorCodigo(treino);
-			JRDataSource dataSource = new JRBeanCollectionDataSource(treinos);
+			List<Treino> listaTreino = this.treinoImpl.buscaPorCodigo(treino);
+			JRDataSource dtsTreinos = new JRBeanCollectionDataSource(listaTreino);
+			
+			List<TreinoExercicio> listaTreinoExercicio = this.treinoExercicioImpl.buscaTreinoPorCodigo(10l, 1l);
+			JRDataSource dtsTreinoExercicios = new JRBeanCollectionDataSource(listaTreinoExercicio);
 			
 			Map<String,Object> parameterMap = new HashMap<String,Object>();
-			parameterMap.put("datasource", dataSource);
+			parameterMap.put("dtsTreinos", dtsTreinos);
 			
-			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameterMap,dataSource);
+			parameterMap.put("jrExercicio", jrExercicio);
+			parameterMap.put("dtsTreinoExercicios", dtsTreinoExercicios);
+			
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jrTreino, parameterMap,dtsTreinos);
 			
 			response.setContentType("application/x-pdf");
-			response.setHeader("Content-Disposition","inline; filename="+treinos.get(0).getDescricao()+".pdf" );
+			response.setHeader("Content-Disposition","inline; filename="+listaTreino.get(0).getDescricao()+".pdf" );
 			
 			final OutputStream outputStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);

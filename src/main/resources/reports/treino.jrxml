@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="treino" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a8eb0fe-6eb5-41f1-bc6c-8dc36fd794fb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="jrExercicio" class="java.lang.Object"/>
+	<parameter name="dtsTreinoExercicios" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="curtidas" class="java.lang.Integer"/>
+	<field name="objetivo" class="java.lang.String"/>
+	<field name="usuario" class="br.com.treinoeforma.model.Usuario"/>
+	<field name="data" class="java.util.Calendar"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="2" width="555" height="25" uuid="c9f4fcdb-243f-4b7a-b21d-c594e728b236"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA DE TREINO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="6" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement x="87" y="16" width="56" height="20" uuid="f84ced77-dd29-4da7-b49c-abe150c594ca"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="9" y="16" width="64" height="20" backcolor="#CCCCCC" uuid="d46a9bbf-c7b2-41e6-acd9-a57794a741b7"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="49" width="468" height="20" uuid="bd2d3076-27c7-46de-8f31-f2fa5b076718"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="9" y="49" width="64" height="20" backcolor="#CCCCCC" uuid="11eebc5c-95c3-4491-aa3a-c5fa8ed97c49"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descricao:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="76" width="546" height="1" uuid="722f7736-809f-43cb-a8b2-83b30cbd27db"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="11" width="546" height="1" uuid="025cd8e0-d003-4180-b709-6eda721c9146"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="68" splitType="Stretch">
+			<subreport>
+				<reportElement x="9" y="0" width="537" height="60" uuid="29458af4-be25-4051-a2c9-48490e5dad8f"/>
+				<dataSourceExpression><![CDATA[$P{dtsTreinoExercicios}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{jrExercicio}]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

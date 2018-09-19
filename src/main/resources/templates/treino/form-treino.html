@@ -184,7 +184,7 @@ jQuery(function(){
 	$("#pdf").on("click",function(){
 		$.ajax({
 			url:/*[[@{/pdf}]]*/,
-			data:{'_csrf':_csrf},
+			data:{'_csrf':_csrf,'id':$("#treinoId").val()},
 			type:'get',
 			dataType:'json',
 			success:function(data){    			

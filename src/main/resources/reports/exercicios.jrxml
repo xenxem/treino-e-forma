@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exercicios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="332a1b46-9ab3-40d3-b911-68eeaab243d9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="titulo" class="br.com.treinoeforma.model.Titulo">
+		<fieldDescription><![CDATA[titulo]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="treino" class="br.com.treinoeforma.model.Treino">
+		<fieldDescription><![CDATA[treino]]></fieldDescription>
+	</field>
+	<field name="exercicio" class="br.com.treinoeforma.model.Exercicio">
+		<fieldDescription><![CDATA[exercicio]]></fieldDescription>
+	</field>
+	<group name="grupoTitulo">
+		<groupExpression><![CDATA[$F{titulo}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField>
+					<reportElement key="" mode="Opaque" x="0" y="0" width="480" height="20" backcolor="#E6E6E6" uuid="6138d0d0-e935-4129-935c-fe2a9ede1efd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{titulo}.getDescricao()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="480" height="20" uuid="5b9b0150-1e2b-425c-b9be-23b956c4ff0b"/>
+				<textFieldExpression><![CDATA[$F{exercicio}.getDescricao()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
