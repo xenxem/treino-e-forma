@@ -10,7 +10,7 @@
 	<form name="form" th:action="@{/salvarTreino}" id="form" th:object="${treinoExercicio}" method="post">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-	    	<h3 class="panel-title">Cadastro do Treino</h3>
+	    	<h3 class="label label-primary">INCLUSÃO DE NOVO TREINO</h3>
 	  	</div>	  
 		<div class="panel-body">		
 				<div class="form-group">
@@ -66,8 +66,7 @@
 				
 				<input type="hidden" name="action" id="action">
 				<input type="hidden" name="treinoExercicioId" id="treinoExercicioId">	
-				<input type="hidden" name="treinoId" id="treinoId" th:field="*{treino.id}">
-				<button type="button" class="btn btn-info btn-sm" id="voltar"> Voltar <span class="glyphicon glyphicon-arrow-left"></span></button>
+				<input type="hidden" name="treinoId" id="treinoId" th:field="*{treino.id}">				
 				<button type="button" class="btn btn-info btn-sm" id="adicionar" title="Seleciona um exercício existente">Selecionar exercício</button>	
 				<!-- 			
 				<button type="button" class="btn btn-info btn-sm" id="novoExercicio" title="Permite a inclusão de um novo exercício">Novo exercício</button>
@@ -111,10 +110,6 @@
 		jQuery(function(){		
 			
 			var _csrf = $("#_csrf_param").attr("value");			
-			
-			$("#voltar").on("click",function(){
-				window.location.href =/*[[@{/treinos}]]*/;
-			});						
 			
 			var item;
 			var descricaoGrupo;

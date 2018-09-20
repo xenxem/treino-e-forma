@@ -74,7 +74,7 @@
 			 <!-- fim modal -->
 			  <div class="panel panel-default">
 					<div class="panel-heading">
-					    <h3 class="panel-title">Grade de Treinos</h3>
+					    <h3 class="label label-primary">MEUS TREINOS CADASTRADOS <span th:text="${listaTe.size()}" class="badge"></span></h3>
 					</div>
 			  <div class="panel-body">
 				<form id="form" th:action="@{/montar}" method="post">
@@ -82,7 +82,7 @@
 	  						<div class="collapse.in" id="collapseExample">						
 	  							<div class="panel-body">
 	  								<div class="form-group">  									 									
-								    	<label for="treinos">Treinos <span th:text="${listaTe.size()}" class="badge"></span></label>								    	
+								    	<label for="treinos">Treino</label>								    	
 							      		<select  id="treinos" class="selectpicker form-control">							      		    
 							       			<option  th:each="treinoExercicio,obj : ${listaTe}" th:selected="${treinoExercicio.treino.id==treino.id}" th:value="${treinoExercicio.treino.id}" th:text="${listaTe[obj.index].treino.descricao}">Treino A</option>
 							   	  		</select>
@@ -181,18 +181,20 @@ jQuery(function(){
 	
 	
 	// clicou no botão pdf...
-	$("#pdf").on("click",function(){
-		$.ajax({
-			url:/*[[@{/pdf}]]*/,
-			data:{'treinoId':"10"},
-			type:'get',
-			dataType:'json',			
-			success:function(data){
+	
+//	$("#pdf").on("click",function(){
+//		$.ajax({
+//			url:/*[[@{/pdf}]]*/,
+//			data:{'treinoId':"10"},
+//			type:'get',
+//			dataType:'json',			
+//			success:function(data){
     		
-			}
-		});
+//			}
+//		});
 		
-	});
+//});
+
 	
 	
 	// clicou no botão adicionar...
