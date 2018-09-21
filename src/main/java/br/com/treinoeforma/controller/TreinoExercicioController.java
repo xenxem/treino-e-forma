@@ -338,7 +338,7 @@ public class TreinoExercicioController {
 			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jrTreino, parameterMap,dtsTreinos);
 			
-			response.setContentType("application/x-pdf");
+			response.setContentType("application/pdf");
 			response.setHeader("Content-Disposition","inline; filename="+listaTreino.get(0).getDescricao()+".pdf" );
 			
 			final OutputStream outputStream = response.getOutputStream();
