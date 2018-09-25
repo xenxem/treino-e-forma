@@ -26,8 +26,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			   <a class="toggleMenu" href="#">Menu</a>
 				 <ul class="nav">
 				   <li><a th:href="@{/}">Home</a></li>
-				    <li sec:authorize="hasRole('PG_NOVO_TREINO')"><a th:href="@{/novo}">Novo treino</a></li>
 				    <li sec:authorize="hasRole('PG_MONTAR_TREINO')"><a th:href="@{/treinos}">Treinos</a></li>
+				    <li sec:authorize="hasRole('PG_NOVO_TREINO')"><a th:href="@{/novo}">Novo treino</a></li>
 				    <!-- <li sec:authorize="hasRole('PG_LISTAR_TREINO')"><a th:href="@{/listarTreino}">Listar treinos</a></li> -->
 				    <li sec:authorize="hasRole('PG_LISTAR_EXERCICIO')"><a th:href="@{/listarExercicio}">Exercícios</a></li>				   
 				   	<li><a th:href="@{/contato}">Contato</a></li>
