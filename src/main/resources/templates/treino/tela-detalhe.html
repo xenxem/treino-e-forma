@@ -58,13 +58,30 @@
 	 </tbody> 
 	</table>
 	<div class=text-center>
-		<a class="btn btn-info btn-md" th:href="@{/pdf}" role="button" id="copiar" onclick="javascript:return false;">Copiar treino</a>
-		<a class="btn btn-info btn-md" th:href="@{/pdf}" role="button" id="pdf" onclick="javascript:return false;">Gerar em PDF</a>
+		<div class="footer navbar-fixed-bottom">
+			<a class="btn btn-info btn-sm" href="#" role="button" id="copiar">Copiar este treino</a>
+			<a class="btn btn-info btn-sm" th:href="@{/pdf/{id}(id=${t.id})}" role="button" id="pdf">Gerar em PDF este treino</a>	
+			<br>						
+		</div>
 	</div>
-</div>
+</div><!-- ./fim content -->
+	
 <div layout:fragment="scripts">
 	<script th:inline="javascript">
-	
+		jQuery(function(){
+			// Executando ação de salvar...
+			$("#copiar").on("click",function(){
+					$.alert({
+					    title: 'Informação:',
+					    content: "A função ainda está sendo construída pelo desenvolvedor.",
+					    type:'blue',
+					    icon: 'glyphicon glyphicon-info-sign',
+					    theme: 'bootstrap', /* 'material', 'bootstrap','supervan'*/
+					    closeIcon: true
+					});					
+				return false;
+			});	
+		});
 	</script>
 </div>
 </body>
