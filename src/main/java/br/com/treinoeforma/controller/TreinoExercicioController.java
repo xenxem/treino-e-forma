@@ -327,7 +327,7 @@ public class TreinoExercicioController {
 			List<Treino> listaTreino = this.treinoImpl.buscaPorCodigo(treino);
 			JRDataSource dtsTreinos = new JRBeanCollectionDataSource(listaTreino);
 			
-			List<TreinoExercicio> listaTreinoExercicio = this.treinoExercicioImpl.buscaTreinoPorCodigo(id, usuarioAutenticado.getId());
+			List<TreinoExercicio> listaTreinoExercicio = this.treinoExercicioImpl.buscaPorTreino(treino);
 			JRDataSource dtsTreinoExercicios = new JRBeanCollectionDataSource(listaTreinoExercicio);
 			
 			Map<String,Object> parameterMap = new HashMap<String,Object>();
@@ -338,8 +338,8 @@ public class TreinoExercicioController {
 			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jrTreino, parameterMap,dtsTreinos);
 			
-			response.setContentType("application/pdf");
-			response.setHeader("Content-Disposition","inline; filename="+listaTreino.get(0).getDescricao()+".pdf" );
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-Disposition","attachment; filename="+listaTreino.get(0).getDescricao()+".pdf" );
 			
 			final OutputStream outputStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);

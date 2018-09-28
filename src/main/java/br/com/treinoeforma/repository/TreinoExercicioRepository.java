@@ -57,5 +57,9 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 	public Long buscaUltimo(@Param("usuario") Usuario usuario);
 	
 	
+	@Query("SELECT te FROM TreinoExercicio te "
+			+ "WHERE te.treino =:treino "			
+			+ "ORDER BY te,te.titulo,te.exercicio")
+	public List<TreinoExercicio> buscaPorTreino(@Param("treino") Treino treino);
 
 }

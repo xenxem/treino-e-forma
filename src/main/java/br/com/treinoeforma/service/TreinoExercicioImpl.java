@@ -90,5 +90,9 @@ public class TreinoExercicioImpl implements Crud<TreinoExercicio> {
 		return this.treinoExercicioRepository.buscaUltimo(usuario);
 	}
 	
+	public List<TreinoExercicio> buscaPorTreino(Treino treino){
+		return this.treinoExercicioRepository.buscaPorTreino(treino);
+	}
+	
 			
 }
