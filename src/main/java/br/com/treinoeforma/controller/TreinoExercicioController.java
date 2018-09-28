@@ -309,7 +309,7 @@ public class TreinoExercicioController {
 	@RequestMapping("/pdf/{id}")
 	public void pdf(@PathVariable Long id, HttpServletResponse response) {
 			
-		GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
+		//GpUserDetails usuarioAutenticado = (GpUserDetails) UsuarioAutenticado.obterUsuarioAutenticado();
 		
 		try {			
 			InputStream isTreino = this.getClass().getResourceAsStream("/reports/treino.jrxml");
