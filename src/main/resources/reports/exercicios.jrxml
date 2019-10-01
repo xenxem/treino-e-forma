@@ -24,7 +24,7 @@
 				<textField>
 					<reportElement key="" mode="Opaque" x="0" y="0" width="480" height="20" backcolor="#E6E6E6" uuid="6138d0d0-e935-4129-935c-fe2a9ede1efd"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="14" isBold="true"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{titulo}.getDescricao()]]></textFieldExpression>
 				</textField>
@@ -41,6 +41,9 @@
 		<band height="25" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="5" width="480" height="20" uuid="5b9b0150-1e2b-425c-b9be-23b956c4ff0b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{exercicio}.getDescricao()]]></textFieldExpression>
 			</textField>
 		</band>

@@ -331,8 +331,7 @@ public class TreinoExercicioController {
 			JRDataSource dtsTreinoExercicios = new JRBeanCollectionDataSource(listaTreinoExercicio);
 			
 			Map<String,Object> parameterMap = new HashMap<String,Object>();
-			parameterMap.put("dtsTreinos", dtsTreinos);
-			
+			//parameterMap.put("dtsTreinos", dtsTreinos);			
 			parameterMap.put("jrExercicio", jrExercicio);
 			parameterMap.put("dtsTreinoExercicios", dtsTreinoExercicios);
 			
