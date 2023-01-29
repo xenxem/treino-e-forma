@@ -21,15 +21,15 @@ public class UsuarioGrupoId implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="grupo_id")
-	private Grupo grupo;
+	private GrupoMuscular grupoMuscular;
 	
 	
 	public UsuarioGrupoId() {}
 		
-	public UsuarioGrupoId(Usuario usuario, Grupo grupo) {
+	public UsuarioGrupoId(Usuario usuario, GrupoMuscular grupoMuscular) {
 		super();
 		this.usuario = usuario;
-		this.grupo = grupo;
+		this.grupoMuscular = grupoMuscular;
 	}
 	public Usuario getUsuario() {
 		return usuario;
@@ -37,17 +37,17 @@ public class UsuarioGrupoId implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Grupo getGrupo() {
-		return grupo;
+	public GrupoMuscular getGrupo() {
+		return grupoMuscular;
 	}
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
+	public void setGrupo(GrupoMuscular grupoMuscular) {
+		this.grupoMuscular = grupoMuscular;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((grupo == null) ? 0 : grupo.hashCode());
+		result = prime * result + ((grupoMuscular == null) ? 0 : grupoMuscular.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
@@ -60,10 +60,10 @@ public class UsuarioGrupoId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UsuarioGrupoId other = (UsuarioGrupoId) obj;
-		if (grupo == null) {
-			if (other.grupo != null)
+		if (grupoMuscular == null) {
+			if (other.grupoMuscular != null)
 				return false;
-		} else if (!grupo.equals(other.grupo))
+		} else if (!grupoMuscular.equals(other.grupoMuscular))
 			return false;
 		if (usuario == null) {
 			if (other.usuario != null)

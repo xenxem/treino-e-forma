@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.treinoeforma.config.SecurityConfig;
-import br.com.treinoeforma.model.Grupo;
+import br.com.treinoeforma.model.GrupoMuscular;
 import br.com.treinoeforma.model.Usuario;
 import br.com.treinoeforma.model.UsuarioGrupo;
 import br.com.treinoeforma.model.UsuarioGrupoId;
@@ -48,10 +48,10 @@ public class ResgistroController {
 			usuario.setLogin(usuario.getLogin().toLowerCase());
 			usuario = usuarioImpl.salvar(usuario);
 			
-			Grupo grupo = new Grupo();
-			grupo.setId(2l);
+			GrupoMuscular grupoMuscular = new GrupoMuscular();
+			grupoMuscular.setId(2l);
 			
-			UsuarioGrupoId id = new UsuarioGrupoId(usuario,grupo);						
+			UsuarioGrupoId id = new UsuarioGrupoId(usuario,grupoMuscular);						
 			UsuarioGrupo ug = new UsuarioGrupo(id);			
 			this.usuarioGrupoImpl.salvar(ug);
 						
